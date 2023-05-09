@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
   <title>Rodger Roller</title>
   <style>
@@ -48,7 +49,7 @@
         document.getElementsByClassName(class_name)
       ).map((element) => {
         if (element.checked) {
-          return parseInt(element.dataset.mod, 10)
+          return parseInt(element.dataset.value, 10)
         }
         else {
           return 0
@@ -113,47 +114,60 @@
     <h1>Rodger Roller</h1>
     <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
+    <div class="flex cards">
+
+      <table>
+        <tr>
+          <td>Level:</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>BA Rank:</td>
+          <td>1</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Health:</td>
+          <td>14/14</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>0</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Shields:</td>
+          <td>20/20</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>5</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Gold:</td>
+          <td>113</td>
+        </tr>
+        <tr>
+          <td>BA Tokens:</td>
+          <td>0</td>
+        </tr>
+      </table>
+
+    </div>
+
+
+
     <table>
-      <tr>
-        <td>Level:</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>Badass Rank:</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>Badass Tokens:</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>Gold:</td>
-        <td>113</td>
-      </tr>
-      <tr>
-        <td>Current Health:</td>
-        <td>14</td>
-      </tr>
-      <tr>
-        <td>Max Health:</td>
-        <td>14</td>
-      </tr>
-      <tr>
-        <td>Health Regen:</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>Current Shields:</td>
-        <td>20</td>
-      </tr>
-      <tr>
-        <td>Max Shields:</td>
-        <td>20</td>
-      </tr>
-      <tr>
-        <td>Shield Regen:</td>
-        <td>5</td>
-      </tr>
+
+
+
       <tr>
         <td>Shield Type:</td>
         <td></td>
@@ -225,7 +239,7 @@
         
         <tr>
           <td>ACC +3 at Range 3+</td>
-          <td><input type="checkbox" class="Accuracy_gun0_toggle" data-mod="3" checked>
+          <td><input type="checkbox" class="Accuracy_gun0_toggle" data-value="3" checked>
           </td>
         </tr>
         
@@ -251,7 +265,7 @@
         </tr>
         
         <tr>
-          <td colspan="2"><button class="accuracy_roller" data-gun="0">Roll Accuracy</button></td>
+          <td colspan="2"><button class="accuracy_roller" data-gun="0">Roll</button></td>
         </tr>
       </table>
 
@@ -309,7 +323,7 @@
 
         
         <tr>
-          <td colspan="2"><button class="accuracy_roller" data-gun="1">Roll Accuracy</button></td>
+          <td colspan="2"><button class="accuracy_roller" data-gun="1">Roll</button></td>
         </tr>
       </table>
 
@@ -317,104 +331,140 @@
     </div>
 
     <h2>Core</h2>
-    <table>
-      <tr>
-        <td>Accuracy: </td>
-        <td id="Accuracy_Base"></td>
-        <td>Mod:
-        <td id="Accuracy_Mod"></td>
-      </tr>
-      <tr>
-        <td>Damage: </td>
-        <td id="Damage_Base"></td>
-        <td>Mod:
-        <td id="Damage_Mod"></td>
-      </tr>
-      <tr>
-        <td>Mastery: </td>
-        <td id="Mastery_Base"></td>
-        <td>Mod:
-        <td id="Mastery_Mod"></td>
-      </tr>
-      <tr>
-        <td>Speed: </td>
-        <td id="Speed_Base"></td>
-        <td>Mod:
-        <td id="Speed_Mod"></td>
-      </tr>
-    </table>
+    <div class="flex cards">
+      <table>
+        <tr>
+          <td>Accuracy: </td>
+          <td id="Accuracy_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Accuracy_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage: </td>
+          <td id="Damage_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Damage_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery: </td>
+          <td id="Mastery_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Mastery_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed:</td>
+          <td id="Speed_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Speed_Mod"></td>
+        </tr>
+      </table>
+    </div>
 
     <h2>Archetype: Deadeye</h2>
-    <table>
+    <div class="flex cards">
       
-      <tr>
-        <td>Accuracy: </td>
-        <td class="Accuracy" data-value="4">4</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Accuracy: </td>
+          <td class="Accuracy" data-value="4">4</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Damage: </td>
-        <td class="Damage" data-value="1">1</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Damage: </td>
+          <td class="Damage" data-value="1">1</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Mastery: </td>
-        <td class="Mastery" data-value="2">2</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Speed: </td>
+          <td class="Speed" data-value="0">0</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Speed: </td>
-        <td class="Speed" data-value="0">0</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Mastery: </td>
+          <td class="Mastery" data-value="2">2</td>
+        </tr>
+      </table>
       
-    </table>
+    </div>
 
     <h2>Class: Hunter</h2>
-    <table>
+    <div class="flex cards">
       
-      <tr>
-        <td>Accuracy:</td>
-        <td class="Accuracy" data-value="2">2</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Accuracy:</td>
+          <td class="Accuracy" data-value="2">2</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Damage:</td>
-        <td class="Damage" data-value="1">1</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Damage:</td>
+          <td class="Damage" data-value="1">1</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Mastery:</td>
-        <td class="Mastery" data-value="1">1</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Speed:</td>
+          <td class="Speed" data-value="0">0</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Speed:</td>
-        <td class="Speed" data-value="0">0</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Mastery:</td>
+          <td class="Mastery" data-value="1">1</td>
+        </tr>
+      </table>
       
-    </table>
+    </div>
 
     <h2>Background: Prize Shot</h2>
-    <table>
+    <div class="flex cards">
       
-      <tr>
-        <td>Accuracy: </td>
-        <td class="Accuracy" data-value="1">1</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Accuracy:</td>
+          <td class="Accuracy" data-value="1">1</td>
+        </tr>
+      </table>
       
-      <tr>
-        <td>Insight_Checks: </td>
-        <td class="Insight_Checks" data-value="-2">-2</td>
-      </tr>
+      <table>
+        <tr>
+          <td>Insight_Checks:</td>
+          <td class="Insight_Checks" data-value="-2">-2</td>
+        </tr>
+      </table>
       
-    </table>
+    </div>
 
     <h2>Action Skill</h2>
     <div>Wings Of Blood!</div>
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
     <h2>Favored Gun</h2>
-    <div>Sniper</div>
+    <div>{"type": "Sniper"}</div>
 
     <h2>Skill Tree</h2>
     <div>TODO: Caliber (+1 DMG on favored guns and +1/SL on Search Checks)</div>

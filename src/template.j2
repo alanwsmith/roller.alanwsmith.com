@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
   <title>Rodger Roller</title>
   <style>
@@ -48,7 +49,7 @@
         document.getElementsByClassName(class_name)
       ).map((element) => {
         if (element.checked) {
-          return parseInt(element.dataset.mod, 10)
+          return parseInt(element.dataset.value, 10)
         }
         else {
           return 0
@@ -113,47 +114,60 @@
     <h1>Rodger Roller</h1>
     <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
+    <div class="flex cards">
+
+      <table>
+        <tr>
+          <td>Level:</td>
+          <td>{{level}}</td>
+        </tr>
+        <tr>
+          <td>BA Rank:</td>
+          <td>{{badass_rank}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Health:</td>
+          <td>{{health.current}}/{{health.max}}</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>{{health.regen}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Shields:</td>
+          <td>{{shields.current}}/{{shields.max}}</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>{{shields.regen}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Gold:</td>
+          <td>{{gold}}</td>
+        </tr>
+        <tr>
+          <td>BA Tokens:</td>
+          <td>{{badass_tokens}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+
+
     <table>
-      <tr>
-        <td>Level:</td>
-        <td>{{level}}</td>
-      </tr>
-      <tr>
-        <td>Badass Rank:</td>
-        <td>{{badass_rank}}</td>
-      </tr>
-      <tr>
-        <td>Badass Tokens:</td>
-        <td>{{badass_tokens}}</td>
-      </tr>
-      <tr>
-        <td>Gold:</td>
-        <td>{{gold}}</td>
-      </tr>
-      <tr>
-        <td>Current Health:</td>
-        <td>{{health.current}}</td>
-      </tr>
-      <tr>
-        <td>Max Health:</td>
-        <td>{{health.max}}</td>
-      </tr>
-      <tr>
-        <td>Health Regen:</td>
-        <td>{{health.regen}}</td>
-      </tr>
-      <tr>
-        <td>Current Shields:</td>
-        <td>{{shields.current}}</td>
-      </tr>
-      <tr>
-        <td>Max Shields:</td>
-        <td>{{shields.max}}</td>
-      </tr>
-      <tr>
-        <td>Shield Regen:</td>
-        <td>{{shields.regen}}</td>
-      </tr>
+
+
+
       <tr>
         <td>Shield Type:</td>
         <td>{{shields.type}}</td>
@@ -220,7 +234,7 @@
         {% for toggle in gun.toggles %}
         <tr>
           <td>{{ toggle.name }}</td>
-          <td><input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}" checked>
+          <td><input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-value="{{toggle.mod}}" checked>
           </td>
         </tr>
         {% endfor %}
@@ -246,7 +260,7 @@
         </tr>
         {% endfor %}
         <tr>
-          <td colspan="2"><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></td>
+          <td colspan="2"><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll</button></td>
         </tr>
       </table>
 
@@ -254,62 +268,84 @@
     </div>
 
     <h2>Core</h2>
-    <table>
-      <tr>
-        <td>Accuracy: </td>
-        <td id="Accuracy_Base"></td>
-        <td>Mod:
-        <td id="Accuracy_Mod"></td>
-      </tr>
-      <tr>
-        <td>Damage: </td>
-        <td id="Damage_Base"></td>
-        <td>Mod:
-        <td id="Damage_Mod"></td>
-      </tr>
-      <tr>
-        <td>Mastery: </td>
-        <td id="Mastery_Base"></td>
-        <td>Mod:
-        <td id="Mastery_Mod"></td>
-      </tr>
-      <tr>
-        <td>Speed: </td>
-        <td id="Speed_Base"></td>
-        <td>Mod:
-        <td id="Speed_Mod"></td>
-      </tr>
-    </table>
+    <div class="flex cards">
+      <table>
+        <tr>
+          <td>Accuracy: </td>
+          <td id="Accuracy_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Accuracy_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage: </td>
+          <td id="Damage_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Damage_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery: </td>
+          <td id="Mastery_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Mastery_Mod"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed:</td>
+          <td id="Speed_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Speed_Mod"></td>
+        </tr>
+      </table>
+    </div>
 
     <h2>Archetype: Deadeye</h2>
-    <table>
-      {% for key in archetype_stats %}
-      <tr>
-        <td>{{ key }}: </td>
-        <td class="{{ key }}" data-value="{{ archetype_stats[key] }}">{{ archetype_stats[key] }}</td>
-      </tr>
+    <div class="flex cards">
+      {% for stat in archetype_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}: </td>
+          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+        </tr>
+      </table>
       {% endfor %}
-    </table>
+    </div>
 
     <h2>Class: Hunter</h2>
-    <table>
-      {% for key in class_stats %}
-      <tr>
-        <td>{{ key }}:</td>
-        <td class="{{ key }}" data-value="{{ class_stats[key] }}">{{class_stats[key]}}</td>
-      </tr>
+    <div class="flex cards">
+      {% for stat in class_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+        </tr>
+      </table>
       {% endfor %}
-    </table>
+    </div>
 
     <h2>Background: Prize Shot</h2>
-    <table>
-      {% for key in background_stats %}
-      <tr>
-        <td>{{ key }}: </td>
-        <td class="{{ key }}" data-value="{{ background_stats[key] }}">{{background_stats[key]}}</td>
-      </tr>
+    <div class="flex cards">
+      {% for stat in background_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+        </tr>
+      </table>
       {% endfor %}
-    </table>
+    </div>
 
     <h2>Action Skill</h2>
     <div>{{action_skill.name}}</div>

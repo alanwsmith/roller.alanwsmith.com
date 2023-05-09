@@ -7,7 +7,9 @@
   },
   "badass_rank": 1,
   "badass_tokens": 0,
-  "favored_gun": "Sniper",
+  "favored_gun": {
+    "type":"Sniper"
+  },
   "health": {
     "max": 14,
     "current": 14,
@@ -20,22 +22,30 @@
     "type": "",
     "info": ""
   },
-  "archetype_stats": {
-    "Accuracy": 4,
-    "Damage": 1,
-    "Speed": 0,
-    "Mastery": 2
-  },
-  "class_stats": {
-    "Accuracy": 2,
-    "Damage": 1,
-    "Speed": 0,
-    "Mastery": 1
-  },
-  "background_stats": {
-    "Accuracy": 1,
-    "Insight_Checks": -2
-  },
+  "archetype_stats": [
+        { "stat": "Accuracy", "value": 4 },
+        { "stat": "Damage", "value": 1 },
+        { "stat": "Speed", "value": 0 },
+        { "stat": "Mastery", "value": 2 }
+  ],
+  "class_stats": [
+        { "stat": "Accuracy", "value": 2 },
+        { "stat": "Damage", "value": 1 },
+        { "stat": "Speed", "value": 0 },
+        { "stat": "Mastery", "value": 1 }
+  ],
+  "background_stats": [
+        { "stat": "Accuracy", "value": 1 },
+        { "stat": "Insight_Checks", "value": -2 }
+  ],
+  "skills": [
+    {
+      "name": "Caliber 1", "mods": [
+        { "stat": "Damage_Mod_Favored", "value": 1 },
+        { "stat": "Search_Checks", "value": 1 }
+      ]
+    }
+  ],
   "guns": [
     {
       "guild": "Black Powder",
