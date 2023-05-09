@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="/styles/global.css" />
   <script>
     const s = {
-      base_stats: ["Accuracy", "Damage", "Mastery", "Speed"]
+      base_stats: ["Accuracy", "Damage", "Mastery", "Speed"],
+      Favored_Gun: {{favored_gun}}
     }
 
     const updateState = () => {
@@ -80,9 +81,8 @@
     const roll_accuracy = (event) => {
       s.Gun_Number = parseInt(event.target.dataset.gun, 10)
       s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
-      s.Base_Accuracy = get_stat_total('Accuracy')
       s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
-      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Base_Accuracy + s.Toggled_Accuracy
+      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Accuracy_Mod + s.Toggled_Accuracy
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
       if (s.Roll_Natural == 1) {
@@ -111,8 +111,6 @@
       }
       updateState()
     }
-
-
 
 
     const init = () => {
@@ -247,7 +245,7 @@
         {% endfor %}
         {% for stat in gun.stats %}
         <tr>
-          <td>{{ stat.stat }} Mod:</td>
+          <td>Bonus {{ stat.stat }}:</td>
           <td class="{{ stat.stat }}_gun{{ gunIndex }}" data-value="{{ stat.mod }}">{{ stat.mod }}</td>
         </tr>
         {% endfor %}
