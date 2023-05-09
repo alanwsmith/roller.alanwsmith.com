@@ -8,11 +8,8 @@
       background-color: black;
       color: #aaa;
     }
-
-    .stat_row {
-      display: flex;
-    }
   </style>
+  <link rel="stylesheet" href="/styles/global.css" />
   <script>
     const s = {
       base_stats: ["Accuracy", "Damage", "Mastery", "Speed"]
@@ -74,15 +71,6 @@
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
       updateState()
-
-      /*
-      const roll = roll(20)
-      const roll_total = roll + accuracy_adjustment
-      window['roll_natural'].innerHTML = roll
-      window['roll_modifier'].innerHTML = accuracy_adjustment
-      window['roll_total'].innerHTML = roll_total
-      */
-
     }
 
     const init = () => {
@@ -92,7 +80,7 @@
         element.addEventListener('click', roll_accuracy)
       })
       updateValues()
-      // updateState()
+      updateState()
     }
 
     document.addEventListener("DOMContentLoaded", init);
@@ -104,9 +92,28 @@
   <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
   <h2>Roll</h2>
-  <div>Natural: <strong id="Roll_Natural"></strong></div>
-  <div>Modifier: <strong id="Accuracy_Adjustment"></strong></div>
-  <div>Total: <strong id="Roll_Total"></strong></div>
+  <table>
+    <tr>
+      <td>Natural:</td>
+      <td id="Roll_Natural">-</td>
+    </tr>
+    <tr>
+      <td>Modifier:</td>
+      <td id="Accuracy_Adjustment">-</td>
+    </tr>
+    <tr>
+      <td>Total: </td>
+      <td id="Roll_Total">-</td>
+    </tr>
+    <tr>
+      <td>Hits: </td>
+      <td id="Hits">-</td>
+    </tr>
+    <tr>
+      <td>Crits: </td>
+      <td id="Crits">-</td>
+    </tr>
+  </table>
 
   <hr />
 
