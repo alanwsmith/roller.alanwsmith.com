@@ -28,6 +28,18 @@
     }
 
 
+    const get_toggle_total = (class_name) => {
+      return Array.from(
+        document.getElementsByClassName(class_name)
+      ).map((element) => {
+        if (element.checked) {
+          return parseInt(element.dataset.mod, 10)
+        }
+        else {
+          return 0
+        }
+      }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    }
 
     const base_stats = ["Accuracy", "Damage", "Mastery", "Speed"]
 
@@ -41,7 +53,8 @@
     const roll_accuracy = (event) => {
       const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
       const base_accuracy = get_stat_total('Accuracy')
-
+      const toggled_accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
+      console.log(toggled_accuracy)
     }
 
     const init = () => {
@@ -85,8 +98,7 @@
 
   <div>Toggles</div>
   {% for toggle in gun.toggles %}
-  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}"
-    checked>
+  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}">
   {% endfor %}
   <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
   {% endfor %}
