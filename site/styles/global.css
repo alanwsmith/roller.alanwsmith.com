@@ -28,3 +28,23 @@ button {
   cursor: pointer;
 }
 
+.gun_wrapper {
+  display: flex;
+}
+
+.flex {
+  display: flex;
+}
+
+td {
+  vertical-align: top;
+}
+
+main {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+table {
+  margin-right: 2rem;
+}

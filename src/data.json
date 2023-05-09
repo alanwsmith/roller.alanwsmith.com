@@ -17,6 +17,7 @@
   },
   "guns": [
     {
+      "guild": "Black Powder",
       "name": "Crappy Sniper",
       "damage": [10],
       "range": 8,
@@ -32,12 +33,29 @@
       ],
       "toggles": [
         {
-          "name": "Accuracy +3 if Range 3+",
+          "name": "ACC +3 at Range 3+",
           "stat": "Accuracy",
           "mod": 3
         }
+      ]
+    }, 
+    {
+      "guild": "Alas!",
+      "name": "Synergy", 
+      "damage": [4, 4], 
+      "range": 5,
+      "hits": [
+        { "min_roll": 2, "add": 1 },
+        { "min_roll": 8, "add": 1 },
+        { "min_roll": 16, "add": 1 }
       ],
-      "guild": "Black Powder"
+      "crits": [],
+      "stats": [
+        { "name": "Guild", "stat": "Damage", "mod": 1 }
+      ],
+      "toggles": []
     }
+
   ]
+
 }

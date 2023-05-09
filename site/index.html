@@ -56,6 +56,20 @@
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
+    const get_min_total = (class_name, compare_value) => {
+      return Array.from(
+        document.getElementsByClassName(class_name)
+      ).map((element) => {
+        console.log(parseInt(element.dataset.min, 10))
+        if (compare_value >= parseInt(element.dataset.min, 10)) {
+          return parseInt(element.dataset.value, 10)
+        }
+        else {
+          return 0
+        }
+      }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    }
+
     const updateValues = () => {
       s.base_stats.forEach((stat) => {
         s[`${stat}_Base`] = get_stat_total(stat)
@@ -71,7 +85,13 @@
       s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Base_Accuracy + s.Toggled_Accuracy
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
-
+      if (s.Roll_Natural == 1) {
+        s.Hits = 0
+        s.Crits = 0
+      } else {
+        s.Hits = get_min_total(`hits_count_gun${s.Gun_Number}`, s.Roll_Total)
+        s.Crits = get_min_total(`crits_count_gun${s.Gun_Number}`, s.Roll_Total)
+      }
       updateState()
     }
 
@@ -90,127 +110,222 @@
 </head>
 
 <body>
-  <h1>Rodger Roller</h1>
-  <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
+  <main>
+    <h1>Rodger Roller</h1>
+    <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
-  <h2>Roll</h2>
-  <table>
-    <tr>
-      <td>Natural:</td>
-      <td id="Roll_Natural">-</td>
-    </tr>
-    <tr>
-      <td>Modifier:</td>
-      <td id="Accuracy_Adjustment">-</td>
-    </tr>
-    <tr>
-      <td>Total: </td>
-      <td id="Roll_Total">-</td>
-    </tr>
-    <tr>
-      <td>Hits: </td>
-      <td id="Hits">-</td>
-    </tr>
-    <tr>
-      <td>Crits: </td>
-      <td id="Crits">-</td>
-    </tr>
-  </table>
-
-  <hr />
-
-  <h2>Guns!</h2>
-  
-  
-  <div>Name: Crappy Sniper</div>
-  <div>Range: 8</div>
-  
-  <div>Accuracy <input type="text" class="Accuracy_gun0" value="2" size="2"
-      disabled /></div>
-  
-  <div>Crit_Damage <input type="text" class="Crit_Damage_gun0" value="2" size="2"
-      disabled /></div>
-  
-
-  
-  Accuracy +3 if Range 3+ <input type="checkbox" class="Accuracy_gun0_toggle" data-mod="3"
-    checked>
-  
-
-  <div>Hits</div>
-  
-  <div>At 8 add 1</div>
-  
-
-  <div>Crits</div>
-  
-  <div>At 16 add 1</div>
-  
-
-
-  <div><button class="accuracy_roller" data-gun="0">Roll Accuracy</button></div>
-  
-
-  <h2>Core</h2>
-  <div>
-    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
-    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
-    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
-    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
-  </div>
-
-  <h2>Archetype: Deadeye</h2>
-  <div class="stat_row">
-    
-    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="4" disabled /></div>
-    
-    <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
-    
-    <div>Mastery: <input class="Mastery" type="text" size="2" value="2" disabled /></div>
-    
-    <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
-    
-  </div>
-
-  <h2>Class: Hunter</h2>
-  <div class="stat_row">
-    
-    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="2" disabled /></div>
-    
-    <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
-    
-    <div>Mastery: <input class="Mastery" type="text" size="2" value="1" disabled /></div>
-    
-    <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
-    
-  </div>
-
-  <h2>Background: Prize Shot</h2>
-  <div class="stat_row">
-    
-    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="1" disabled />
+    <h2>Accuracy Roll</h2>
+    <div class="flex">
+      <table>
+        <tr>
+          <td>Natural:</td>
+          <td id="Roll_Natural">-</td>
+        </tr>
+        <tr>
+          <td>Modifier:</td>
+          <td id="Accuracy_Adjustment">-</td>
+        </tr>
+        <tr>
+          <td>Total: </td>
+          <td id="Roll_Total">-</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Hits: </td>
+          <td id="Hits">-</td>
+        </tr>
+        <tr>
+          <td>Crits: </td>
+          <td id="Crits">-</td>
+        </tr>
+      </table>
     </div>
-    
-    <div>Insight_Checks: <input class="Insight_Checks" type="text" size="2" value="-2" disabled />
+
+    <hr />
+
+    <h2>Guns!</h2>
+    <div class="gun_wrapper">
+      
+      <table class="gun_details">
+        
+        <tr>
+          <td colspan="2">Crappy Sniper</td>
+        </tr>
+        <tr>
+          <td>Range: </td>
+          <td>8</td>
+        </tr>
+        
+        <tr>
+          <td>Accuracy:</td>
+          <td><input type="text" class="Accuracy_gun0" value="2" size="2" disabled />
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Crit_Damage:</td>
+          <td><input type="text" class="Crit_Damage_gun0" value="2" size="2" disabled />
+          </td>
+        </tr>
+        
+
+        
+        <tr>
+          <td>ACC +3 at Range 3+</td>
+          <td><input type="checkbox" class="Accuracy_gun0_toggle" data-mod="3" checked>
+          </td>
+        </tr>
+        
+
+        
+        <tr>
+          <td class="hits_count_gun0" data-min="8" data-value="1">Add
+            1 hit at
+          </td>
+          <td>
+            8
+          </td>
+        </tr>
+        
+
+        
+        <tr>
+          <td class="crits_count_gun0" data-min="16" data-value="1">
+            Add 1 crit at </td>
+          <td>
+            16
+          </td>
+        </tr>
+        
+        <tr>
+          <td colspan="2"><button class="accuracy_roller" data-gun="0">Roll Accuracy</button></td>
+        </tr>
+      </table>
+
+      
+      <table class="gun_details">
+        
+        <tr>
+          <td colspan="2">Synergy</td>
+        </tr>
+        <tr>
+          <td>Range: </td>
+          <td>5</td>
+        </tr>
+        
+        <tr>
+          <td>Damage:</td>
+          <td><input type="text" class="Damage_gun1" value="1" size="2" disabled />
+          </td>
+        </tr>
+        
+
+        
+
+        
+        <tr>
+          <td class="hits_count_gun1" data-min="2" data-value="1">Add
+            1 hit at
+          </td>
+          <td>
+            2
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="hits_count_gun1" data-min="8" data-value="1">Add
+            1 hit at
+          </td>
+          <td>
+            8
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="hits_count_gun1" data-min="16" data-value="1">Add
+            1 hit at
+          </td>
+          <td>
+            16
+          </td>
+        </tr>
+        
+
+        
+        <tr>
+          <td colspan="2"><button class="accuracy_roller" data-gun="1">Roll Accuracy</button></td>
+        </tr>
+      </table>
+
+      
     </div>
-    
-  </div>
 
-  <h2>Action Skill</h2>
-  <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+    <h2>Core</h2>
+    <div>
+      <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
+      <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
+      <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
+      <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
+    </div>
 
-  <h2>Favored Gun</h2>
-  <div>Sniper Rifle</div>
+    <h2>Archetype: Deadeye</h2>
+    <div class="stat_row">
+      
+      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="4" disabled />
+      </div>
+      
+      <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled />
+      </div>
+      
+      <div>Mastery: <input class="Mastery" type="text" size="2" value="2" disabled />
+      </div>
+      
+      <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled />
+      </div>
+      
+    </div>
 
-  <h2>Skill Tree</h2>
-  <div>TODO</div>
+    <h2>Class: Hunter</h2>
+    <div class="stat_row">
+      
+      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="2" disabled /></div>
+      
+      <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
+      
+      <div>Mastery: <input class="Mastery" type="text" size="2" value="1" disabled /></div>
+      
+      <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
+      
+    </div>
 
-  <h2>Melee Die</h2>
-  <div>1D4</div>
+    <h2>Background: Prize Shot</h2>
+    <div class="stat_row">
+      
+      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="1" disabled />
+      </div>
+      
+      <div>Insight_Checks: <input class="Insight_Checks" type="text" size="2" value="-2" disabled />
+      </div>
+      
+    </div>
 
-  <h2>Traits</h2>
-  <div>Insider: +5 Guild Sneak Checks</div>
-  <div>Looter: +5 Loot Search Checks</div>
+    <h2>Action Skill</h2>
+    <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+
+    <h2>Favored Gun</h2>
+    <div>Sniper Rifle</div>
+
+    <h2>Skill Tree</h2>
+    <div>TODO</div>
+
+    <h2>Melee Die</h2>
+    <div>1D4</div>
+
+    <h2>Traits</h2>
+    <div>Insider: +5 Guild Sneak Checks</div>
+    <div>Looter: +5 Loot Search Checks</div>
+  </main>
 
 </body>
 

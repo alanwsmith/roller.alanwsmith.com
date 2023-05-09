@@ -56,6 +56,20 @@
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
+    const get_min_total = (class_name, compare_value) => {
+      return Array.from(
+        document.getElementsByClassName(class_name)
+      ).map((element) => {
+        console.log(parseInt(element.dataset.min, 10))
+        if (compare_value >= parseInt(element.dataset.min, 10)) {
+          return parseInt(element.dataset.value, 10)
+        }
+        else {
+          return 0
+        }
+      }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    }
+
     const updateValues = () => {
       s.base_stats.forEach((stat) => {
         s[`${stat}_Base`] = get_stat_total(stat)
@@ -71,7 +85,13 @@
       s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Base_Accuracy + s.Toggled_Accuracy
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
-
+      if (s.Roll_Natural == 1) {
+        s.Hits = 0
+        s.Crits = 0
+      } else {
+        s.Hits = get_min_total(`hits_count_gun${s.Gun_Number}`, s.Roll_Total)
+        s.Crits = get_min_total(`crits_count_gun${s.Gun_Number}`, s.Roll_Total)
+      }
       updateState()
     }
 
@@ -90,109 +110,143 @@
 </head>
 
 <body>
-  <h1>Rodger Roller</h1>
-  <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
+  <main>
+    <h1>Rodger Roller</h1>
+    <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
-  <h2>Roll</h2>
-  <table>
-    <tr>
-      <td>Natural:</td>
-      <td id="Roll_Natural">-</td>
-    </tr>
-    <tr>
-      <td>Modifier:</td>
-      <td id="Accuracy_Adjustment">-</td>
-    </tr>
-    <tr>
-      <td>Total: </td>
-      <td id="Roll_Total">-</td>
-    </tr>
-    <tr>
-      <td>Hits: </td>
-      <td id="Hits">-</td>
-    </tr>
-    <tr>
-      <td>Crits: </td>
-      <td id="Crits">-</td>
-    </tr>
-  </table>
-
-  <hr />
-
-  <h2>Guns!</h2>
-  {% for gun in guns %}
-  {% set gunIndex = loop.index0 %}
-  <div>Name: {{ gun.name }}</div>
-  <div>Range: {{ gun.range }}</div>
-  {% for stat in gun.stats %}
-  <div>{{ stat.stat }} <input type="text" class="{{ stat.stat }}_gun{{ gunIndex }}" value="{{ stat.mod }}" size="2"
-      disabled /></div>
-  {% endfor %}
-
-  {% for toggle in gun.toggles %}
-  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}"
-    checked>
-  {% endfor %}
-
-  <div>Hits</div>
-  {% for hit in gun.hits %}
-  <div>At {{hit.min_roll}} add {{ hit.add }}</div>
-  {% endfor %}
-
-  <div>Crits</div>
-  {% for crit in gun.crits %}
-  <div>At {{crit.min_roll}} add {{ crit.add }}</div>
-  {% endfor %}
-
-
-  <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
-  {% endfor %}
-
-  <h2>Core</h2>
-  <div>
-    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
-    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
-    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
-    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
-  </div>
-
-  <h2>Archetype: Deadeye</h2>
-  <div class="stat_row">
-    {% for key in archetype_stats %}
-    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ archetype_stats[key] }}" disabled /></div>
-    {% endfor %}
-  </div>
-
-  <h2>Class: Hunter</h2>
-  <div class="stat_row">
-    {% for key in class_stats %}
-    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ class_stats[key] }}" disabled /></div>
-    {% endfor %}
-  </div>
-
-  <h2>Background: Prize Shot</h2>
-  <div class="stat_row">
-    {% for key in background_stats %}
-    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ background_stats[key] }}" disabled />
+    <h2>Accuracy Roll</h2>
+    <div class="flex">
+      <table>
+        <tr>
+          <td>Natural:</td>
+          <td id="Roll_Natural">-</td>
+        </tr>
+        <tr>
+          <td>Modifier:</td>
+          <td id="Accuracy_Adjustment">-</td>
+        </tr>
+        <tr>
+          <td>Total: </td>
+          <td id="Roll_Total">-</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Hits: </td>
+          <td id="Hits">-</td>
+        </tr>
+        <tr>
+          <td>Crits: </td>
+          <td id="Crits">-</td>
+        </tr>
+      </table>
     </div>
-    {% endfor %}
-  </div>
 
-  <h2>Action Skill</h2>
-  <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+    <hr />
 
-  <h2>Favored Gun</h2>
-  <div>Sniper Rifle</div>
+    <h2>Guns!</h2>
+    <div class="gun_wrapper">
+      {% for gun in guns %}
+      <table class="gun_details">
+        {% set gunIndex = loop.index0 %}
+        <tr>
+          <td colspan="2">{{ gun.name }}</td>
+        </tr>
+        <tr>
+          <td>Range: </td>
+          <td>{{ gun.range }}</td>
+        </tr>
+        {% for stat in gun.stats %}
+        <tr>
+          <td>{{ stat.stat }}:</td>
+          <td><input type="text" class="{{ stat.stat }}_gun{{ gunIndex }}" value="{{ stat.mod }}" size="2" disabled />
+          </td>
+        </tr>
+        {% endfor %}
 
-  <h2>Skill Tree</h2>
-  <div>TODO</div>
+        {% for toggle in gun.toggles %}
+        <tr>
+          <td>{{ toggle.name }}</td>
+          <td><input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}" checked>
+          </td>
+        </tr>
+        {% endfor %}
 
-  <h2>Melee Die</h2>
-  <div>1D4</div>
+        {% for hit in gun.hits %}
+        <tr>
+          <td class="hits_count_gun{{gunIndex}}" data-min="{{hit.min_roll}}" data-value="{{hit.add}}">Add
+            {{ hit.add }} hit at
+          </td>
+          <td>
+            {{hit.min_roll}}
+          </td>
+        </tr>
+        {% endfor %}
 
-  <h2>Traits</h2>
-  <div>Insider: +5 Guild Sneak Checks</div>
-  <div>Looter: +5 Loot Search Checks</div>
+        {% for crit in gun.crits %}
+        <tr>
+          <td class="crits_count_gun{{gunIndex}}" data-min="{{crit.min_roll}}" data-value="{{crit.add}}">
+            Add {{ crit.add }} crit at </td>
+          <td>
+            {{crit.min_roll}}
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="2"><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></td>
+        </tr>
+      </table>
+
+      {% endfor %}
+    </div>
+
+    <h2>Core</h2>
+    <div>
+      <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
+      <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
+      <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
+      <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
+    </div>
+
+    <h2>Archetype: Deadeye</h2>
+    <div class="stat_row">
+      {% for key in archetype_stats %}
+      <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ archetype_stats[key] }}" disabled />
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Class: Hunter</h2>
+    <div class="stat_row">
+      {% for key in class_stats %}
+      <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ class_stats[key] }}" disabled /></div>
+      {% endfor %}
+    </div>
+
+    <h2>Background: Prize Shot</h2>
+    <div class="stat_row">
+      {% for key in background_stats %}
+      <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ background_stats[key] }}" disabled />
+      </div>
+      {% endfor %}
+    </div>
+
+    <h2>Action Skill</h2>
+    <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+
+    <h2>Favored Gun</h2>
+    <div>Sniper Rifle</div>
+
+    <h2>Skill Tree</h2>
+    <div>TODO</div>
+
+    <h2>Melee Die</h2>
+    <div>1D4</div>
+
+    <h2>Traits</h2>
+    <div>Insider: +5 Guild Sneak Checks</div>
+    <div>Looter: +5 Loot Search Checks</div>
+  </main>
 
 </body>
 
