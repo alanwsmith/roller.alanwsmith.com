@@ -78,10 +78,10 @@
 
     const roll_accuracy = (event) => {
       s.Gun_Number = parseInt(event.target.dataset.gun, 10)
-      s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
-      s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
+      s.Gun_Accuracy_Mod = get_stat_total(`Gun_Accuracy_Mod__gun${s.Gun_Number}`)
+      s.Toggled_Accuracy = get_toggle_total(`Gun_Accuracy_Mod__gun${s.Gun_Number}_toggle`)
       s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Toggled_Accuracy
-      s.Is_Favored_Gun_Type = document.getElementById(`Is_Favored_Gun_Type_gun${s.Gun_Number}`).innerHTML
+      s.Is_Favored_Gun_Type = document.getElementById(`Is_Favored_Gun_Type__gun${s.Gun_Number}`).innerHTML
       if (s.Is_Favored_Gun_Type === "yes") {
         s.Accuracy_Adjustment += s.Accuracy_Mod
       }
@@ -134,7 +134,6 @@
     <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
     <div class="flex cards">
-
       <table>
         <tr>
           <td>Level:</td>
@@ -228,10 +227,10 @@
       <table class="gun_details">
         
         <tr>
-          <td colspan="2">Crappy Sniper</td>
+          <td colspan="2">Black Powder Guild</td>
         </tr>
         <tr>
-          <td colspan="2">Black Powder Guild</td>
+          <td colspan="2">Crappy Sniper</td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -239,7 +238,7 @@
         </tr>
         <tr>
           <td>Favored:</td>
-          <td id="Is_Favored_Gun_Type_gun0">yes</td>
+          <td id="Is_Favored_Gun_Type__gun0">yes</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -253,20 +252,21 @@
         
         
         <tr>
-          <td>Bonus Accuracy:</td>
-          <td class="Accuracy_gun0" data-value="2">2</td>
+          <td>Gun_Accuracy_Mod:</td>
+          <td class="Gun_Accuracy_Mod__gun0" data-value="2">2</td>
         </tr>
         
         <tr>
-          <td>Bonus Crit_Damage:</td>
-          <td class="Crit_Damage_gun0" data-value="2">2</td>
+          <td>Gun_Crit_Damage_Mod:</td>
+          <td class="Gun_Crit_Damage_Mod__gun0" data-value="2">2</td>
         </tr>
         
 
         
         <tr>
           <td>Range 3 = ACC +3</td>
-          <td><input type="checkbox" class="Accuracy_gun0_toggle" data-value="3" checked>
+          <td><input type="checkbox" class="Gun_Accuracy_Mod__gun0_toggle" data-value="3"
+              checked>
           </td>
         </tr>
         
@@ -301,10 +301,10 @@
       <table class="gun_details">
         
         <tr>
-          <td colspan="2">Synergy</td>
+          <td colspan="2">Alas! Guild</td>
         </tr>
         <tr>
-          <td colspan="2">Alas! Guild</td>
+          <td colspan="2">Synergy</td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -312,7 +312,7 @@
         </tr>
         <tr>
           <td>Favored:</td>
-          <td id="Is_Favored_Gun_Type_gun1">no</td>
+          <td id="Is_Favored_Gun_Type__gun1">no</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -331,8 +331,8 @@
         
         
         <tr>
-          <td>Bonus Damage:</td>
-          <td class="Damage_gun1" data-value="1">1</td>
+          <td>Gun_Damage_Mod:</td>
+          <td class="Gun_Damage_Mod__gun1" data-value="1">1</td>
         </tr>
         
 

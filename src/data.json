@@ -60,14 +60,14 @@
         { "min_roll": 16, "add": 1 }
       ],
       "stats": [
-        { "name": "Guild", "stat": "Accuracy", "mod": 2 },
-        { "name": "Guild", "stat": "Crit_Damage", "mod": 2 }
+        { "stat": "Gun_Accuracy_Mod", "value": 2 },
+        { "stat": "Gun_Crit_Damage_Mod", "value": 2 }
       ],
       "toggles": [
         {
           "name": "Range 3 = ACC +3",
-          "stat": "Accuracy",
-          "mod": 3
+          "stat": "Gun_Accuracy_Mod",
+          "value": 3
         }
       ]
     }, 
@@ -84,7 +84,7 @@
       ],
       "crits": [],
       "stats": [
-        { "name": "Guild", "stat": "Damage", "mod": 1 }
+        { "stat": "Gun_Damage_Mod", "value": 1 }
       ],
       "toggles": []
     }
