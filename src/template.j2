@@ -178,7 +178,7 @@
       </tr>
     </table>
 
-    <h2>Accuracy Roll</h2>
+    <h2>Range Attack</h2>
     <div class="flex">
       <table>
         <tr>
@@ -223,6 +223,10 @@
         <tr>
           <td>Range: </td>
           <td>{{ gun.range }}</td>
+        </tr>
+        <tr>
+          <td>Damage Dice:</td>
+          <td>{% for die in gun.damage %}{{die}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
         </tr>
         {% for stat in gun.stats %}
         <tr>

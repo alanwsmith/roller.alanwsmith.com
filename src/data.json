@@ -65,7 +65,7 @@
       ],
       "toggles": [
         {
-          "name": "ACC +3 at Range 3+",
+          "name": "Range 3 = ACC +3",
           "stat": "Accuracy",
           "mod": 3
         }
