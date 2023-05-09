@@ -14,12 +14,23 @@
     }
   </style>
   <script>
-    const roll_dice = (sides) => {
+    const s = {
+      base_stats: ["Accuracy", "Damage", "Mastery", "Speed"]
+    }
+
+    const updateState = () => {
+      for (k in s) {
+        if (window[k] !== undefined) {
+          window[k].innerHTML = s[k]
+        }
+      }
+    }
+
+    const roll = (sides) => {
       const roll_holder = new Uint32Array(1)
       crypto.getRandomValues(roll_holder)
       const raw_roll = roll_holder[0] / (0xffffffff + 1)
-      const roll = Math.floor(raw_roll * sides) + 1
-      return roll
+      return Math.floor(raw_roll * sides) + 1
     }
 
     const get_stat_total = (class_name) => {
@@ -35,7 +46,6 @@
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
-
     const get_toggle_total = (class_name) => {
       return Array.from(
         document.getElementsByClassName(class_name)
@@ -49,24 +59,30 @@
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
-    const base_stats = ["Accuracy", "Damage", "Mastery", "Speed"]
-
     const updateValues = () => {
-      base_stats.forEach((stat) => {
-        window[`${stat}_Base`].innerHTML = get_stat_total(stat)
-        window[`${stat}_Mod`].innerHTML = Math.floor(get_stat_total(stat) / 2)
+      s.base_stats.forEach((stat) => {
+        s[`${stat}_Base`] = get_stat_total(stat)
+        s[`${stat}_Mod`] = Math.floor(get_stat_total(stat) / 2)
       })
     }
 
     const roll_accuracy = (event) => {
-      const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
-      const base_accuracy = get_stat_total('Accuracy')
-      const toggled_accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
-      const accuracy_adjustment = gun_accuracy_mod + base_accuracy + toggled_accuracy
-      const roll = roll_dice(20)
+      s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
+      s.Base_Accuracy = get_stat_total('Accuracy')
+      s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
+      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Base_Accuracy + s.Toggled_Accuracy
+      s.Roll_Natural = roll(20)
+      s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
+      updateState()
+
+      /*
+      const roll = roll(20)
+      const roll_total = roll + accuracy_adjustment
       window['roll_natural'].innerHTML = roll
       window['roll_modifier'].innerHTML = accuracy_adjustment
-      window['roll_total'].innerHTML = roll + accuracy_adjustment
+      window['roll_total'].innerHTML = roll_total
+      */
+
     }
 
     const init = () => {
@@ -76,6 +92,7 @@
         element.addEventListener('click', roll_accuracy)
       })
       updateValues()
+      // updateState()
     }
 
     document.addEventListener("DOMContentLoaded", init);
@@ -87,9 +104,9 @@
   <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
   <h2>Roll</h2>
-  <div>Natural: <strong id="roll_natural"></strong></div>
-  <div>Modifier: <strong id="roll_modifier"></strong></div>
-  <div>Total: <strong id="roll_total"></strong></div>
+  <div>Natural: <strong id="Roll_Natural"></strong></div>
+  <div>Modifier: <strong id="Accuracy_Adjustment"></strong></div>
+  <div>Total: <strong id="Roll_Total"></strong></div>
 
   <hr />
 
@@ -98,15 +115,14 @@
   {% set gunIndex = loop.index %}
   <div>Name: {{ gun.name }}</div>
   <div>Range: {{ gun.range }}</div>
-  <div>Stats</div>
   {% for stat in gun.stats %}
   <div>{{ stat.stat }} <input type="text" class="{{ stat.stat }}_gun{{ gunIndex }}" value="{{ stat.mod }}" size="2"
       disabled /></div>
   {% endfor %}
 
-  <div>Toggles</div>
   {% for toggle in gun.toggles %}
-  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}">
+  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}"
+    checked>
   {% endfor %}
   <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
   {% endfor %}

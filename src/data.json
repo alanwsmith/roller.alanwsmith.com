@@ -31,7 +31,7 @@
       ],
       "toggles": [
         {
-          "name": "Range >3 = Accuracy +3",
+          "name": "Accuracy +3 if Range 3+",
           "stat": "Accuracy",
           "mod": 3
         }
