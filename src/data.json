@@ -4,5 +4,39 @@
     "Damage": 1,
     "Speed": 0,
     "Mastery": 2
-  }
+  },
+  "class_stats": {
+    "Accuracy": 2,
+    "Damage": 1,
+    "Speed": 0,
+    "Mastery": 1
+  },
+  "background_stats": {
+    "Accuracy": 1,
+    "Insight_Checks": -2
+  },
+  "guns": [
+    {
+      "name": "Crappy Sniper",
+      "damage": [10],
+      "range": 8,
+      "hits_by_accuracy": [
+        { "low": 2, "high": 7, "hits": 0, "crits": 0 },
+        { "low": 8, "high": 15, "hits": 1, "crits": 0 },
+        { "low": 16, "high": 9000, "hits": 1, "crits": 1 }
+      ],
+      "stats": [
+        { "name": "Guild", "stat": "Accuracy", "mod": 2 },
+        { "name": "Guild", "stat": "Crit_Damage", "mod": 2 }
+      ],
+      "toggles": [
+        {
+          "name": "Range +3",
+          "stat": "Accuracy",
+          "mod": 3
+        }
+      ],
+      "guild": "Black Powder"
+    }
+  ]
 }

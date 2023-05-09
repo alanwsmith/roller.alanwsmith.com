@@ -2,13 +2,60 @@
 <html>
 
 <head>
-  <title>Roller</title>
+  <title>Rodger Roller</title>
   <style>
     body {
       background-color: black;
       color: #aaa;
     }
+
+    .stat_row {
+      display: flex;
+    }
   </style>
+  <script>
+    const get_stat_total = (class_name) => {
+      return Array.from(
+        document.getElementsByClassName(class_name)
+      ).map((element) => {
+        if (element.value) {
+          return parseInt(element.value, 10)
+        }
+        else {
+          return 0
+        }
+      }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    }
+
+
+
+    const base_stats = ["Accuracy", "Damage", "Mastery", "Speed"]
+
+    const updateValues = () => {
+      base_stats.forEach((stat) => {
+        window[`${stat}_Base`].innerHTML = get_stat_total(stat)
+        window[`${stat}_Mod`].innerHTML = Math.floor(get_stat_total(stat) / 2)
+      })
+    }
+
+    const roll_accuracy = (event) => {
+      const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
+      const base_accuracy = get_stat_total('Accuracy')
+
+    }
+
+    const init = () => {
+      console.log("init")
+      Array.from(
+        document.getElementsByClassName('accuracy_roller')
+      ).forEach((element) => {
+        element.addEventListener('click', roll_accuracy)
+      })
+      updateValues()
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
 </head>
 
 <body>
@@ -17,21 +64,71 @@
 
   <h2>Core</h2>
   <div>
-    <div>Accurracy: <span>x</span> mod: <span></span></div>
-    <div>Damage: <span>x</span> mod: <span></span></div>
-    <div>Speed: <span>x</span> mod: <span></span></div>
-    <div>Mastery: <span>x</span> mod: <span></span></div>
+    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
+    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
+    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
+    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
   </div>
 
   <hr />
 
-  <h2>Archetype: Deadeye</h2>
+  <h2>Guns!</h2>
+  {% for gun in guns %}
+  {% set gunIndex = loop.index %}
+  <div>Name: {{ gun.name }}</div>
+  <div>Range: {{ gun.range }}</div>
+  <div>Stats</div>
+  {% for stat in gun.stats %}
+  <div>{{ stat.stat }} <input type="text" class="{{ stat.stat }}_gun{{ gunIndex }}" value="{{ stat.mod }}" size="2"
+      disabled /></div>
+  {% endfor %}
 
-  <div>
+  <div>Toggles</div>
+  {% for toggle in gun.toggles %}
+  {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}"
+    checked>
+  {% endfor %}
+  <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
+  {% endfor %}
+
+  <h2>Archetype: Deadeye</h2>
+  <div class="stat_row">
     {% for key in archetype_stats %}
-    <div>{{ key }}: {{ archetype_stats[key] }}</div>
+    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ archetype_stats[key] }}" disabled /></div>
     {% endfor %}
   </div>
+
+  <h2>Class: Hunter</h2>
+  <div class="stat_row">
+    {% for key in class_stats %}
+    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ class_stats[key] }}" disabled /></div>
+    {% endfor %}
+  </div>
+
+  <h2>Background: Prize Shot</h2>
+  <div class="stat_row">
+    {% for key in background_stats %}
+    <div>{{ key }}: <input class="{{ key }}" type="text" size="2" value="{{ background_stats[key] }}" disabled />
+    </div>
+    {% endfor %}
+  </div>
+
+  <h2>Action Skill</h2>
+  <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+
+  <h2>Favored Gun</h2>
+  <div>Sniper Rifle</div>
+
+  <h2>Skill Tree</h2>
+  <div>TODO</div>
+
+  <h2>Melee Die</h2>
+  <div>1D4</div>
+
+  <h2>Traits</h2>
+  <div>Insider: +5 Guild Sneak Checks</div>
+  <div>Looter: +5 Loot Search Checks</div>
+
 
 </body>
 

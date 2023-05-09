@@ -2,13 +2,60 @@
 <html>
 
 <head>
-  <title>Roller</title>
+  <title>Rodger Roller</title>
   <style>
     body {
       background-color: black;
       color: #aaa;
     }
+
+    .stat_row {
+      display: flex;
+    }
   </style>
+  <script>
+    const get_stat_total = (class_name) => {
+      return Array.from(
+        document.getElementsByClassName(class_name)
+      ).map((element) => {
+        if (element.value) {
+          return parseInt(element.value, 10)
+        }
+        else {
+          return 0
+        }
+      }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    }
+
+
+
+    const base_stats = ["Accuracy", "Damage", "Mastery", "Speed"]
+
+    const updateValues = () => {
+      base_stats.forEach((stat) => {
+        window[`${stat}_Base`].innerHTML = get_stat_total(stat)
+        window[`${stat}_Mod`].innerHTML = Math.floor(get_stat_total(stat) / 2)
+      })
+    }
+
+    const roll_accuracy = (event) => {
+      const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
+      const base_accuracy = get_stat_total('Accuracy')
+
+    }
+
+    const init = () => {
+      console.log("init")
+      Array.from(
+        document.getElementsByClassName('accuracy_roller')
+      ).forEach((element) => {
+        element.addEventListener('click', roll_accuracy)
+      })
+      updateValues()
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
 </head>
 
 <body>
@@ -17,27 +64,89 @@
 
   <h2>Core</h2>
   <div>
-    <div>Accurracy: <span>x</span> mod: <span></span></div>
-    <div>Damage: <span>x</span> mod: <span></span></div>
-    <div>Speed: <span>x</span> mod: <span></span></div>
-    <div>Mastery: <span>x</span> mod: <span></span></div>
+    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
+    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
+    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
+    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
   </div>
 
   <hr />
 
-  <h2>Archetype: Deadeye</h2>
+  <h2>Guns!</h2>
+  
+  
+  <div>Name: Crappy Sniper</div>
+  <div>Range: 8</div>
+  <div>Stats</div>
+  
+  <div>Accuracy <input type="text" class="Accuracy_gun1" value="2" size="2"
+      disabled /></div>
+  
+  <div>Crit_Damage <input type="text" class="Crit_Damage_gun1" value="2" size="2"
+      disabled /></div>
+  
 
-  <div>
+  <div>Toggles</div>
+  
+  Range +3 <input type="checkbox" class="Accuracy_gun1_toggle" data-mod="3"
+    checked>
+  
+  <div><button class="accuracy_roller" data-gun="1">Roll Accuracy</button></div>
+  
+
+  <h2>Archetype: Deadeye</h2>
+  <div class="stat_row">
     
-    <div>Accuracy: 4</div>
+    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="4" disabled /></div>
     
-    <div>Damage: 1</div>
+    <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
     
-    <div>Mastery: 2</div>
+    <div>Mastery: <input class="Mastery" type="text" size="2" value="2" disabled /></div>
     
-    <div>Speed: 0</div>
+    <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
     
   </div>
+
+  <h2>Class: Hunter</h2>
+  <div class="stat_row">
+    
+    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="2" disabled /></div>
+    
+    <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
+    
+    <div>Mastery: <input class="Mastery" type="text" size="2" value="1" disabled /></div>
+    
+    <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
+    
+  </div>
+
+  <h2>Background: Prize Shot</h2>
+  <div class="stat_row">
+    
+    <div>Accuracy: <input class="Accuracy" type="text" size="2" value="1" disabled />
+    </div>
+    
+    <div>Insight_Checks: <input class="Insight_Checks" type="text" size="2" value="-2" disabled />
+    </div>
+    
+  </div>
+
+  <h2>Action Skill</h2>
+  <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+
+  <h2>Favored Gun</h2>
+  <div>Sniper Rifle</div>
+
+  <h2>Skill Tree</h2>
+  <div>TODO</div>
+
+  <h2>Melee Die</h2>
+  <div>1D4</div>
+
+  <h2>Traits</h2>
+  <div>Insider: +5 Guild Sneak Checks</div>
+  <div>Looter: +5 Loot Search Checks</div>
+
 
 </body>
 
