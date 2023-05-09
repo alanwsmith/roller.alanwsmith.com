@@ -92,6 +92,9 @@
         s.Hits = get_min_total(`hits_count_gun${s.Gun_Number}`, s.Roll_Total)
         s.Crits = get_min_total(`crits_count_gun${s.Gun_Number}`, s.Roll_Total)
       }
+      if (s.Roll_Natural == 20) {
+        s.Crits += 1
+      }
       updateState()
     }
 
@@ -162,12 +165,7 @@
 
     </div>
 
-
-
     <table>
-
-
-
       <tr>
         <td>Shield Type:</td>
         <td>{{shields.type}}</td>
