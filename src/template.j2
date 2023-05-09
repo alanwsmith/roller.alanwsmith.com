@@ -62,11 +62,14 @@
       const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
       const base_accuracy = get_stat_total('Accuracy')
       const toggled_accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
-      const total_accuracy = gun_accuracy_mod + base_accuracy + toggled_accuracy
+      const accuracy_adjustment = gun_accuracy_mod + base_accuracy + toggled_accuracy
+      const roll = roll_dice(20)
+      window['roll_natural'].innerHTML = roll
+      window['roll_modifier'].innerHTML = accuracy_adjustment
+      window['roll_total'].innerHTML = roll + accuracy_adjustment
     }
 
     const init = () => {
-      console.log(roll_dice(20));
       Array.from(
         document.getElementsByClassName('accuracy_roller')
       ).forEach((element) => {
@@ -84,15 +87,9 @@
   <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
   <h2>Roll</h2>
-  <div id="natural_roll"></div>
-
-  <h2>Core</h2>
-  <div>
-    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
-    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
-    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
-    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
-  </div>
+  <div>Natural: <strong id="roll_natural"></strong></div>
+  <div>Modifier: <strong id="roll_modifier"></strong></div>
+  <div>Total: <strong id="roll_total"></strong></div>
 
   <hr />
 
@@ -113,6 +110,14 @@
   {% endfor %}
   <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
   {% endfor %}
+
+  <h2>Core</h2>
+  <div>
+    <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
+    <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
+    <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
+    <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
+  </div>
 
   <h2>Archetype: Deadeye</h2>
   <div class="stat_row">
