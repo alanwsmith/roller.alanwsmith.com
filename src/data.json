@@ -38,9 +38,9 @@
         { "stat": "Accuracy", "value": 1 },
         { "stat": "Insight_Checks", "value": -2 }
   ],
-  "skills": [
+  "skill_tree": [
     {
-      "name": "Caliber 1", "mods": [
+      "name": "Caliber 1", "stats": [
         { "stat": "Damage_Mod_Favored", "value": 1 },
         { "stat": "Search_Checks", "value": 1 }
       ]

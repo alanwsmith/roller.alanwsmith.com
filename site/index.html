@@ -95,8 +95,25 @@
       if (s.Roll_Natural == 20) {
         s.Crits += 1
       }
+      calculate_hits()
+    }
+
+
+    const calculate_hits = () => {
+      for (let i = 0; i < s.Hits; i++) {
+        const natural_rolls = Array.from(
+          document.getElementsByClassName(`DamageDie_gun${s.Gun_Number}`)
+        ).map((element) => {
+          return roll(parseInt(element.dataset.value, 10))
+        })
+        console.log("hit")
+        console.log(natural_rolls)
+      }
       updateState()
     }
+
+
+
 
     const init = () => {
       Array.from(
@@ -222,18 +239,20 @@
           <td>Range: </td>
           <td>8</td>
         </tr>
-        <tr>
-          <td>Damage Dice:</td>
-          <td>10</td>
-        </tr>
         
         <tr>
-          <td>Accuracy:</td>
+          <td>Damage Die:</td>
+          <td class="DamageDie_gun0" data-value="10">10</td>
+        </tr>
+        
+        
+        <tr>
+          <td>Accuracy Mod:</td>
           <td class="Accuracy_gun0" data-value="2">2</td>
         </tr>
         
         <tr>
-          <td>Crit_Damage:</td>
+          <td>Crit_Damage Mod:</td>
           <td class="Crit_Damage_gun0" data-value="2">2</td>
         </tr>
         
@@ -285,13 +304,20 @@
           <td>Range: </td>
           <td>5</td>
         </tr>
+        
         <tr>
-          <td>Damage Dice:</td>
-          <td>4, 4</td>
+          <td>Damage Die:</td>
+          <td class="DamageDie_gun1" data-value="4">4</td>
         </tr>
         
         <tr>
-          <td>Damage:</td>
+          <td>Damage Die:</td>
+          <td class="DamageDie_gun1" data-value="4">4</td>
+        </tr>
+        
+        
+        <tr>
+          <td>Damage Mod:</td>
           <td class="Damage_gun1" data-value="1">1</td>
         </tr>
         
@@ -473,7 +499,28 @@
     <div>{"type": "Sniper"}</div>
 
     <h2>Skill Tree</h2>
-    <div>TODO: Caliber (+1 DMG on favored guns and +1/SL on Search Checks)</div>
+    <div class="cards">
+      
+      <table>
+        <tr>
+          <td colspan="2">
+            Caliber 1
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Damage_Mod_Favored</td>
+          <td class="Damage_Mod_Favored">1</td>
+        </tr>
+        
+        <tr>
+          <td>Search_Checks</td>
+          <td class="Search_Checks">1</td>
+        </tr>
+        
+      </table>
+      
+    </div>
 
     <h2>Melee Die</h2>
     <div>1D4</div>

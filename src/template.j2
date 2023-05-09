@@ -95,8 +95,25 @@
       if (s.Roll_Natural == 20) {
         s.Crits += 1
       }
+      calculate_hits()
+    }
+
+
+    const calculate_hits = () => {
+      for (let i = 0; i < s.Hits; i++) {
+        const natural_rolls = Array.from(
+          document.getElementsByClassName(`DamageDie_gun${s.Gun_Number}`)
+        ).map((element) => {
+          return roll(parseInt(element.dataset.value, 10))
+        })
+        console.log("hit")
+        console.log(natural_rolls)
+      }
       updateState()
     }
+
+
+
 
     const init = () => {
       Array.from(
@@ -222,13 +239,15 @@
           <td>Range: </td>
           <td>{{ gun.range }}</td>
         </tr>
+        {% for die in gun.damage %}
         <tr>
-          <td>Damage Dice:</td>
-          <td>{% for die in gun.damage %}{{die}}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+          <td>Damage Die:</td>
+          <td class="DamageDie_gun{{gunIndex}}" data-value="{{die}}">{{die}}</td>
         </tr>
+        {% endfor %}
         {% for stat in gun.stats %}
         <tr>
-          <td>{{ stat.stat }}:</td>
+          <td>{{ stat.stat }} Mod:</td>
           <td class="{{ stat.stat }}_gun{{ gunIndex }}" data-value="{{ stat.mod }}">{{ stat.mod }}</td>
         </tr>
         {% endfor %}
@@ -357,7 +376,23 @@
     <div>{{ favored_gun }}</div>
 
     <h2>Skill Tree</h2>
-    <div>TODO: Caliber (+1 DMG on favored guns and +1/SL on Search Checks)</div>
+    <div class="cards">
+      {% for skill in skill_tree %}
+      <table>
+        <tr>
+          <td colspan="2">
+            {{ skill.name }}
+          </td>
+        </tr>
+        {% for stat in skill.stats %}
+        <tr>
+          <td>{{ stat.stat }}</td>
+          <td class="{{stat.stat }}">{{ stat.value }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endfor %}
+    </div>
 
     <h2>Melee Die</h2>
     <div>1D4</div>
