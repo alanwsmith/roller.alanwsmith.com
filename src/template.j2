@@ -34,12 +34,7 @@
       return Array.from(
         document.getElementsByClassName(class_name)
       ).map((element) => {
-        if (element.dataset.value) {
-          return parseInt(element.dataset.value, 10)
-        }
-        else {
-          return 0
-        }
+        return parseInt(element.innerHTML, 10)
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
@@ -101,15 +96,15 @@
     }
 
     const calculate_hits = () => {
+      let natural_hit_rolls = []
       for (let i = 0; i < s.Hits; i++) {
-        const natural_rolls = Array.from(
-          document.getElementsByClassName(`DamageDie_gun${s.Gun_Number}`)
+        natural_hit_rolls.push(...Array.from(
+          document.getElementsByClassName(`DamageDie__gun${s.Gun_Number}`)
         ).map((element) => {
-          return roll(parseInt(element.dataset.value, 10))
-        })
-        console.log("hit")
-        console.log(natural_rolls)
+          return roll(parseInt(element.innerHTML, 10))
+        }))
       }
+      s.Natural_Hit_Rolls = natural_hit_rolls
       updateState()
     }
 
@@ -217,6 +212,31 @@
           <td id="Crits">-</td>
         </tr>
       </table>
+      <table>
+        <tr>
+          <td>Natural Hit Rolls: </td>
+          <td id="Natural_Hit_Rolls">-</td>
+        </tr>
+        <tr>
+          <td>Natural Crit Rolls: </td>
+          <td id="Natural_Crit_Rolls">-</td>
+        </tr>
+        <tr>
+          <td>Fav Gun DMG Mod:</td>
+          <td id="Favoriate_Gun_DMG_Mod">-</td>
+        </tr>
+        <tr>
+          <td>Bonuses:</td>
+          <td id="Damage_Bonuses">-</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Total Damage: </td>
+          <td id="Total_Damage">-</td>
+        </tr>
+      </table>
+
     </div>
 
     <hr />
@@ -249,13 +269,13 @@
         {% for die in gun.damage %}
         <tr>
           <td>Damage Die:</td>
-          <td class="DamageDie_gun{{gunIndex}}" data-value="{{die}}">{{die}}</td>
+          <td class="DamageDie__gun{{gunIndex}}">{{die}}</td>
         </tr>
         {% endfor %}
         {% for stat in gun.stats %}
         <tr>
           <td>{{ stat.stat }}:</td>
-          <td class="{{ stat.stat }}__gun{{ gunIndex }}" data-value="{{stat.value}}">{{ stat.value }}</td>
+          <td class="{{ stat.stat }}__gun{{ gunIndex }}">{{ stat.value }}</td>
         </tr>
         {% endfor %}
 
@@ -347,7 +367,7 @@
       <table>
         <tr>
           <td>{{stat.stat}}: </td>
-          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
         </tr>
       </table>
       {% endfor %}
@@ -359,7 +379,7 @@
       <table>
         <tr>
           <td>{{stat.stat}}:</td>
-          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
         </tr>
       </table>
       {% endfor %}
@@ -371,7 +391,7 @@
       <table>
         <tr>
           <td>{{stat.stat}}:</td>
-          <td class="{{stat.stat}}" data-value="{{stat.value}}">{{stat.value}}</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
         </tr>
       </table>
       {% endfor %}

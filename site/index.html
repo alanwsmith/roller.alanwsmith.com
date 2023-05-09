@@ -34,12 +34,7 @@
       return Array.from(
         document.getElementsByClassName(class_name)
       ).map((element) => {
-        if (element.dataset.value) {
-          return parseInt(element.dataset.value, 10)
-        }
-        else {
-          return 0
-        }
+        return parseInt(element.innerHTML, 10)
       }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
@@ -101,15 +96,15 @@
     }
 
     const calculate_hits = () => {
+      let natural_hit_rolls = []
       for (let i = 0; i < s.Hits; i++) {
-        const natural_rolls = Array.from(
-          document.getElementsByClassName(`DamageDie_gun${s.Gun_Number}`)
+        natural_hit_rolls.push(...Array.from(
+          document.getElementsByClassName(`DamageDie__gun${s.Gun_Number}`)
         ).map((element) => {
-          return roll(parseInt(element.dataset.value, 10))
-        })
-        console.log("hit")
-        console.log(natural_rolls)
+          return roll(parseInt(element.innerHTML, 10))
+        }))
       }
+      s.Natural_Hit_Rolls = natural_hit_rolls
       updateState()
     }
 
@@ -217,6 +212,31 @@
           <td id="Crits">-</td>
         </tr>
       </table>
+      <table>
+        <tr>
+          <td>Natural Hit Rolls: </td>
+          <td id="Natural_Hit_Rolls">-</td>
+        </tr>
+        <tr>
+          <td>Natural Crit Rolls: </td>
+          <td id="Natural_Crit_Rolls">-</td>
+        </tr>
+        <tr>
+          <td>Fav Gun DMG Mod:</td>
+          <td id="Favoriate_Gun_DMG_Mod">-</td>
+        </tr>
+        <tr>
+          <td>Bonuses:</td>
+          <td id="Damage_Bonuses">-</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Total Damage: </td>
+          <td id="Total_Damage">-</td>
+        </tr>
+      </table>
+
     </div>
 
     <hr />
@@ -247,18 +267,18 @@
         
         <tr>
           <td>Damage Die:</td>
-          <td class="DamageDie_gun0" data-value="10">10</td>
+          <td class="DamageDie__gun0">10</td>
         </tr>
         
         
         <tr>
           <td>Gun_Accuracy_Mod:</td>
-          <td class="Gun_Accuracy_Mod__gun0" data-value="2">2</td>
+          <td class="Gun_Accuracy_Mod__gun0">2</td>
         </tr>
         
         <tr>
           <td>Gun_Crit_Damage_Mod:</td>
-          <td class="Gun_Crit_Damage_Mod__gun0" data-value="2">2</td>
+          <td class="Gun_Crit_Damage_Mod__gun0">2</td>
         </tr>
         
 
@@ -321,18 +341,18 @@
         
         <tr>
           <td>Damage Die:</td>
-          <td class="DamageDie_gun1" data-value="4">4</td>
+          <td class="DamageDie__gun1">4</td>
         </tr>
         
         <tr>
           <td>Damage Die:</td>
-          <td class="DamageDie_gun1" data-value="4">4</td>
+          <td class="DamageDie__gun1">4</td>
         </tr>
         
         
         <tr>
           <td>Gun_Damage_Mod:</td>
-          <td class="Gun_Damage_Mod__gun1" data-value="1">1</td>
+          <td class="Gun_Damage_Mod__gun1">1</td>
         </tr>
         
 
@@ -426,28 +446,28 @@
       <table>
         <tr>
           <td>Accuracy: </td>
-          <td class="Accuracy" data-value="4">4</td>
+          <td class="Accuracy">4</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Damage: </td>
-          <td class="Damage" data-value="1">1</td>
+          <td class="Damage">1</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Speed: </td>
-          <td class="Speed" data-value="0">0</td>
+          <td class="Speed">0</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Mastery: </td>
-          <td class="Mastery" data-value="2">2</td>
+          <td class="Mastery">2</td>
         </tr>
       </table>
       
@@ -459,28 +479,28 @@
       <table>
         <tr>
           <td>Accuracy:</td>
-          <td class="Accuracy" data-value="2">2</td>
+          <td class="Accuracy">2</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Damage:</td>
-          <td class="Damage" data-value="1">1</td>
+          <td class="Damage">1</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Speed:</td>
-          <td class="Speed" data-value="0">0</td>
+          <td class="Speed">0</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Mastery:</td>
-          <td class="Mastery" data-value="1">1</td>
+          <td class="Mastery">1</td>
         </tr>
       </table>
       
@@ -492,14 +512,14 @@
       <table>
         <tr>
           <td>Accuracy:</td>
-          <td class="Accuracy" data-value="1">1</td>
+          <td class="Accuracy">1</td>
         </tr>
       </table>
       
       <table>
         <tr>
           <td>Insight_Checks:</td>
-          <td class="Insight_Checks" data-value="-2">-2</td>
+          <td class="Insight_Checks">-2</td>
         </tr>
       </table>
       
