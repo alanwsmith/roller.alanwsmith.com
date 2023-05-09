@@ -14,6 +14,14 @@
     }
   </style>
   <script>
+    const roll_dice = (sides) => {
+      const roll_holder = new Uint32Array(1)
+      crypto.getRandomValues(roll_holder)
+      const raw_roll = roll_holder[0] / (0xffffffff + 1)
+      const roll = Math.floor(raw_roll * sides) + 1
+      return roll
+    }
+
     const get_stat_total = (class_name) => {
       return Array.from(
         document.getElementsByClassName(class_name)
@@ -54,11 +62,11 @@
       const gun_accuracy_mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
       const base_accuracy = get_stat_total('Accuracy')
       const toggled_accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
-      console.log(toggled_accuracy)
+      const total_accuracy = gun_accuracy_mod + base_accuracy + toggled_accuracy
     }
 
     const init = () => {
-      console.log("init")
+      console.log(roll_dice(20));
       Array.from(
         document.getElementsByClassName('accuracy_roller')
       ).forEach((element) => {
@@ -74,6 +82,9 @@
 <body>
   <h1>Rodger Roller</h1>
   <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
+
+  <h2>Roll</h2>
+  <div id="natural_roll"></div>
 
   <h2>Core</h2>
   <div>
@@ -158,7 +169,6 @@
   <h2>Traits</h2>
   <div>Insider: +5 Guild Sneak Checks</div>
   <div>Looter: +5 Loot Search Checks</div>
-
 
 </body>
 
