@@ -7,7 +7,7 @@
   },
   "badass_rank": 1,
   "badass_tokens": 0,
-  "favored_gun": "Sniper Rifle",
+  "favored_gun": "Sniper",
   "health": {
     "max": 14,
     "current": 14,
@@ -40,7 +40,7 @@
     {
       "guild": "Black Powder",
       "name": "Crappy Sniper",
-      "type": "Sniper Rifle",
+      "type": "Sniper",
       "damage": [10],
       "range": 8,
       "hits": [

@@ -34,8 +34,8 @@
       return Array.from(
         document.getElementsByClassName(class_name)
       ).map((element) => {
-        if (element.value) {
-          return parseInt(element.value, 10)
+        if (element.dataset.value) {
+          return parseInt(element.dataset.value, 10)
         }
         else {
           return 0
@@ -162,7 +162,6 @@
         <td>Shield Info:</td>
         <td></td>
       </tr>
-
     </table>
 
     <h2>Accuracy Roll</h2>
@@ -205,7 +204,7 @@
         </tr>
         <tr>
           <td>Type: </td>
-          <td>Sniper Rifle</td>
+          <td>Sniper</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -214,14 +213,12 @@
         
         <tr>
           <td>Accuracy:</td>
-          <td><input type="text" class="Accuracy_gun0" value="2" size="2" disabled />
-          </td>
+          <td class="Accuracy_gun0" data-value="2">2</td>
         </tr>
         
         <tr>
           <td>Crit_Damage:</td>
-          <td><input type="text" class="Crit_Damage_gun0" value="2" size="2" disabled />
-          </td>
+          <td class="Crit_Damage_gun0" data-value="2">2</td>
         </tr>
         
 
@@ -275,8 +272,7 @@
         
         <tr>
           <td>Damage:</td>
-          <td><input type="text" class="Damage_gun1" value="1" size="2" disabled />
-          </td>
+          <td class="Damage_gun1" data-value="1">1</td>
         </tr>
         
 
@@ -353,22 +349,22 @@
       
       <tr>
         <td>Accuracy: </td>
-        <td><input class="Accuracy" type="text" size="2" value="4" disabled /></td>
+        <td class="Accuracy" data-value="4">4</td>
       </tr>
       
       <tr>
         <td>Damage: </td>
-        <td><input class="Damage" type="text" size="2" value="1" disabled /></td>
+        <td class="Damage" data-value="1">1</td>
       </tr>
       
       <tr>
         <td>Mastery: </td>
-        <td><input class="Mastery" type="text" size="2" value="2" disabled /></td>
+        <td class="Mastery" data-value="2">2</td>
       </tr>
       
       <tr>
         <td>Speed: </td>
-        <td><input class="Speed" type="text" size="2" value="0" disabled /></td>
+        <td class="Speed" data-value="0">0</td>
       </tr>
       
     </table>
@@ -378,22 +374,22 @@
       
       <tr>
         <td>Accuracy:</td>
-        <td><input class="Accuracy" type="text" size="2" value="2" disabled /></td>
+        <td class="Accuracy" data-value="2">2</td>
       </tr>
       
       <tr>
         <td>Damage:</td>
-        <td><input class="Damage" type="text" size="2" value="1" disabled /></td>
+        <td class="Damage" data-value="1">1</td>
       </tr>
       
       <tr>
         <td>Mastery:</td>
-        <td><input class="Mastery" type="text" size="2" value="1" disabled /></td>
+        <td class="Mastery" data-value="1">1</td>
       </tr>
       
       <tr>
         <td>Speed:</td>
-        <td><input class="Speed" type="text" size="2" value="0" disabled /></td>
+        <td class="Speed" data-value="0">0</td>
       </tr>
       
     </table>
@@ -403,12 +399,12 @@
       
       <tr>
         <td>Accuracy: </td>
-        <td><input class="Accuracy" type="text" size="2" value="1" disabled /></td>
+        <td class="Accuracy" data-value="1">1</td>
       </tr>
       
       <tr>
         <td>Insight_Checks: </td>
-        <td><input class="Insight_Checks" type="text" size="2" value="-2" disabled /></td>
+        <td class="Insight_Checks" data-value="-2">-2</td>
       </tr>
       
     </table>
@@ -418,7 +414,7 @@
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
     <h2>Favored Gun</h2>
-    <div>Sniper Rifle</div>
+    <div>Sniper</div>
 
     <h2>Skill Tree</h2>
     <div>TODO: Caliber (+1 DMG on favored guns and +1/SL on Search Checks)</div>
