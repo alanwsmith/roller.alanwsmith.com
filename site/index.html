@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
 <head>
   <title>Rodger Roller</title>
   <style>
@@ -14,7 +13,6 @@
   <script>
     const s = {
       base_stats: ["Accuracy", "Damage", "Mastery", "Speed"],
-      Favored_Gun: {"type": "Sniper"}
     }
 
     const updateState = () => {
@@ -80,9 +78,16 @@
 
     const roll_accuracy = (event) => {
       s.Gun_Number = parseInt(event.target.dataset.gun, 10)
+      s.Current_Gun_Type = document.getElementById(`Gun_Type_gun${s.Gun_Number}`).innerHTML
+      s.Favored_Gun_Type = document.getElementById(`Favored_Gun_Type`).innerHTML
+      s.Is_Favored_Gun_Type = s.Current_Gun_Type == s.Favored_Gun_Type ? true : false
       s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
       s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
-      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Accuracy_Mod + s.Toggled_Accuracy
+      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Toggled_Accuracy
+      if (s.Is_Favored_Gun_Type) {
+        s.Accuracy_Adjustment += s.Accuracy_Mod
+      }
+
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
       if (s.Roll_Natural == 1) {
@@ -230,8 +235,8 @@
           <td colspan="2">Crappy Sniper</td>
         </tr>
         <tr>
-          <td>Type: </td>
-          <td>Sniper</td>
+          <td>Type:</td>
+          <td id="Gun_Type_gun0">Sniper</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -266,7 +271,7 @@
         
         <tr>
           <td class="hits_count_gun0" data-min="8" data-value="1">Add
-            1 hit at
+            1 hit at:
           </td>
           <td>
             8
@@ -277,7 +282,8 @@
         
         <tr>
           <td class="crits_count_gun0" data-min="16" data-value="1">
-            Add 1 crit at </td>
+            Add 1 crit at:
+          </td>
           <td>
             16
           </td>
@@ -295,8 +301,8 @@
           <td colspan="2">Synergy</td>
         </tr>
         <tr>
-          <td>Type: </td>
-          <td>Pistol</td>
+          <td>Type:</td>
+          <td id="Gun_Type_gun1">Pistol</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -325,7 +331,7 @@
         
         <tr>
           <td class="hits_count_gun1" data-min="2" data-value="1">Add
-            1 hit at
+            1 hit at:
           </td>
           <td>
             2
@@ -334,7 +340,7 @@
         
         <tr>
           <td class="hits_count_gun1" data-min="8" data-value="1">Add
-            1 hit at
+            1 hit at:
           </td>
           <td>
             8
@@ -343,7 +349,7 @@
         
         <tr>
           <td class="hits_count_gun1" data-min="16" data-value="1">Add
-            1 hit at
+            1 hit at:
           </td>
           <td>
             16
@@ -494,7 +500,7 @@
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
     <h2>Favored Gun</h2>
-    <div>{"type": "Sniper"}</div>
+    <div id="Favored_Gun_Type">Sniper</div>
 
     <h2>Skill Tree</h2>
     <div class="cards">

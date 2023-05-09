@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
 <head>
   <title>Rodger Roller</title>
   <style>
@@ -14,7 +13,6 @@
   <script>
     const s = {
       base_stats: ["Accuracy", "Damage", "Mastery", "Speed"],
-      Favored_Gun: {{favored_gun}}
     }
 
     const updateState = () => {
@@ -80,9 +78,16 @@
 
     const roll_accuracy = (event) => {
       s.Gun_Number = parseInt(event.target.dataset.gun, 10)
+      s.Current_Gun_Type = document.getElementById(`Gun_Type_gun${s.Gun_Number}`).innerHTML
+      s.Favored_Gun_Type = document.getElementById(`Favored_Gun_Type`).innerHTML
+      s.Is_Favored_Gun_Type = s.Current_Gun_Type == s.Favored_Gun_Type ? true : false
       s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
       s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
-      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Accuracy_Mod + s.Toggled_Accuracy
+      s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Toggled_Accuracy
+      if (s.Is_Favored_Gun_Type) {
+        s.Accuracy_Adjustment += s.Accuracy_Mod
+      }
+
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
       if (s.Roll_Natural == 1) {
@@ -230,8 +235,8 @@
           <td colspan="2">{{ gun.name }}</td>
         </tr>
         <tr>
-          <td>Type: </td>
-          <td>{{ gun.type}}</td>
+          <td>Type:</td>
+          <td id="Gun_Type_gun{{gunIndex}}">{{gun.type}}</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -261,7 +266,7 @@
         {% for hit in gun.hits %}
         <tr>
           <td class="hits_count_gun{{gunIndex}}" data-min="{{hit.min_roll}}" data-value="{{hit.add}}">Add
-            {{ hit.add }} hit at
+            {{ hit.add }} hit at:
           </td>
           <td>
             {{hit.min_roll}}
@@ -272,7 +277,8 @@
         {% for crit in gun.crits %}
         <tr>
           <td class="crits_count_gun{{gunIndex}}" data-min="{{crit.min_roll}}" data-value="{{crit.add}}">
-            Add {{ crit.add }} crit at </td>
+            Add {{ crit.add }} crit at:
+          </td>
           <td>
             {{crit.min_roll}}
           </td>
@@ -371,7 +377,7 @@
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
     <h2>Favored Gun</h2>
-    <div>{{ favored_gun }}</div>
+    <div id="Favored_Gun_Type">{{ favored_gun_type.type }}</div>
 
     <h2>Skill Tree</h2>
     <div class="cards">
