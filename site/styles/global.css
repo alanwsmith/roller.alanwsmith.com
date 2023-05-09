@@ -1,4 +1,15 @@
-html, body {
+@font-face {
+  font-family: 'Atkinson-Hyperlegible';
+  src: url('/fonts/AtkinsonHyperlegible-Regular.ttf') format('opentype');
+}
+
+/*
+@font-face {
+  font-family: 'Atkinson-Hyperlegible-Bold';
+  src: url('/fonts/Atkinson-Hyperlegible-Bold.ttf') format('opentype');
+}
+
+*/html, body {
   height: 100%;
       background-color: black;
       color: #aaa;
@@ -28,6 +39,10 @@ button {
   cursor: pointer;
 }
 
+body {
+  font-family: 'Atkinson-Hyperlegible';
+}
+
 .gun_wrapper {
   display: flex;
 }
@@ -47,4 +62,10 @@ main {
 
 table {
   margin-right: 2rem;
+}
+
+
+td:nth-child(n+2) {
+  padding-left: 0.8rem;
+  text-align: right;
 }

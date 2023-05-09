@@ -1,4 +1,25 @@
 {
+  "name": "Rodger",
+  "level": 1,
+  "gold": 113,
+  "action_skill": {
+    "name": "Wings Of Blood!"
+  },
+  "badass_rank": 1,
+  "badass_tokens": 0,
+  "favored_gun": "Sniper Rifle",
+  "health": {
+    "max": 14,
+    "current": 14,
+    "regen": 0
+  },
+  "shields": {
+    "max": 20,
+    "current": 20,
+    "regen": 5,
+    "type": "",
+    "info": ""
+  },
   "archetype_stats": {
     "Accuracy": 4,
     "Damage": 1,
@@ -19,6 +40,7 @@
     {
       "guild": "Black Powder",
       "name": "Crappy Sniper",
+      "type": "Sniper Rifle",
       "damage": [10],
       "range": 8,
       "hits": [
@@ -42,6 +64,7 @@
     {
       "guild": "Alas!",
       "name": "Synergy", 
+      "type": "Pistol",
       "damage": [4, 4], 
       "range": 5,
       "hits": [
@@ -55,7 +78,5 @@
       ],
       "toggles": []
     }
-
   ]
-
 }

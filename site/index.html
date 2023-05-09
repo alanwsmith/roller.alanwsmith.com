@@ -60,7 +60,6 @@
       return Array.from(
         document.getElementsByClassName(class_name)
       ).map((element) => {
-        console.log(parseInt(element.dataset.min, 10))
         if (compare_value >= parseInt(element.dataset.min, 10)) {
           return parseInt(element.dataset.value, 10)
         }
@@ -114,6 +113,58 @@
     <h1>Rodger Roller</h1>
     <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
 
+    <table>
+      <tr>
+        <td>Level:</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Badass Rank:</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Badass Tokens:</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>Gold:</td>
+        <td>113</td>
+      </tr>
+      <tr>
+        <td>Current Health:</td>
+        <td>14</td>
+      </tr>
+      <tr>
+        <td>Max Health:</td>
+        <td>14</td>
+      </tr>
+      <tr>
+        <td>Health Regen:</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>Current Shields:</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Max Shields:</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Shield Regen:</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>Shield Type:</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Shield Info:</td>
+        <td></td>
+      </tr>
+
+    </table>
+
     <h2>Accuracy Roll</h2>
     <div class="flex">
       <table>
@@ -151,6 +202,10 @@
         
         <tr>
           <td colspan="2">Crappy Sniper</td>
+        </tr>
+        <tr>
+          <td>Type: </td>
+          <td>Sniper Rifle</td>
         </tr>
         <tr>
           <td>Range: </td>
@@ -210,6 +265,10 @@
           <td colspan="2">Synergy</td>
         </tr>
         <tr>
+          <td>Type: </td>
+          <td>Pistol</td>
+        </tr>
+        <tr>
           <td>Range: </td>
           <td>5</td>
         </tr>
@@ -262,62 +321,107 @@
     </div>
 
     <h2>Core</h2>
-    <div>
-      <div>Accuracy: <span id="Accuracy_Base"></span> Mod: <span id="Accuracy_Mod"></span></div>
-      <div>Damage: <span id="Damage_Base"></span> Mod: <span id="Damage_Mod"></span></div>
-      <div>Mastery: <span id="Mastery_Base"></span> Mod: <span id="Mastery_Mod"></span></div>
-      <div>Speed: <span id="Speed_Base"></span> Mod: <span id="Speed_Mod"></span></div>
-    </div>
+    <table>
+      <tr>
+        <td>Accuracy: </td>
+        <td id="Accuracy_Base"></td>
+        <td>Mod:
+        <td id="Accuracy_Mod"></td>
+      </tr>
+      <tr>
+        <td>Damage: </td>
+        <td id="Damage_Base"></td>
+        <td>Mod:
+        <td id="Damage_Mod"></td>
+      </tr>
+      <tr>
+        <td>Mastery: </td>
+        <td id="Mastery_Base"></td>
+        <td>Mod:
+        <td id="Mastery_Mod"></td>
+      </tr>
+      <tr>
+        <td>Speed: </td>
+        <td id="Speed_Base"></td>
+        <td>Mod:
+        <td id="Speed_Mod"></td>
+      </tr>
+    </table>
 
     <h2>Archetype: Deadeye</h2>
-    <div class="stat_row">
+    <table>
       
-      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="4" disabled />
-      </div>
+      <tr>
+        <td>Accuracy: </td>
+        <td><input class="Accuracy" type="text" size="2" value="4" disabled /></td>
+      </tr>
       
-      <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled />
-      </div>
+      <tr>
+        <td>Damage: </td>
+        <td><input class="Damage" type="text" size="2" value="1" disabled /></td>
+      </tr>
       
-      <div>Mastery: <input class="Mastery" type="text" size="2" value="2" disabled />
-      </div>
+      <tr>
+        <td>Mastery: </td>
+        <td><input class="Mastery" type="text" size="2" value="2" disabled /></td>
+      </tr>
       
-      <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled />
-      </div>
+      <tr>
+        <td>Speed: </td>
+        <td><input class="Speed" type="text" size="2" value="0" disabled /></td>
+      </tr>
       
-    </div>
+    </table>
 
     <h2>Class: Hunter</h2>
-    <div class="stat_row">
+    <table>
       
-      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="2" disabled /></div>
+      <tr>
+        <td>Accuracy:</td>
+        <td><input class="Accuracy" type="text" size="2" value="2" disabled /></td>
+      </tr>
       
-      <div>Damage: <input class="Damage" type="text" size="2" value="1" disabled /></div>
+      <tr>
+        <td>Damage:</td>
+        <td><input class="Damage" type="text" size="2" value="1" disabled /></td>
+      </tr>
       
-      <div>Mastery: <input class="Mastery" type="text" size="2" value="1" disabled /></div>
+      <tr>
+        <td>Mastery:</td>
+        <td><input class="Mastery" type="text" size="2" value="1" disabled /></td>
+      </tr>
       
-      <div>Speed: <input class="Speed" type="text" size="2" value="0" disabled /></div>
+      <tr>
+        <td>Speed:</td>
+        <td><input class="Speed" type="text" size="2" value="0" disabled /></td>
+      </tr>
       
-    </div>
+    </table>
 
     <h2>Background: Prize Shot</h2>
-    <div class="stat_row">
+    <table>
       
-      <div>Accuracy: <input class="Accuracy" type="text" size="2" value="1" disabled />
-      </div>
+      <tr>
+        <td>Accuracy: </td>
+        <td><input class="Accuracy" type="text" size="2" value="1" disabled /></td>
+      </tr>
       
-      <div>Insight_Checks: <input class="Insight_Checks" type="text" size="2" value="-2" disabled />
-      </div>
+      <tr>
+        <td>Insight_Checks: </td>
+        <td><input class="Insight_Checks" type="text" size="2" value="-2" disabled /></td>
+      </tr>
       
-    </div>
+    </table>
 
     <h2>Action Skill</h2>
+    <div>Wings Of Blood!</div>
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
     <h2>Favored Gun</h2>
     <div>Sniper Rifle</div>
 
     <h2>Skill Tree</h2>
-    <div>TODO</div>
+    <div>TODO: Caliber (+1 DMG on favored guns and +1/SL on Search Checks)</div>
 
     <h2>Melee Die</h2>
     <div>1D4</div>
