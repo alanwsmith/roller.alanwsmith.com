@@ -96,6 +96,18 @@
     }
 
     const calculate_hits = () => {
+      s.Damage_Bonuses = 0
+
+      if (s.Is_Favored_Gun_Type === "yes") {
+        s.Favored_Gun_Damage_Mod = s.Damage_Mod
+        s.Damage_Bonuses += get_stat_total(`Damage_Mod_Favored`)
+      } else {
+        s.Favored_Gun_Damage_Mod = 0
+      }
+
+      s.Damage_Bonuses += get_stat_total(`Gun_Damage_Mod__gun${s.Gun_Number}`)
+
+
       let natural_hit_rolls = []
       for (let i = 0; i < s.Hits; i++) {
         natural_hit_rolls.push(...Array.from(
@@ -105,9 +117,15 @@
         }))
       }
       s.Natural_Hit_Rolls = natural_hit_rolls
+
+      let natural_crit_rolls = []
+      for (let i = 0; i < s.Crits; i++) {
+        natural_crit_rolls.push(roll(12))
+      }
+      s.Natural_Crit_Rolls = natural_crit_rolls
+
       updateState()
     }
-
 
     const init = () => {
       Array.from(
@@ -127,6 +145,9 @@
   <main>
     <h1>Rodger Roller</h1>
     <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
+
+    <p>Question: If there is a DMG or CRIT DMG mod on a gun and there are multiple hits
+      or crits, does the mod get added for each one, or is it only added one time?</p>
 
     <div class="flex cards">
       <table>
@@ -223,7 +244,7 @@
         </tr>
         <tr>
           <td>Fav Gun DMG Mod:</td>
-          <td id="Favoriate_Gun_DMG_Mod">-</td>
+          <td id="Favored_Gun_Damage_Mod">-</td>
         </tr>
         <tr>
           <td>Bonuses:</td>
