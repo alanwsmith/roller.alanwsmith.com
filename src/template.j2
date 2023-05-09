@@ -64,12 +64,14 @@
     }
 
     const roll_accuracy = (event) => {
-      s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${event.target.dataset.gun}`)
+      s.Gun_Number = parseInt(event.target.dataset.gun, 10)
+      s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
       s.Base_Accuracy = get_stat_total('Accuracy')
-      s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${event.target.dataset.gun}_toggle`)
+      s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
       s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Base_Accuracy + s.Toggled_Accuracy
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
+
       updateState()
     }
 
@@ -119,7 +121,7 @@
 
   <h2>Guns!</h2>
   {% for gun in guns %}
-  {% set gunIndex = loop.index %}
+  {% set gunIndex = loop.index0 %}
   <div>Name: {{ gun.name }}</div>
   <div>Range: {{ gun.range }}</div>
   {% for stat in gun.stats %}
@@ -131,6 +133,18 @@
   {{ toggle.name }} <input type="checkbox" class="{{toggle.stat}}_gun{{gunIndex}}_toggle" data-mod="{{toggle.mod}}"
     checked>
   {% endfor %}
+
+  <div>Hits</div>
+  {% for hit in gun.hits %}
+  <div>At {{hit.min_roll}} add {{ hit.add }}</div>
+  {% endfor %}
+
+  <div>Crits</div>
+  {% for crit in gun.crits %}
+  <div>At {{crit.min_roll}} add {{ crit.add }}</div>
+  {% endfor %}
+
+
   <div><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll Accuracy</button></div>
   {% endfor %}
 
