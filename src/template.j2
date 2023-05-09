@@ -78,16 +78,13 @@
 
     const roll_accuracy = (event) => {
       s.Gun_Number = parseInt(event.target.dataset.gun, 10)
-      s.Current_Gun_Type = document.getElementById(`Gun_Type_gun${s.Gun_Number}`).innerHTML
-      s.Favored_Gun_Type = document.getElementById(`Favored_Gun_Type`).innerHTML
-      s.Is_Favored_Gun_Type = s.Current_Gun_Type == s.Favored_Gun_Type ? true : false
       s.Gun_Accuracy_Mod = get_stat_total(`Accuracy_gun${s.Gun_Number}`)
       s.Toggled_Accuracy = get_toggle_total(`Accuracy_gun${s.Gun_Number}_toggle`)
       s.Accuracy_Adjustment = s.Gun_Accuracy_Mod + s.Toggled_Accuracy
-      if (s.Is_Favored_Gun_Type) {
+      s.Is_Favored_Gun_Type = document.getElementById(`Is_Favored_Gun_Type_gun${s.Gun_Number}`).innerHTML
+      if (s.Is_Favored_Gun_Type === "yes") {
         s.Accuracy_Adjustment += s.Accuracy_Mod
       }
-
       s.Roll_Natural = roll(20)
       s.Roll_Total = s.Roll_Natural + s.Accuracy_Adjustment
       if (s.Roll_Natural == 1) {
@@ -102,7 +99,6 @@
       }
       calculate_hits()
     }
-
 
     const calculate_hits = () => {
       for (let i = 0; i < s.Hits; i++) {
@@ -235,8 +231,16 @@
           <td colspan="2">{{ gun.name }}</td>
         </tr>
         <tr>
+          <td colspan="2">{{ gun.guild}} Guild</td>
+        </tr>
+        <tr>
           <td>Type:</td>
           <td id="Gun_Type_gun{{gunIndex}}">{{gun.type}}</td>
+        </tr>
+        <tr>
+          <td>Favored:</td>
+          <td id="Is_Favored_Gun_Type_gun{{gunIndex}}">{% if favored_gun_type.type == gun.type %}yes{% else %}no{% endif
+            %}</td>
         </tr>
         <tr>
           <td>Range: </td>
