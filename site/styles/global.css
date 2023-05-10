@@ -76,6 +76,7 @@ td:nth-child(n+2) {
   align-self: flex-start;
   border-top: 1px solid #444;
   margin-right:40px;
+  padding: 6px;
   width: 190px;
 }
 
@@ -87,6 +88,7 @@ td:nth-child(n+2) {
   align-self: flex-start;
   border-top: 1px solid #444;
   margin-right:40px;
+  padding: 6px;
   width: 150px;
 }
 
@@ -96,8 +98,10 @@ td:nth-child(n+2) {
 
 .cards3 > table {
   align-self: flex-start;
-  border-top: 1px solid #444;
+  border: 1px solid #444;
+  border-radius: 8px;
   margin-right:40px;
+  padding: 6px;
   width: 260px;
 }
 

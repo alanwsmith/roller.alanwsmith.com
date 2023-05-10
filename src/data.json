@@ -46,6 +46,10 @@
       ]
     }
   ],
+  "traits": [
+    { "name": "Insider", "stat": "Loot_Search_Checks", "value": 5 },
+    { "name": "Looter", "stat": "Guild_Sneak_Checks", "value": 5 }
+  ],
   "guns": [
     {
       "guild": "Black Powder",

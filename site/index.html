@@ -66,20 +66,24 @@
     <div class="cards1">
       <table>
         <tr>
+          <td>Insight:</td>
+          <td id="Insight_Checks"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
           <td>Interact:</td>
           <td id="Interact_Checks"></td>
         </tr>
       </table>
       <table>
         <tr>
-          <td>Talk:</td>
-          <td id="Talk_Checks"></td>
+          <td>Search:</td>
+          <td id="Search_Checks"></td>
         </tr>
-      </table>
-      <table>
         <tr>
-          <td>Insight:</td>
-          <td id="Insight_Checks"></td>
+          <td>Loot:</td>
+          <td id="Loot_Search_Checks"></td>
         </tr>
       </table>
       <table>
@@ -87,11 +91,15 @@
           <td>Sneak:</td>
           <td id="Sneak_Checks"></td>
         </tr>
+        <tr>
+          <td>Guild:</td>
+          <td id="Guild_Sneak_Checks"></td>
+        </tr>
       </table>
       <table>
         <tr>
-          <td>Search:</td>
-          <td id="Search_Checks"></td>
+          <td>Talk:</td>
+          <td id="Talk_Checks"></td>
         </tr>
       </table>
       <table>
@@ -160,13 +168,13 @@
       <table class="gun_details">
         
         <tr>
-          <td colspan="2">Black Powder Guild</td>
-        </tr>
-        <tr>
           <td><strong>Crappy Sniper</strong></td>
           <td>
             <button class="accuracy_roller" data-gun="0">Roll</button>
           </td>
+        </tr>
+        <tr>
+          <td colspan="2">From Black Powder</td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -233,13 +241,13 @@
       <table class="gun_details">
         
         <tr>
-          <td colspan="2">Alas! Guild</td>
-        </tr>
-        <tr>
           <td><strong>Synergy</strong></td>
           <td>
             <button class="accuracy_roller" data-gun="1">Roll</button>
           </td>
+        </tr>
+        <tr>
+          <td colspan="2">From Alas!</td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -356,28 +364,28 @@
       
       <table>
         <tr>
-          <td>Accuracy: </td>
+          <td>Accuracy:</td>
           <td class="Accuracy">4</td>
         </tr>
       </table>
       
       <table>
         <tr>
-          <td>Damage: </td>
+          <td>Damage:</td>
           <td class="Damage">1</td>
         </tr>
       </table>
       
       <table>
         <tr>
-          <td>Mastery: </td>
+          <td>Mastery:</td>
           <td class="Mastery">2</td>
         </tr>
       </table>
       
       <table>
         <tr>
-          <td>Speed: </td>
+          <td>Speed:</td>
           <td class="Speed">0</td>
         </tr>
       </table>
@@ -471,8 +479,29 @@
     <div>1D4</div>
 
     <h2>Traits</h2>
-    <div>Insider: +5 Guild Sneak Checks</div>
-    <div>Looter: +5 Loot Search Checks</div>
+    <div class="cards1">
+      
+      <table>
+        <tr>
+          <td colspan="2">Insider</td>
+        </tr>
+        <tr>
+          <td>Loot_Search_Checks</td>
+          <td class="Loot_Search_Checks">5</td>
+        </tr>
+      </table>
+      
+      <table>
+        <tr>
+          <td colspan="2">Looter</td>
+        </tr>
+        <tr>
+          <td>Guild_Sneak_Checks</td>
+          <td class="Guild_Sneak_Checks">5</td>
+        </tr>
+      </table>
+      
+    </div>
 
     <table>
       <tr>

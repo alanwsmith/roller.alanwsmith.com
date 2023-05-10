@@ -66,20 +66,24 @@
     <div class="cards1">
       <table>
         <tr>
+          <td>Insight:</td>
+          <td id="Insight_Checks"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
           <td>Interact:</td>
           <td id="Interact_Checks"></td>
         </tr>
       </table>
       <table>
         <tr>
-          <td>Talk:</td>
-          <td id="Talk_Checks"></td>
+          <td>Search:</td>
+          <td id="Search_Checks"></td>
         </tr>
-      </table>
-      <table>
         <tr>
-          <td>Insight:</td>
-          <td id="Insight_Checks"></td>
+          <td>Loot:</td>
+          <td id="Loot_Search_Checks"></td>
         </tr>
       </table>
       <table>
@@ -87,11 +91,15 @@
           <td>Sneak:</td>
           <td id="Sneak_Checks"></td>
         </tr>
+        <tr>
+          <td>Guild:</td>
+          <td id="Guild_Sneak_Checks"></td>
+        </tr>
       </table>
       <table>
         <tr>
-          <td>Search:</td>
-          <td id="Search_Checks"></td>
+          <td>Talk:</td>
+          <td id="Talk_Checks"></td>
         </tr>
       </table>
       <table>
@@ -160,13 +168,13 @@
       <table class="gun_details">
         {% set gunIndex = loop.index0 %}
         <tr>
-          <td colspan="2">{{gun.guild}} Guild</td>
-        </tr>
-        <tr>
           <td><strong>{{gun.name}}</strong></td>
           <td>
             <button class="accuracy_roller" data-gun="{{gunIndex}}">Roll</button>
           </td>
+        </tr>
+        <tr>
+          <td colspan="2">From {{gun.guild}}</td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -278,7 +286,7 @@
       {% for stat in archetype_stats %}
       <table>
         <tr>
-          <td>{{stat.stat}}: </td>
+          <td>{{stat.stat}}:</td>
           <td class="{{stat.stat}}">{{stat.value}}</td>
         </tr>
       </table>
@@ -339,8 +347,19 @@
     <div>1D4</div>
 
     <h2>Traits</h2>
-    <div>Insider: +5 Guild Sneak Checks</div>
-    <div>Looter: +5 Loot Search Checks</div>
+    <div class="cards1">
+      {% for trait in traits %}
+      <table>
+        <tr>
+          <td colspan="2">{{trait.name}}</td>
+        </tr>
+        <tr>
+          <td>{{trait.stat}}</td>
+          <td class="{{trait.stat}}">{{trait.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
 
     <table>
       <tr>
