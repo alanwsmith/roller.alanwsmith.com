@@ -224,7 +224,7 @@
         </tr>
         <tr>
           <td>Roll:</td>
-          <td id="Natural_Hit_Rolls">-</td>
+          <td><strong id="Natural_Hit_Rolls">-</strong></td>
         </tr>
       </table>
       <table>
@@ -234,17 +234,17 @@
         </tr>
         <tr>
           <td>Roll:</td>
-          <td id="Natural_Crit_Rolls">-</td>
+          <td><strong id="Natural_Crit_Rolls">-</strong></td>
         </tr>
       </table>
       <table>
         <tr>
           <td>FavGun DMG:</td>
-          <td id="Favored_Gun_Damage_Mod">-</td>
+          <td><strong id="Favored_Gun_Damage_Mod">-</strong></td>
         </tr>
         <tr>
           <td>Bonuses:</td>
-          <td id="Damage_Bonuses">-</td>
+          <td><strong id="Damage_Bonuses">-</strong></td>
         </tr>
       </table>
     </div>
@@ -465,8 +465,57 @@
     <div>{{action_skill.name}}</div>
     <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
 
+    <h2>Gernades</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Type:</td>
+          <td>{{gernades.type}}</td>
+        </tr>
+        <tr>
+          <td>Damage:</td>
+          <td>{{gernades.damage}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Current Count:</td>
+          <td>{{gernades.count}}</td>
+        </tr>
+        <tr>
+          <td>Max:</td>
+          <td>{{gernades.max}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Info:</td>
+        </tr>
+        <tr>
+          <td>{{gernades.info}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Potions</h2>
+    <div class="cards4">
+      <table>
+        {% for potion in potions %}
+        <tr>
+          <td>{{loop.index}}. {{ potion }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
     <h2>Favored Gun</h2>
-    <div id="Favored_Gun_Type">{{favored_gun_type.type}}</div>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td id="Favored_Gun_Type">{{favored_gun_type.type}}</td>
+        </tr>
+      </table>
+    </div>
 
 
     <h2>Traits</h2>
@@ -484,16 +533,19 @@
       {% endfor %}
     </div>
 
-    <table>
-      <tr>
-        <td>Shield Type:</td>
-        <td>{{shields.type}}</td>
-      </tr>
-      <tr>
-        <td>Shield Info:</td>
-        <td>{{shields.info}}</td>
-      </tr>
-    </table>
+    <h2>Shield</h2>
+    <div class="cards4">
+      <table>
+        <tr>
+          <td>Shield Type:</td>
+          <td>{{shields.type}}</td>
+        </tr>
+        <tr>
+          <td>Shield Info:</td>
+          <td>{{shields.info}}</td>
+        </tr>
+      </table>
+    </div>
 
   </main>
 
