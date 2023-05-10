@@ -25,14 +25,14 @@
   "archetype_stats": [
         { "stat": "Accuracy", "value": 4 },
         { "stat": "Damage", "value": 1 },
-        { "stat": "Speed", "value": 0 },
-        { "stat": "Mastery", "value": 2 }
+        { "stat": "Mastery", "value": 2 },
+        { "stat": "Speed", "value": 0 }
   ],
   "class_stats": [
         { "stat": "Accuracy", "value": 2 },
         { "stat": "Damage", "value": 1 },
-        { "stat": "Speed", "value": 0 },
-        { "stat": "Mastery", "value": 1 }
+        { "stat": "Mastery", "value": 1 },
+        { "stat": "Speed", "value": 0 }
   ],
   "background_stats": [
         { "stat": "Accuracy", "value": 1 },

@@ -107,7 +107,6 @@
 
       s.Damage_Bonuses += get_stat_total(`Gun_Damage_Mod__gun${s.Gun_Number}`)
 
-
       let natural_hit_rolls = []
       for (let i = 0; i < s.Hits; i++) {
         natural_hit_rolls.push(...Array.from(
@@ -116,13 +115,41 @@
           return roll(parseInt(element.innerHTML, 10))
         }))
       }
-      s.Natural_Hit_Rolls = natural_hit_rolls
+
+      if (natural_hit_rolls.length === 0) {
+        s.Natural_Hit_Rolls = 0
+      } else {
+        s.Natural_Hit_Rolls = natural_hit_rolls
+      }
 
       let natural_crit_rolls = []
       for (let i = 0; i < s.Crits; i++) {
         natural_crit_rolls.push(roll(12))
       }
-      s.Natural_Crit_Rolls = natural_crit_rolls
+
+      if (natural_crit_rolls.length === 0) {
+        s.Natural_Crit_Rolls = 0
+      } else {
+        s.Natural_Crit_Rolls = natural_crit_rolls
+      }
+
+      if (natural_crit_rolls.length > 0) {
+        s.Damage_Bonuses += get_stat_total(`Gun_Crit_Damage_Mod__gun${s.Gun_Number}`)
+      }
+
+      if (s.Roll_Natural === 1) {
+        s.Damage_Bonuses = 0
+        s.Favored_Gun_Damage_Mod = 0
+      }
+
+      if (s.Hits === 0) {
+        s.Damage_Bonuses = 0
+        s.Favored_Gun_Damage_Mod = 0
+      }
+
+      s.Total_Damage = natural_hit_rolls.reduce((a, c) => a + c, 0) +
+        natural_crit_rolls.reduce((a, c) => a + c, 0) +
+        s.Damage_Bonuses + s.Favored_Gun_Damage_Mod
 
       updateState()
     }
@@ -144,12 +171,7 @@
 <body>
   <main>
     <h1>Rodger Roller</h1>
-    <p>This is my custom character sheet and dice roller for my Bunkers And Badasses character. </p>
-
-    <p>Question: If there is a DMG or CRIT DMG mod on a gun and there are multiple hits
-      or crits, does the mod get added for each one, or is it only added one time?</p>
-
-    <div class="flex cards">
+    <div class="cards1">
       <table>
         <tr>
           <td>Level:</td>
@@ -193,22 +215,9 @@
           <td>{{badass_tokens}}</td>
         </tr>
       </table>
-
     </div>
-
-    <table>
-      <tr>
-        <td>Shield Type:</td>
-        <td>{{shields.type}}</td>
-      </tr>
-      <tr>
-        <td>Shield Info:</td>
-        <td>{{shields.info}}</td>
-      </tr>
-    </table>
-
     <h2>Range Attack</h2>
-    <div class="flex">
+    <div class="cards1">
       <table>
         <tr>
           <td>Natural:</td>
@@ -225,25 +234,25 @@
       </table>
       <table>
         <tr>
-          <td>Hits: </td>
+          <td>Number Of Hits: </td>
           <td id="Hits">-</td>
         </tr>
         <tr>
-          <td>Crits: </td>
+          <td>Number Of Crits: </td>
           <td id="Crits">-</td>
         </tr>
       </table>
       <table>
         <tr>
-          <td>Natural Hit Rolls: </td>
+          <td>Hit Rolls:</td>
           <td id="Natural_Hit_Rolls">-</td>
         </tr>
         <tr>
-          <td>Natural Crit Rolls: </td>
+          <td>Crit Rolls:</td>
           <td id="Natural_Crit_Rolls">-</td>
         </tr>
         <tr>
-          <td>Fav Gun DMG Mod:</td>
+          <td>FavGun DMG:</td>
           <td id="Favored_Gun_Damage_Mod">-</td>
         </tr>
         <tr>
@@ -257,13 +266,10 @@
           <td id="Total_Damage">-</td>
         </tr>
       </table>
-
     </div>
 
-    <hr />
-
     <h2>Guns!</h2>
-    <div class="gun_wrapper">
+    <div class="cards3">
       {% for gun in guns %}
       <table class="gun_details">
         {% set gunIndex = loop.index0 %}
@@ -271,7 +277,10 @@
           <td colspan="2">{{ gun.guild}} Guild</td>
         </tr>
         <tr>
-          <td colspan="2">{{ gun.name }}</td>
+          <td><strong>{{ gun.name }}</strong></td>
+          <td>
+            <button class="accuracy_roller" data-gun="{{gunIndex}}">Roll</button>
+          </td>
         </tr>
         <tr>
           <td>Type:</td>
@@ -330,16 +339,12 @@
           </td>
         </tr>
         {% endfor %}
-        <tr>
-          <td colspan="2"><button class="accuracy_roller" data-gun="{{gunIndex}}">Roll</button></td>
-        </tr>
       </table>
-
       {% endfor %}
     </div>
 
-    <h2>Core</h2>
-    <div class="flex cards">
+    <h2>Base Stats</h2>
+    <div class="cards2">
       <table>
         <tr>
           <td>Accuracy: </td>
@@ -383,7 +388,7 @@
     </div>
 
     <h2>Archetype: Deadeye</h2>
-    <div class="flex cards">
+    <div class="cards2">
       {% for stat in archetype_stats %}
       <table>
         <tr>
@@ -395,7 +400,7 @@
     </div>
 
     <h2>Class: Hunter</h2>
-    <div class="flex cards">
+    <div class="cards2">
       {% for stat in class_stats %}
       <table>
         <tr>
@@ -407,7 +412,7 @@
     </div>
 
     <h2>Background: Prize Shot</h2>
-    <div class="flex cards">
+    <div class="cards2">
       {% for stat in background_stats %}
       <table>
         <tr>
@@ -418,15 +423,8 @@
       {% endfor %}
     </div>
 
-    <h2>Action Skill</h2>
-    <div>{{action_skill.name}}</div>
-    <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
-
-    <h2>Favored Gun</h2>
-    <div id="Favored_Gun_Type">{{ favored_gun_type.type }}</div>
-
     <h2>Skill Tree</h2>
-    <div class="cards">
+    <div class="cards3">
       {% for skill in skill_tree %}
       <table>
         <tr>
@@ -444,12 +442,31 @@
       {% endfor %}
     </div>
 
+    <h2>Action Skill</h2>
+    <div>{{action_skill.name}}</div>
+    <div>TODO: Add tickmarks for single use in combat and number per day equaly to mastery mod</div>
+
+    <h2>Favored Gun</h2>
+    <div id="Favored_Gun_Type">{{ favored_gun_type.type }}</div>
+
     <h2>Melee Die</h2>
     <div>1D4</div>
 
     <h2>Traits</h2>
     <div>Insider: +5 Guild Sneak Checks</div>
     <div>Looter: +5 Loot Search Checks</div>
+
+    <table>
+      <tr>
+        <td>Shield Type:</td>
+        <td>{{shields.type}}</td>
+      </tr>
+      <tr>
+        <td>Shield Info:</td>
+        <td>{{shields.info}}</td>
+      </tr>
+    </table>
+
   </main>
 
 </body>
