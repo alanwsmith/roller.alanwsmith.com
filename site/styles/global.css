@@ -75,6 +75,7 @@ td:nth-child(n+2) {
 .cards1 > table {
   align-self: flex-start;
   border-top: 1px solid #444;
+  border-top-left-radius: 8px;
   margin-right:40px;
   padding: 6px;
   width: 190px;
@@ -87,6 +88,7 @@ td:nth-child(n+2) {
 .cards2 > table {
   align-self: flex-start;
   border-top: 1px solid #444;
+  border-top-left-radius: 8px;
   margin-right:40px;
   padding: 6px;
   width: 220px;
@@ -109,13 +111,22 @@ td:nth-child(n+2) {
 h1 {
   margin-bottom: 0.9rem;
   padding-top: 1.4rem;
-  color: #777;
+  color: #999;
 }
 
 h2 {
   margin-bottom: 0.7rem;
-  padding-top: 2.4rem;
-  color: #777;
+  margin-top: 2.4rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.5rem;
+  padding-top: 0.8rem;
+  color: #999;
+  border-top: 2px solid #555;
+  border-radius: 8px;
+}
+
+.h2small {
+  font-size: 1.1rem;
 }
 
 .accuracy_roller, .check_roller, .general_roller {

@@ -22,6 +22,12 @@
     "type": "",
     "info": ""
   },
+  "skill_points": [
+        { "stat": "Accuracy", "value": 0 },
+        { "stat": "Damage", "value": 0 },
+        { "stat": "Mastery", "value": 0 },
+        { "stat": "Speed", "value": 0 }
+  ],
   "archetype_stats": [
         { "stat": "Accuracy", "value": 4 },
         { "stat": "Damage", "value": 1 },

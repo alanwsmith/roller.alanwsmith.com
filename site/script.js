@@ -86,7 +86,7 @@ const get_toggle_total = (class_name) => {
 
 const general_roll = (event) => {
     const number = parseInt(event.target.dataset.type, 10)
-    s[`Roll_1d${number}`] = roll(number)
+    s[`General_Roll`] = roll(number)
     updateState()
 }
 
