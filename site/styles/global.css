@@ -89,7 +89,7 @@ td:nth-child(n+2) {
   border-top: 1px solid #444;
   margin-right:40px;
   padding: 6px;
-  width: 150px;
+  width: 220px;
 }
 
 .cards3 {
@@ -109,16 +109,16 @@ td:nth-child(n+2) {
 h1 {
   margin-bottom: 0.9rem;
   padding-top: 1.4rem;
-  color: #bbb;
+  color: #777;
 }
 
 h2 {
   margin-bottom: 0.7rem;
   padding-top: 2.4rem;
-  color: #bbb;
+  color: #777;
 }
 
-.accuracy_roller {
+.accuracy_roller, .check_roller, .general_roller {
   background-color: #000;
   color: #bb3431;
   border: 0;
