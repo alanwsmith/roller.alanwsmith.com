@@ -150,11 +150,25 @@ const calculate_hits = () => {
     updateState()
 }
 
+const roll_check = (event) => {
+    const type = event.target.dataset.type
+    const modifier = parseInt(document.getElementById(`${type}_Checks`).innerHTML)
+    s.Checks_Natural = roll(20)
+    s.Checks_Total = s.Checks_Natural + modifier
+    console.log(s.Checks_Natural)
+    updateState()
+}
+
 const init = () => {
     Array.from(
         document.getElementsByClassName('accuracy_roller')
     ).forEach((element) => {
         element.addEventListener('click', roll_accuracy)
+    })
+    Array.from(
+        document.getElementsByClassName('check_roller')
+    ).forEach((element) => {
+        element.addEventListener('click', roll_check)
     })
     updateValues()
     updateState()
