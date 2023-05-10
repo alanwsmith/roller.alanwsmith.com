@@ -56,6 +56,14 @@ const updateValues = () => {
         s[`${stat}_Base`] = get_stat_total(stat)
         s[`${stat}_Mod`] = Math.floor(get_stat_total(stat) / 2)
     })
+
+    s.Interact_Checks = s.Accuracy_Mod
+    s.Talk_Checks = s.Speed_Mod
+    s.Insight_Checks = s.Accuracy_Mod
+    s.Sneak_Checks = s.Mastery_Mod
+    s.Search_Checks = s.Mastery_Mod
+    s.Traverse_Checks = s.Speed_Mod
+
 }
 
 const roll_accuracy = (event) => {
