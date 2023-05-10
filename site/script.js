@@ -90,6 +90,12 @@ const general_roll = (event) => {
     updateState()
 }
 
+const initiative_roll = () => {
+    s.Initiative_Natural = roll(20)
+    s.Initiative_Total = s.Initiative_Natural + s.Speed_Mod + s.Initiative_Mod + get_stat_total("BA_Rank")
+    updateState()
+}
+
 const melee_roll = (event) => {
     console.log("Here")
     s.Melee_Natural = roll(event.target.dataset.value)
@@ -162,7 +168,10 @@ const updateValues = () => {
     s.Loot_Search_Checks = s.Search_Checks + get_stat_total("Loot_Search_Checks")
     s.Movement = 3 + get_stat_total("Speed_Mod")
     s.Melee_Mod = s.Damage_Mod
+    s.Initiative_Speed_Mod = s.Speed_Mod
+    s.Initiative_Mod = get_stat_total("Initiative_Mod")
 }
+
 
 const init = () => {
     Array.from(
@@ -179,6 +188,11 @@ const init = () => {
         document.getElementsByClassName('general_roller')
     ).forEach((element) => {
         element.addEventListener('click', general_roll)
+    })
+    Array.from(
+        document.getElementsByClassName('initiative_roller')
+    ).forEach((element) => {
+        element.addEventListener('click', initiative_roll)
     })
     Array.from(
         document.getElementsByClassName('melee_roller')
