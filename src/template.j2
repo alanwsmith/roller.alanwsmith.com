@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Rodger Roller</title>
+  <title>Rodger Hammerstein Character Sheet</title>
   <style>
     body {
       background-color: black;
@@ -15,18 +15,10 @@
 
 <body>
   <main>
-    <h1>Rodger Roller</h1>
+    <h1>Rodger Hammerstein<br />
+      <div class="h2small">Level {{level}}</div>
+    </h1>
     <div class="cards1">
-      <table>
-        <tr>
-          <td>Level:</td>
-          <td>{{level}}</td>
-        </tr>
-        <tr>
-          <td>BA Rank:</td>
-          <td>{{badass_rank}}</td>
-        </tr>
-      </table>
 
       <table>
         <tr>
@@ -52,8 +44,19 @@
 
       <table>
         <tr>
+          <td>Movement:</td>
+          <td id="Movement"></td>
+        </tr>
+        <tr>
           <td>Gold:</td>
           <td>{{gold}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>BA Rank:</td>
+          <td>{{badass_rank}}</td>
         </tr>
         <tr>
           <td>BA Tokens:</td>
@@ -168,22 +171,20 @@
 
     <h2>Range Attack<br />
       <div class="h2small">
-        Combined Damage:
+        Natural:
+        <span id="Roll_Natural">0</span> -
+        Damage:
         <span id="Total_Damage">0</span>
       </div>
     </h2>
     <div class="cards2">
       <table>
         <tr>
-          <td>Natural:</td>
-          <td id="Roll_Natural">-</td>
-        </tr>
-        <tr>
           <td>Modifier:</td>
           <td id="Accuracy_Adjustment">-</td>
         </tr>
         <tr>
-          <td>Total: </td>
+          <td>Calculated: </td>
           <td id="Roll_Total">-</td>
         </tr>
       </table>
@@ -294,6 +295,25 @@
       {% endfor %}
     </div>
 
+    <h2>Melee Attack
+      <div class="h2small">
+        Natural:
+        <span id="Melee_Natural">0</span> -
+        Mod:
+        <span id="Melee_Mod"></span> -
+        Damage:
+        <span id="Melee_Damage">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>1d4</td>
+          <td><button class="melee_roller" data-value="4">Roll</button></td>
+        </tr>
+      </table>
+    </div>
+
     <h2>Base Stats</h2>
     <div class="cards2">
       <table>
@@ -337,6 +357,8 @@
         </tr>
       </table>
     </div>
+
+
 
     <h2>Skill Points</h2>
     <div class="cards2">
@@ -412,8 +434,6 @@
     <h2>Favored Gun</h2>
     <div id="Favored_Gun_Type">{{favored_gun_type.type}}</div>
 
-    <h2>Melee Die</h2>
-    <div>1D4</div>
 
     <h2>Traits</h2>
     <div class="cards1">

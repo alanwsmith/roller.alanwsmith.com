@@ -90,12 +90,20 @@ const general_roll = (event) => {
     updateState()
 }
 
+const melee_roll = (event) => {
+    console.log("Here")
+    s.Melee_Natural = roll(event.target.dataset.value)
+    s.Melee_Damage = s.Melee_Natural + s.Melee_Mod
+    updateState()
+}
 
 const roll = (sides) => {
+    // NOTE: This does parseInt so you don't have to do
+    // it everywhere else
     const roll_holder = new Uint32Array(1)
     crypto.getRandomValues(roll_holder)
     const raw_roll = roll_holder[0] / (0xffffffff + 1)
-    return Math.floor(raw_roll * sides) + 1
+    return Math.floor(raw_roll * parseInt(sides, 10)) + 1
 }
 
 const roll_accuracy = (event) => {
@@ -152,6 +160,8 @@ const updateValues = () => {
     s.Traverse_Checks = s.Speed_Mod + get_stat_total("Traverse_Checks")
     s.Guild_Sneak_Checks = s.Sneak_Checks + get_stat_total("Guild_Sneak_Checks")
     s.Loot_Search_Checks = s.Search_Checks + get_stat_total("Loot_Search_Checks")
+    s.Movement = 3 + get_stat_total("Speed_Mod")
+    s.Melee_Mod = s.Damage_Mod
 }
 
 const init = () => {
@@ -169,6 +179,11 @@ const init = () => {
         document.getElementsByClassName('general_roller')
     ).forEach((element) => {
         element.addEventListener('click', general_roll)
+    })
+    Array.from(
+        document.getElementsByClassName('melee_roller')
+    ).forEach((element) => {
+        element.addEventListener('click', melee_roll)
     })
     updateValues()
     updateState()

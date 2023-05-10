@@ -129,7 +129,7 @@ h2 {
   font-size: 1.1rem;
 }
 
-.accuracy_roller, .check_roller, .general_roller {
+.accuracy_roller, .check_roller, .general_roller, .melee_roller {
   background-color: #000;
   color: #bb3431;
   border: 0;
