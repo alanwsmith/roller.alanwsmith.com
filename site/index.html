@@ -235,11 +235,11 @@
         <tbody>
           <tr>
             <td>Hits:</td>
-            <td></td>
+            <td x-text="$store.d.ranged_attack.hits"></td>
           </tr>
           <tr>
             <td>Roll:</td>
-            <td></td>
+            <td x-text="$store.d.ranged_attack.hits_roll"></td>
           </tr>
         </tbody>
       </table>
@@ -247,11 +247,11 @@
         <tbody>
           <tr>
             <td>Crits:</td>
-            <td< /td>
+            <td x-text="$store.d.ranged_attack.crits"></td>
           </tr>
           <tr>
             <td>Roll:</td>
-            <td></td>
+            <td x-text="$store.d.ranged_attack.crits_roll"></td>
           </tr>
         </tbody>
       </table>
@@ -546,39 +546,29 @@
         change_gun_toggle(gun_index, toggle_key, toggle_index) {
           this.guns[gun_index].toggles[toggle_key][toggle_index].status = !
             this.guns[gun_index].toggles[toggle_key][toggle_index].status
-          console.log(
-            this.guns[gun_index].toggles[toggle_key][toggle_index].status
-          )
         },
 
         check_insight() {
           return this.stat_mod("Accuracy") + this.stat_value("Insight_Mod")
         },
-
         check_interact() {
           return this.stat_mod("Accuracy") + this.stat_value("Interact_Mod")
         },
-
         check_search() {
           return this.stat_mod("Mastery") + this.stat_value("Search_Mod")
         },
-
         check_search_loot() {
           return this.check_search() + this.stat_value("Loot_Search_Mod")
         },
-
         check_sneak() {
           return this.stat_mod("Mastery") + this.stat_value("Sneak_Mod")
         },
-
         check_sneak_guild() {
           return this.check_sneak() + this.stat_value("Guild_Sneak_Mod")
         },
-
         check_talk() {
           return this.stat_mod("Speed") + this.stat_value("Talk_Mod")
         },
-
         check_traverse() {
           return this.stat_mod("Speed") + this.stat_value("Traverse_Mod")
         },
@@ -601,14 +591,46 @@
 
         roll_ranged_attack(index) {
           const gun = this.guns[index]
-          this.ranged_attack.accuracy_natural = this.roll(20)
-          this.ranged_attack.accuracy_mod = 0
+          const ra = this.ranged_attack
+          ra.accuracy_natural = this.roll(20)
+          ra.accuracy_mod = 0
+
           if (this.is_favored_gun_type(index)) {
-            this.ranged_attack.accuracy_mod += this.stat_mod('Accuracy')
+            ra.accuracy_mod += this.stat_mod('Accuracy')
           }
+
           if (gun.stats.Accuracy) {
-            this.ranged_attack.accuracy_mod += gun.stats.Accuracy.value
+            ra.accuracy_mod += gun.stats.Accuracy.value
           }
+
+          if (gun.toggles.Accuracy) {
+            gun.toggles.Accuracy.forEach((toggle) => {
+              if (toggle.status === true) {
+                ra.accuracy_mod += toggle.value
+              }
+            })
+          }
+
+          ra.accuracy_calculated = ra.accuracy_natural + ra.accuracy_mod
+
+          if (ra.accuracy_natural === 1) {
+            ra.accuracy_mod = 0
+            ra.accuracy_calculated = 0
+          }
+
+          ra.hits = 0
+          gun.hits.forEach((hit) => {
+            if (ra.accuracy_calculated >= hit.min_roll) {
+              ra.hits += 1
+            }
+          })
+
+          ra.crits = 0
+          gun.crits.forEach((crit) => {
+            if (ra.accuracy_calculated >= crit.min_roll) {
+              ra.crits += 1
+            }
+          })
 
 
 
