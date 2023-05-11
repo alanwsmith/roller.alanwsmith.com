@@ -103,12 +103,13 @@
     </div>
 
 
-    <!--
     <h2>Skill Checks<br>
-      <div class="h2small">Natural: <span id="Checks_Natural">0</span> - Total: <span id="Checks_Total">0</span>
+      <div class="h2small">Natural: <span x-text="$store.d.rolls.checks_natural">0</span>
+        - Total: <span x-text="$store.d.rolls.checks_total">0</span>
       </div>
     </h2>
 
+    <!--
 
     <div class="cards1">
       <table>
@@ -448,42 +449,21 @@
       </template>
     </div>
 
-
-    <h2>Skill Points</h2>
-    <div class="cards1">
-      <template x-for="stat_name in $store.d.stat_names">
-        <table>
-          <tr>
-            <td x-text="stat_name"></td>
-            <td x-text="$store.d.stat_values[stat_name].skill_points"></td>
-          </tr>
-        </table>
-      </template>
-    </div>
-
-    <h2>Archetype: Deadeye</h2>
-    <div class="cards1">
-      <template x-for="stat_name in $store.d.stat_names">
-        <table>
-          <tr>
-            <td x-text="stat_name"></td>
-            <td x-text="$store.d.stat_values[stat_name].archetype"></td>
-          </tr>
-        </table>
-      </template>
-    </div>
-
-    <h2>Class: Hunter</h2>
-    <div class="cards1">
-      <template x-for="stat_name in $store.d.stat_names">
-        <table>
-          <tr>
-            <td x-text="stat_name"></td>
-            <td x-text="$store.d.stat_values[stat_name].class"></td>
-          </tr>
-        </table>
-      </template>
-    </div>
+    <template x-for="stat_category in $store.d.stat_categories">
+      <div>
+        <h2 x-text="stat_category[0]"></h2>
+        <div class="cards1">
+          <template x-for="stat_name in $store.d.stat_names">
+            <table>
+              <tr>
+                <td x-text="stat_name"></td>
+                <td x-text="$store.d.stat_values[stat_name][stat_category[1]]"></td>
+              </tr>
+            </table>
+          </template>
+        </div>
+      </div>
+    </template>
 
   </main>
   <script>
@@ -550,6 +530,8 @@
         },
 
         rolls: {
+          checks_natural: 0,
+          checks_total: 0,
           initiative_natural: 0,
           initiative_total: 0,
         },
@@ -562,7 +544,13 @@
           info: "Just a regular old shield that saves your ass"
         },
 
+        stat_categories: [
+          ["Skill Points", "skill_points"],
+          ["Archetype: Deadeye", "archetype"],
+          ["Class: Hunter", "class"],
+        ],
         stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
+
 
         traits: [
           {name: "Insider", desc: "+5 Loot Search Checks"},
