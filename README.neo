@@ -24,11 +24,12 @@ to give me the numbers and handle the math.
 
 Details
 
-The site is really just a single static page that includes
-the stats and virtual rollers. The data is maintained 
-in a JSON file^json^^. I'm doing an experiment with the build
-process using a Minijinja^mj^^ template^tmpl^^ and a simple 
-Rust process^rp^^ to output the page. 
+The site is really just a single static page that 
+includes the stats and virtual rollers. The data 
+is maintained in a JSON file^json^^. I'm doing an 
+experiment with the build process using a 
+Minijinja^mj^^ template^tmpl^^ and a simple Rust 
+process^rp^^ to output the page. 
 
 The data is output directly into HTML elements 
 (and `data-` attributes in some cases). There's a 
@@ -37,11 +38,11 @@ the page. I could have called the JSON in JavaScript
 or made a JS object. I found the simplicity of 
 writing out to the template directly nice though. 
 
-The data needed for calculations is pulled in via
+Calculations are done by pulling in the data via
 `getElementById()`js` and `getElementsByClassName()`js`
-calls. I also considered making a duplicate of
-the data in a JS object. That felt like the wrong 
-move. I prefer the single source of truth model. 
+calls. I considered making a duplicate of the data 
+in a JS object. That felt like the wrong move. I 
+prefer the single source of truth model. 
 
 -> h2
 
@@ -49,7 +50,7 @@ Rolls
 
 The virtual dice rolls are done with the 
 `Crypto.getRandomValues()`js`^grv^^ JavaScript 
-method. Some are simple like the `1d6`` that 
+method. Some are simple, like the `1d6`` that 
 simulate a single six sided dice roll. Others are
 more complicated like the *Range Attack** rolls.
 Those involved pulling various values and 
@@ -61,8 +62,8 @@ All of that logic is done in JavaScript.
 
 The Math
 
-I didn't realize quote how involved the math was
-until I coded everything up. And, not just the 
+I didn't realize how involved the math was
+until I coded everything. And, not just the 
 math, but all the conditions you have to keep
 up with and cross reference. I'm good with all 
 that stuff if I can focus on it, but the context
@@ -76,14 +77,18 @@ but I'm cool with it. The way my brain works,
 it lets me better focus on the story. 
 
 
+---
 
--> reference
+-> Reference
 >> Bunkers And Badasses
 >> id: bnb
 >> url: https://tinytinagames.com/
 
+Based off the Borderlands series of games (of
+which I've now played a little and liked as well)
 
--> reference
+
+-> Reference
 >> Crypto: getRandomValues() - MDN
 >> id: grv
 >> url: https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues
@@ -93,15 +98,44 @@ strong in your browser via JavaScript. They're suitable
 for cryptographic purposes so they should be fine for
 simulating dice rolls unless I'm really missing something.
 
--> reference
->> 
 
--> reference
+-> Reference
+>> JSON Data File
+>> id: json
+>> url: https://github.com/alanwsmith/roller.alanwsmith.com/blob/main/src/data.json
+
+This is the source data for the site. 
+
+
+-> Reference
 >> Minijinja 
 >> id: mj
 >> url: 
 
-A powerful template engine for Rust with minimal dependencies. 
+"A powerful template engine for Rust with minimal dependencies."
 I used the original Jinja a long time ago. It's fun to see
 that it's migrated to different languages. 
+
+
+-> Reference
+>> Rust Build Process
+>> id: rp
+>> url: https://github.com/alanwsmith/roller.alanwsmith.com/blob/main/src/main.rs
+
+This is about as short as I could make it. It reads the
+template file and the JSON data then mashes them together
+and writes the output.
+
+
+-> Reference
+>> Template Character Sheet
+>> id: tmpl
+>> url: https://github.com/alanwsmith/roller.alanwsmith.com/blob/main/src/template.j2 
+
+The Minijinja template file used to build the 
+character sheet. I was thinking about looking
+up the alternate ways to do the displays besides
+tables. Leaving that for another time though. 
+This works and got me out the door.
+
 
