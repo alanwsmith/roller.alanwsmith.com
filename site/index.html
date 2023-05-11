@@ -69,27 +69,22 @@
       </table>
 
     </div>
-    <!--
 
-
-
-
-    </div>
 
     <h2>Initiative<br>
-      <div class="h2small">Natural: <span id="Initiative_Natural">0</span> - Total: <span id="Initiative_Total">0</span>
-      </div>
+      <div class="h2small">Natural: <span x-text="$store.d.rolls.initiative_natural">0</span> - Total: <span
+          x-text="$store.d.rolls.initiative_total">0</span></div>
     </h2>
     <div class="cards1">
       <table>
         <tbody>
           <tr>
             <td>Speed Mod:</td>
-            <td id="Initiative_Speed_Mod" class="plus">0</td>
+            <td x-html="`+` + $store.d.stat_value('Speed')"></td>
           </tr>
           <tr>
             <td>Misc Mod:</td>
-            <td id="Initiative_Mod" class="plus">0</td>
+            <td x-html="`+` + $store.d.stat_value('Initiative_Mod')"></td>
           </tr>
         </tbody>
       </table>
@@ -97,16 +92,18 @@
         <tbody>
           <tr>
             <td>BA Rank:</td>
-            <td id="Initiative_BA_Rank" class="plus">1</td>
+            <td x-text="$store.d.ba_rank"></td>
           </tr>
           <tr>
             <td>1d20</td>
-            <td><button class="initiative_roller">Roll</button></td>
+            <td><button class="roller" @click="$store.d.roll_initiative()">Roll</button></td>
           </tr>
         </tbody>
       </table>
     </div>
 
+
+    <!--
     <h2>Skill Checks<br>
       <div class="h2small">Natural: <span id="Checks_Natural">0</span> - Total: <span id="Checks_Total">0</span>
       </div>
@@ -441,7 +438,7 @@
         <table>
           <tr>
             <td x-text="stat_name"></td>
-            <td x-text="$store.d.stat_base(stat_name)"></td>
+            <td x-text="$store.d.stat_value(stat_name)"></td>
           </tr>
           <tr>
             <td>Mod</td>
@@ -458,7 +455,7 @@
         <table>
           <tr>
             <td x-text="stat_name"></td>
-            <td x-text="$store.d.raw_stats[stat_name].skill_points"></td>
+            <td x-text="$store.d.stat_values[stat_name].skill_points"></td>
           </tr>
         </table>
       </template>
@@ -470,7 +467,7 @@
         <table>
           <tr>
             <td x-text="stat_name"></td>
-            <td x-text="$store.d.raw_stats[stat_name].archetype"></td>
+            <td x-text="$store.d.stat_values[stat_name].archetype"></td>
           </tr>
         </table>
       </template>
@@ -482,7 +479,7 @@
         <table>
           <tr>
             <td x-text="stat_name"></td>
-            <td x-text="$store.d.raw_stats[stat_name].class"></td>
+            <td x-text="$store.d.stat_values[stat_name].class"></td>
           </tr>
         </table>
       </template>
@@ -492,27 +489,30 @@
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('d', {
-        name: "Rodger Hammerstein",
-        level: 1,
-        movement: 3,
-        gold: 113,
+
         ba_rank: 1,
         ba_tokens: 0,
+        gold: 113,
+        level: 1,
+        movement: 3,
+        name: "Rodger Hammerstein",
+
+        detail_checks: {
+          Guild_Sneak_Checks: {
+            looter_trait: 5
+          },
+          Loot_Search_Checks: {
+            insider_trait: 5
+          }
+        },
+
         health: {
           max: 14,
           current: 14,
           regen: 0
         },
-        shields: {
-          max: 20,
-          current: 20,
-          regen: 5,
-          type: "Basic",
-          info: "Just a regular old shield that saves your ass"
-        },
-        stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
 
-        raw_stats: {
+        stat_values: {
           Accuracy: {
             archetype: 4,
             background: 1,
@@ -527,41 +527,73 @@
           Damage_Mod_Favored_Gun: {
             caliber_level_1: 1
           },
-          Insight_Checks: {
+          Insight: {
             background: -2,
           },
+          Initiative_Mod: {},
           Mastery: {
             archetype: 2,
             class: 1,
             skill_points: 0,
           },
-          Search_Checks: {
+          Search: {
             caliber_level_1: 1
           },
+          Sneak: {},
           Speed: {
             archetype: 0,
             class: 0,
             skill_points: 0,
-          }
-        },
-
-        detail_checks: {
-          Guild_Sneak_Checks: {
-            Looter_Trait: 5
           },
-          Loot_Search_Checks: {
-            Insider_Trait: 5
-          }
+          Talk: {},
+          Traverse: {},
         },
 
-        stat_base(name) {
-          return Object.entries(this.raw_stats[name]).map((k) => {
+        rolls: {
+          initiative_natural: 0,
+          initiative_total: 0,
+        },
+
+        shields: {
+          max: 20,
+          current: 20,
+          regen: 5,
+          type: "Basic",
+          info: "Just a regular old shield that saves your ass"
+        },
+
+        stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
+
+        traits: [
+          {name: "Insider", desc: "+5 Loot Search Checks"},
+          {name: "Looter", desc: "+5 Guild Sneak Checks"},
+        ],
+
+        roll(sides) {
+          // Includes parseInt so you don't have to do it elsewhere
+          const roll_holder = new Uint32Array(1)
+          crypto.getRandomValues(roll_holder)
+          const raw_roll = roll_holder[0] / (0xffffffff + 1)
+          return Math.floor(raw_roll * parseInt(sides, 10)) + 1
+        },
+
+        roll_initiative() {
+          this.rolls.initiative_natural = this.roll(20)
+          this.rolls.initiative_total =
+            this.rolls.initiative_natural +
+            this.ba_rank +
+            this.stat_mod("Speed") +
+            this.stat_value('Initiative_Mod')
+        },
+
+        stat_value(name) {
+          return Object.entries(this.stat_values[name]).map((k) => {
             return k[1]
           }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         },
 
         stat_mod(name) {
-          return Math.floor(this.stat_base(name) / 2)
+          return Math.floor(this.stat_value(name) / 2)
         }
 
       })
