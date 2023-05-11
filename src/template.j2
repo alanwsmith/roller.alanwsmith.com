@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rodger Hammerstien Character Sheet</title>
+  <style>
+    body {
+      background-color: black;
+      color: #aaa;
+    }
+  </style>
+  <link rel="stylesheet" href="/styles/global.css" />
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <main>
+    <h1>Rodger Hammerstien<br />
+      <div class="h2small">Level {{level}}</div>
+    </h1>
+    <div class="cards1">
+
+      <table>
+        <tr>
+          <td>Health:</td>
+          <td>{{health.current}}/{{health.max}}</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>{{health.regen}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Shields:</td>
+          <td>{{shields.current}}/{{shields.max}}</td>
+        </tr>
+        <tr>
+          <td>Regen:</td>
+          <td>{{shields.regen}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>Movement:</td>
+          <td id="Movement"></td>
+        </tr>
+        <tr>
+          <td>Gold:</td>
+          <td>{{gold}}</td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>BA Rank:</td>
+          <td class="BA_Rank">{{badass_rank}}</td>
+        </tr>
+        <tr>
+          <td>BA Tokens:</td>
+          <td>{{badass_tokens}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Initiative<br />
+      <div class="h2small">Natural: <span id="Initiative_Natural">0</span> - Total: <span id="Initiative_Total">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Speed Mod:</td>
+          <td id="Initiative_Speed_Mod" class="plus"></td>
+        </tr>
+        <tr>
+          <td>Misc Mod:</td>
+          <td id="Initiative_Mod" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>BA Rank:</td>
+          <td id="Initiative_BA_Rank" class="plus">{{badass_rank}}</td>
+        </tr>
+        <tr>
+          <td>1d20</td>
+          <td><button class="initiative_roller">Roll</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Skill Checks<br />
+      <div class="h2small">Natural: <span id="Checks_Natural">0</span> - Total: <span id="Checks_Total">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td><button class="check_roller" data-type="Insight">Insight:</button></td>
+          <td id="Insight_Checks"></td>
+        </tr>
+        <tr>
+          <td><button class="check_roller" data-type="Interact">Interact:</button></td>
+          <td id="Interact_Checks"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td><button class="check_roller" data-type="Search">Search:</button></td>
+          <td id="Search_Checks"></td>
+        </tr>
+        <tr>
+          <td><button class="check_roller" data-type="Loot_Search">Loot:</button></td>
+          <td id="Loot_Search_Checks"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td><button class="check_roller" data-type="Sneak">Sneak:</button></td>
+          <td id="Sneak_Checks"></td>
+        </tr>
+        <tr>
+          <td><button class="check_roller" data-type="Guild_Sneak">Guild:</button></td>
+          <td id="Guild_Sneak_Checks"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td><button class="check_roller" data-type="Talk">Talk:</button></td>
+          <td id="Talk_Checks"></td>
+        </tr>
+        <tr>
+          <td><button class="check_roller" data-type="Traverse">Traverse:</button></td>
+          <td id="Traverse_Checks"></td>
+        </tr>
+      </table>
+    </div>
+
+
+    <h2>General Rolls<br />
+      <div class="h2small">
+        Natural:
+        <span id="General_Roll">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="4">1d4</button></td>
+          <td id="Roll_1d4"></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="6">1d6</button></td>
+          <td id="Roll_1d6"></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="8">1d8</button></td>
+          <td id="Roll_1d8"></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="10">1d10</button></td>
+          <td id="Roll_1d10"></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="12">1d12</button></td>
+          <td id="Roll_1d12"></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td><button class="general_roller" data-type="20">1d20</button></td>
+          <td id="Roll_1d20"></td>
+        </tr>
+      </table>
+
+    </div>
+
+
+
+    <h2>Range Attack<br />
+      <div class="h2small">
+        Damage:
+        <span id="Total_Damage">0</span>
+      </div>
+    </h2>
+    <div class="cards2">
+      <table>
+        <tr>
+          <td>Natural:</td>
+          <td id="Roll_Natural">0</td>
+        </tr>
+        <tr>
+          <td>Modifier:</td>
+          <td id="Accuracy_Adjustment" class="plus">0</td>
+        </tr>
+        <tr>
+          <td>Calculated:</td>
+          <td id="Roll_Total">0</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Hits:</td>
+          <td id="Hits">0</td>
+        </tr>
+        <tr>
+          <td>Roll:</td>
+          <td><strong id="Natural_Hit_Rolls">0</strong></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Crits:</td>
+          <td id="Crits">0</td>
+        </tr>
+        <tr>
+          <td>Roll:</td>
+          <td><strong id="Natural_Crit_Rolls">0</strong></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>FavGun DMG:</td>
+          <td><strong id="Favored_Gun_Damage_Mod" class="plus">0</strong></td>
+        </tr>
+        <tr>
+          <td>Bonuses:</td>
+          <td><strong id="Damage_Bonuses" class="plus">0</strong></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Guns!</h2>
+    <div class="cards3">
+      {% for gun in guns %}
+      <table class="gun_details">
+        {% set gunIndex = loop.index0 %}
+        <tr>
+          <td><strong>{{gun.name}}</strong></td>
+          <td>
+            <button class="accuracy_roller" data-gun="{{gunIndex}}">Roll</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">From {{gun.guild}}</td>
+        </tr>
+        <tr>
+          <td>Type:</td>
+          <td id="Gun_Type_gun{{gunIndex}}">{{gun.type}}</td>
+        </tr>
+        <tr>
+          <td>Favored:</td>
+          <td id="Is_Favored_Gun_Type__gun{{gunIndex}}">{% if favored_gun_type.type == gun.type %}yes{% else %}no{%
+            endif
+            %}</td>
+        </tr>
+        <tr>
+          <td>Range: </td>
+          <td>{{gun.range}}</td>
+        </tr>
+        {% for die in gun.damage %}
+        <tr>
+          <td>Damage Die:</td>
+          <td class="DamageDie__gun{{gunIndex}}">{{die}}</td>
+        </tr>
+        {% endfor %}
+        {% for stat in gun.stats %}
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{ stat.stat }}__gun{{ gunIndex }} plus">{{stat.value}}</td>
+        </tr>
+        {% endfor %}
+
+        {% for toggle in gun.toggles %}
+        <tr>
+          <td>{{toggle.name}}</td>
+          <td><input type="checkbox" class="{{toggle.stat}}__gun{{gunIndex}}_toggle" data-value="{{toggle.value}}"
+              checked>
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% for hit in gun.hits %}
+        <tr>
+          <td class="hits_count_gun{{gunIndex}}" data-min="{{hit.min_roll}}" data-value="{{hit.add}}">Add
+            {{hit.add}} hit at:
+          </td>
+          <td>
+            {{hit.min_roll}}
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% for crit in gun.crits %}
+        <tr>
+          <td class="crits_count_gun{{gunIndex}}" data-min="{{crit.min_roll}}" data-value="{{crit.add}}">
+            Add {{crit.add}} crit at:
+          </td>
+          <td>
+            {{crit.min_roll}}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Melee Attack
+      <div class="h2small">
+        Damage:
+        <span id="Melee_Damage">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>1d4</td>
+          <td><button class="melee_roller" data-value="4">Roll</button></td>
+        </tr>
+        <tr>
+          <td>Natural:</td>
+          <td id="Melee_Natural">0</td>
+        </tr>
+        <tr>
+          <td>
+            Mod:</td>
+          <td id="Melee_Mod" class="plus"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Base Stats</h2>
+    <div class="cards2">
+      <table>
+        <tr>
+          <td>Accuracy: </td>
+          <td id="Accuracy_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Accuracy_Mod" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage: </td>
+          <td id="Damage_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Damage_Mod" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery: </td>
+          <td id="Mastery_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Mastery_Mod" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed:</td>
+          <td id="Speed_Base"></td>
+        </tr>
+        <tr>
+          <td>Mod:</td>
+          <td id="Speed_Mod" class="plus"></td>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <h2>Skill Points</h2>
+    <div class="cards2">
+      {% for stat in skill_points %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Archetype: Deadeye</h2>
+    <div class="cards2">
+      {% for stat in archetype_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Class: Hunter</h2>
+    <div class="cards2">
+      {% for stat in class_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Background: Prize Shot</h2>
+    <div class="cards4">
+      {% for stat in background_stats %}
+      <table>
+        <tr>
+          <td>{{stat.stat}}:</td>
+          <td class="{{stat.stat}}">{{stat.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Skill Tree</h2>
+    <div class="cards3">
+      {% for skill in skill_tree %}
+      <table>
+        <tr>
+          <td>
+            {{skill.name}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Level
+          </td>
+          <td>
+            {{skill.level}}
+          </td>
+        </tr>
+        {% for stat in skill.stats %}
+        <tr>
+          <td>{{stat.stat}}</td>
+          <td class="{{stat.stat }} plus">{{stat.value}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Action Skill
+      <div class="h2small">Encounter uses: <input type="checkbox" /> - Day uses: <input type="checkbox" /> <input
+          type="checkbox" /> <input type="checkbox" /></div>
+    </h2>
+    <div class="cards4">
+      <table>
+        <tr>
+          <td>{{action_skill.name}}</td>
+        </tr>
+        <tr>
+          <td>Does 2d8 to selected enemy</td>
+        </tr>
+        <tr>
+          <td>All adjacent enemies are taunted and attack me next</td>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <h2>Familiar: Roger The Flamingo</h2>
+    <div class="cards3">
+      <table>
+        <tr>
+          <td>Health:</td>
+          <td>{{ familiar.health_current }}/{{ familiar.health_max }}</td>
+        </tr>
+        <tr>
+          <td>Attack/Turn</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Movement</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Damage:</td>
+          <td>1d4 + 1</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>ACC:</td>
+          <td class="plus">1</td>
+        </tr>
+        <tr>
+          <td>Roll 2-7:</td>
+          <td>-1 DMG</td>
+        </tr>
+        <tr>
+          <td>Roll 8-15:</td>
+          <td>Normal</td>
+        </tr>
+        <tr>
+          <td>Roll 16+:</td>
+          <td>+1 DMG</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Gernades</h2>
+    <div class="cards3">
+      <table>
+        <tr>
+          <td>Type:</td>
+          <td>{{gernades.type}}</td>
+        </tr>
+        <tr>
+          <td>Damage:</td>
+          <td>{{gernades.damage}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Current Count:</td>
+          <td>{{gernades.count}}</td>
+        </tr>
+        <tr>
+          <td>Max:</td>
+          <td>{{gernades.max}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Info:</td>
+        </tr>
+        <tr>
+          <td>{{gernades.info}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Potions</h2>
+    <div class="cards3">
+      <table>
+        {% for potion in potions %}
+        <tr>
+          <td>{{loop.index}}. {{ potion }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+
+    <h2>Favored Gun</h2>
+    <div class="cards3">
+      <table>
+        <tr>
+          <td id="Favored_Gun_Type">{{favored_gun_type.type}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Feats</h2>
+    <div class="cards4">
+      <table>
+        {% for feat in feats %}
+        <tr>
+          <td>{{ feat.name}}: </td>
+          <td>{{ feat.description }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+
+
+    <h2>Traits</h2>
+    <div class="cards3">
+      {% for trait in traits %}
+      <table>
+        <tr>
+          <td colspan="2">{{trait.name}}</td>
+        </tr>
+        <tr>
+          <td>{{trait.stat}}</td>
+          <td class="{{trait.stat}} plus">{{trait.value}}</td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+
+    <h2>Shield</h2>
+    <div class="cards4">
+      <table>
+        <tr>
+          <td>Shield Type:</td>
+          <td>{{shields.type}}</td>
+        </tr>
+        <tr>
+          <td>Shield Info:</td>
+          <td>{{shields.info}}</td>
+        </tr>
+      </table>
+    </div>
+
+  </main>
+
+</body>
+
+</html>
