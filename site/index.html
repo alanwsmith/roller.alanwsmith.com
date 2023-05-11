@@ -271,7 +271,7 @@
 
     <h2>Guns!</h2>
     <div class="cards3">
-      <template x-for="(gun, index) in $store.d.guns">
+      <template x-for="(gun, gun_index) in $store.d.guns">
         <table>
           <tbody>
             <tr>
@@ -279,7 +279,7 @@
             </tr>
             <tr>
               <td x-html="`From ` + gun.guild"></td>
-              <td><button @click="$store.d.roll_ranged_attack(index)">Roll</button></td>
+              <td><button @click="$store.d.roll_ranged_attack(gun_index)">Roll</button></td>
             </tr>
             <tr>
               <td>Type</td>
@@ -287,7 +287,7 @@
             </tr>
             <tr>
               <td>Favored</td>
-              <td x-text="$store.d.is_favored_gun_type(index)"></td>
+              <td x-text="$store.d.is_favored_gun_type(gun_index)"></td>
             </tr>
             <tr>
               <td>Range</td>
@@ -303,11 +303,14 @@
                 <td x-html="`+` + stat.value"></td>
               </tr>
             </template>
-            <template x-for="toggle in gun.toggles">
-              <tr>
-                <td x-text="toggle.name"></td>
-                <td><input type="checkbox" checked></td>
-              </tr>
+            <template x-for="toggle_key in Object.keys(gun.toggles)">
+              <template x-for="toggle, toggle_index in gun.toggles[toggle_key]">
+                <tr>
+                  <td x-text="toggle.desc"></td>
+                  <td><input x-on:change="$store.d.change_gun_toggle(gun_index, toggle_key, toggle_index)"
+                      type="checkbox" checked></td>
+                </tr>
+              </template>
             </template>
             <template x-for="hit in gun.hits">
               <tr>
@@ -423,13 +426,11 @@
               Accuracy: {name: "Accuracy", value: 2},
               Crit_Damage: {name: "Crit Damage", value: 2}
             },
-            toggles: [
-              {
-                name: "Range 3 = ACC +3",
-                stat: "Gun_Accuracy_Mod",
-                value: 3
-              }
-            ],
+            toggles: {
+              Accuracy: [
+                {desc: "Range 3 = ACC +3", status: true, value: 3}
+              ]
+            },
           },
 
           {
@@ -445,7 +446,7 @@
               {min_roll: 16, add: 1}
             ],
             stats: {
-              Damage: {name: "Gun_Damage_Mod", value: 1}
+              Damage: {name: "Damage", value: 1}
             },
             toggles: []
           }
@@ -517,7 +518,6 @@
           Traverse_Mod: {},
         },
 
-
         shields: {
           max: 20,
           current: 20,
@@ -531,6 +531,7 @@
           ["Archetype: Deadeye", "archetype"],
           ["Class: Hunter", "class"],
         ],
+
         stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
 
         traits: [
@@ -540,6 +541,14 @@
 
         basic_roll(sides) {
           this.rolls.basic = this.roll(sides)
+        },
+
+        change_gun_toggle(gun_index, toggle_key, toggle_index) {
+          this.guns[gun_index].toggles[toggle_key][toggle_index].status = !
+            this.guns[gun_index].toggles[toggle_key][toggle_index].status
+          console.log(
+            this.guns[gun_index].toggles[toggle_key][toggle_index].status
+          )
         },
 
         check_insight() {
@@ -600,6 +609,8 @@
           if (gun.stats.Accuracy) {
             this.ranged_attack.accuracy_mod += gun.stats.Accuracy.value
           }
+
+
 
 
 
