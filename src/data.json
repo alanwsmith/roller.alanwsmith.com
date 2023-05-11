@@ -2,14 +2,8 @@
   "name": "Rodger",
   "level": 1,
   "gold": 113,
-  "action_skill": {
-    "name": "Wings Of Blood!"
-  },
   "badass_rank": 1,
   "badass_tokens": 0,
-  "favored_gun_type": {
-    "type":"Sniper"
-  },
   "health": {
     "max": 14,
     "current": 14,
@@ -22,6 +16,23 @@
     "type": "Basic",
     "info": "Just a regular old shield that saves your ass"
   },
+  "familiar": {
+    "name": "Roger",
+    "health_max": 15,
+    "health_current": 15
+  },
+  "gernades": {
+    "type": "tbd",
+    "damage": "tbd",
+    "info": "",
+    "count": "0",
+    "max": "3"
+  },
+  "potions":[
+    "",
+    "",
+    ""
+  ],
   "skill_points": [
         { "stat": "Accuracy", "value": 0 },
         { "stat": "Damage", "value": 0 },
@@ -46,7 +57,7 @@
   ],
   "skill_tree": [
     {
-      "name": "Caliber 1", "stats": [
+      "name": "Caliber", "level": 1, "stats": [
         { "stat": "Damage_Mod_Favored", "value": 1 },
         { "stat": "Search_Checks", "value": 1 }
       ]
@@ -56,18 +67,18 @@
     { "name": "Insider", "stat": "Loot_Search_Checks", "value": 5 },
     { "name": "Looter", "stat": "Guild_Sneak_Checks", "value": 5 }
   ],
-  "gernades": {
-    "type": "tbd",
-    "damage": "tbd",
-    "info": "",
-    "count": "0",
-    "max": "3"
-  },
-  "potions":[
-    "",
-    "",
-    ""
+  "feats": [
+    {
+      "name": "Social Distancing", 
+      "description": "Gain extra movement the first time an enemy enters an adjacent square" 
+    }
   ],
+  "favored_gun_type": {
+    "type":"Sniper"
+  },
+  "action_skill": {
+    "name": "Wings Of Blood!"
+  },
   "guns": [
     {
       "guild": "Black Powder",

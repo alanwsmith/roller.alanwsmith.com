@@ -97,7 +97,6 @@ const initiative_roll = () => {
 }
 
 const melee_roll = (event) => {
-    console.log("Here")
     s.Melee_Natural = roll(event.target.dataset.value)
     s.Melee_Damage = s.Melee_Natural + s.Melee_Mod
     updateState()
@@ -141,7 +140,6 @@ const roll_check = (event) => {
     const modifier = parseInt(document.getElementById(`${type}_Checks`).innerHTML)
     s.Checks_Natural = roll(20)
     s.Checks_Total = s.Checks_Natural + modifier
-    console.log(s.Checks_Natural)
     updateState()
 }
 
