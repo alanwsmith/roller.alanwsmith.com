@@ -7,7 +7,7 @@ fn main() {
     let template = include_str!("template.j2");
     let json = include_str!("data.json");
     let output = render(template, json);
-    fs::write("site/index.html", output).unwrap();
+    fs::write("index.html", output).unwrap();
 }
 
 fn render(template: &str, json: &str) -> String {

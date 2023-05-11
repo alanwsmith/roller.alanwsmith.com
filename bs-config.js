@@ -7,7 +7,7 @@ module.exports = {
     port: 3000,
     reloadOnRestart: true,
     server: {
-        baseDir: 'site',
+        baseDir: 'src',
         index: 'index.html'
     },
     watch: true,
