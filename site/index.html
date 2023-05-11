@@ -9,9 +9,12 @@
 
 <body>
   <main x-data>
-    <h1 x-text="$store.d.name"></h1>
-    <div x-text="$store.d.stat_base('Accuracy')"></div>
-    <div x-text="$store.d.stat_mod('Accuracy')"></div>
+    <h1>
+      <span x-text="$store.d.name"></span>
+      <br />
+      <span class="h2small" x-html="'Level ' + $store.d.level"></span>
+    </h1>
+
 
     <h2>Base Stats</h2>
     <div class="cards1">
@@ -34,6 +37,7 @@
     document.addEventListener('alpine:init', () => {
       Alpine.store('d', {
         name: "Rodger Hammerstein",
+        level: 1,
         stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
 
         raw_stats: {
