@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rodger Hammerstien Character Sheet</title>
+  <script defer src="alpine.js"></script>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+
+<body>
+  <main x-data>
+    <h1 x-text="$store.d.name"></h1>
+    <div x-text="$store.d.stat_base('Accuracy')"></div>
+    <div x-text="$store.d.stat_mod('Accuracy')"></div>
+
+    <h2>Base Stats</h2>
+    <div class="cards1">
+      <template x-for="stat_name in $store.d.stat_names">
+        <table>
+          <tr>
+            <td x-text="stat_name"></td>
+            <td x-text="$store.d.stat_base(stat_name)"></td>
+          </tr>
+          <tr>
+            <td>Mod</td>
+            <td x-text="$store.d.stat_mod(stat_name)"></td>
+          </tr>
+        </table>
+      </template>
+    </div>
+
+  </main>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('d', {
+        name: "Rodger Hammerstein",
+        stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
+
+        raw_stats: {
+          Accuracy: {
+            archetype: 4,
+            background: 1,
+            class: 2,
+            skill_points: 0,
+          },
+          Damage: {
+            archetype: 1,
+            class: 2,
+            skill_points: 0,
+          },
+          Mastery: {
+            archetype: 2,
+            class: 1,
+            skill_points: 0,
+          },
+          Speed: {
+            archetype: 0,
+            class: 0,
+            skill_points: 0,
+          }
+        },
+
+        stat_base(name) {
+          return Object.entries(this.raw_stats[name]).map((k) => {
+            return k[1]
+          }).reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        },
+
+        stat_mod(name) {
+          return Math.floor(this.stat_base(name) / 2)
+        }
+
+      })
+    })
+  </script>
+</body>
+
+</html>
