@@ -161,21 +161,20 @@
       </table>
     </div>
 
-    <!--
 
-    <h2>General Rolls<br>
+    <h2>Basic Rolls<br>
       <div class="h2small">
         Natural:
-        <span id="General_Roll">0</span>
+        <span x-text="$store.d.rolls.basic"></span>
       </div>
     </h2>
 
     <div class="cards1">
+
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="4">1d4</button></td>
-            <td id="Roll_1d4"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(4)">1d4</button></td>
           </tr>
         </tbody>
       </table>
@@ -183,8 +182,7 @@
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="6">1d6</button></td>
-            <td id="Roll_1d6"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(6)">1d6</button></td>
           </tr>
         </tbody>
       </table>
@@ -192,8 +190,7 @@
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="8">1d8</button></td>
-            <td id="Roll_1d8"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(8)">1d8</button></td>
           </tr>
         </tbody>
       </table>
@@ -201,8 +198,7 @@
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="10">1d10</button></td>
-            <td id="Roll_1d10"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(10)">1d10</button></td>
           </tr>
         </tbody>
       </table>
@@ -210,8 +206,7 @@
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="12">1d12</button></td>
-            <td id="Roll_1d12"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(12)">1d12</button></td>
           </tr>
         </tbody>
       </table>
@@ -219,14 +214,15 @@
       <table>
         <tbody>
           <tr>
-            <td><button class="general_roller" data-type="20">1d20</button></td>
-            <td id="Roll_1d20"></td>
+            <td><button class="roller" @click="$store.d.basic_roll(20)">1d20</button></td>
           </tr>
         </tbody>
       </table>
 
     </div>
 
+
+    <!--
     <h2>Range Attack<br>
       <div class="h2small">
         Damage:
@@ -529,6 +525,7 @@
         },
 
         rolls: {
+          basic: 0,
           checks_natural: 0,
           checks_total: 0,
           initiative_natural: 0,
@@ -555,7 +552,9 @@
           {name: "Looter", desc: "+5 Guild Sneak Checks"},
         ],
 
-
+        basic_roll(sides) {
+          this.rolls.basic = this.roll(sides)
+        },
 
         check_insight() {
           return this.stat_mod("Accuracy") + this.stat_value("Insight_Mod")
