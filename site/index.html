@@ -222,6 +222,42 @@
     </div>
 
 
+
+    <h2>Guns!</h2>
+    <div class="cards3">
+      <template x-for="(gun, index) in $store.d.guns">
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2" x-text="gun.name"></th>
+            </tr>
+            <tr>
+              <td x-html="`From ` + gun.guild"></td>
+              <td>Roll</td>
+            </tr>
+            <tr>
+              <td>Type</td>
+              <td x-text="gun.type"></td>
+            </tr>
+            <tr>
+              <td>Favored</td>
+              <td x-text="$store.d.is_favored_gun_type(index)"></td>
+            </tr>
+            <tr>
+              <td>Range</td>
+              <td x-text="gun.range"></td>
+            </tr>
+            <tr>
+              <td>Damage</td>
+              <td x-text="gun.damage.map((d) => { return ` d` + d })"></td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+    </div>
+
+
+
     <!--
     <h2>Range Attack<br>
       <div class="h2small">
@@ -474,6 +510,54 @@
         movement: 3,
         name: "Rodger Hammerstein",
 
+        favored_guns: ["Sniper"],
+
+        guns: [
+          {
+            damage: [10],
+            guild: "Black Powder",
+            name: "Crappy Sniper",
+            range: 8,
+            type: "Sniper",
+            crits: [
+              {min_roll: 16, add: 1}
+            ],
+            hits: [
+              {min_roll: 8, add: 1}
+            ],
+            stats: [
+              {stat: "Gun_Accuracy_Mod", value: 2},
+              {stat: "Gun_Crit_Damage_Mod", value: 2}
+            ],
+            toggles: [
+              {
+                name: "Range 3 = ACC +3",
+                stat: "Gun_Accuracy_Mod",
+                value: 3
+              }
+            ],
+          },
+
+          {
+            damage: [4, 4],
+            guild: "Alas!",
+            name: "Synergy",
+            range: 5,
+            type: "Pistol",
+            crits: [],
+            hits: [
+              {min_roll: 2, add: 1},
+              {min_roll: 8, add: 1},
+              {min_roll: 16, add: 1}
+            ],
+            stats: [
+              {stat: "Gun_Damage_Mod", value: 1}
+            ],
+            toggles: []
+          }
+
+        ],
+
         health: {
           max: 14,
           current: 14,
@@ -588,6 +672,13 @@
           return this.stat_mod("Speed") + this.stat_value("Traverse_Mod")
         },
 
+        is_favored_gun_type(index) {
+          if (this.favored_guns.includes(this.guns[index].type)) {
+            return "yes"
+          } else {
+            return "no"
+          }
+        },
 
         roll(sides) {
           // Includes parseInt so you don't have to do it elsewhere
