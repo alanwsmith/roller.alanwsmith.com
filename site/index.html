@@ -92,7 +92,7 @@
         <tbody>
           <tr>
             <td>BA Rank:</td>
-            <td x-text="$store.d.ba_rank"></td>
+            <td x-html="`+` + $store.d.ba_rank"></td>
           </tr>
           <tr>
             <td>1d20</td>
@@ -222,7 +222,6 @@
     </div>
 
 
-
     <h2>Guns!</h2>
     <div class="cards3">
       <template x-for="(gun, index) in $store.d.guns">
@@ -251,6 +250,30 @@
               <td>Damage</td>
               <td x-text="gun.damage.map((d) => { return ` d` + d })"></td>
             </tr>
+            <template x-for="stat in gun.stats">
+              <tr>
+                <td x-text="stat.name"></td>
+                <td x-html="`+` + stat.value"></td>
+              </tr>
+            </template>
+            <template x-for="toggle in gun.toggles">
+              <tr>
+                <td x-text="toggle.name"></td>
+                <td><input type="checkbox" checked></td>
+              </tr>
+            </template>
+            <template x-for="hit in gun.hits">
+              <tr>
+                <td>Add 1 hit at:</td>
+                <td x-text="hit.min_roll"></td>
+              </tr>
+            </template>
+            <template x-for="crit in gun.crits">
+              <tr>
+                <td>Add 1 crit at:</td>
+                <td x-text="crit.min_roll"></td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </template>
@@ -319,120 +342,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <h2>Guns!</h2>
-    <div class="cards3">
-      <table class="gun_details">
-        <tbody>
-          <tr>
-            <td><strong>Crappy Sniper</strong></td>
-            <td>
-              <button class="accuracy_roller" data-gun="0">Roll</button>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">From Black Powder</td>
-          </tr>
-          <tr>
-            <td>Type:</td>
-            <td id="Gun_Type_gun0">Sniper</td>
-          </tr>
-          <tr>
-            <td>Favored:</td>
-            <td id="Is_Favored_Gun_Type__gun0">yes</td>
-          </tr>
-          <tr>
-            <td>Range: </td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>Damage Die:</td>
-            <td class="DamageDie__gun0">10</td>
-          </tr>
-          <tr>
-            <td>Gun_Accuracy_Mod:</td>
-            <td class="Gun_Accuracy_Mod__gun0 plus">2</td>
-          </tr>
-          <tr>
-            <td>Gun_Crit_Damage_Mod:</td>
-            <td class="Gun_Crit_Damage_Mod__gun0 plus">2</td>
-          </tr>
-          <tr>
-            <td>Range 3 = ACC +3</td>
-            <td><input type="checkbox" class="Gun_Accuracy_Mod__gun0_toggle" data-value="3" checked="">
-            </td>
-          </tr>
-          <tr>
-            <td class="hits_count_gun0" data-min="8" data-value="1">Add
-              1 hit at:
-            </td>
-            <td>
-              8
-            </td>
-          </tr>
-          <tr>
-            <td class="crits_count_gun0" data-min="16" data-value="1">
-              Add 1 crit at:
-            </td>
-            <td>
-              16
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
-
-      <table class="gun_details">
-        <tbody>
-          <tr>
-            <td><strong>Synergy</strong></td>
-            <td>
-              <button class="accuracy_roller" data-gun="1">Roll</button>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">From Alas!</td>
-          </tr>
-          <tr>
-            <td>Type:</td>
-            <td id="Gun_Type_gun1">Pistol</td>
-          </tr>
-          <tr>
-            <td>Favored:</td>
-            <td id="Is_Favored_Gun_Type__gun1">no</td>
-          </tr>
-          <tr>
-            <td>Range: </td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>Damage Die:</td>
-            <td class="DamageDie__gun1">4</td>
-          </tr>
-          <tr>
-            <td>Damage Die:</td>
-            <td class="DamageDie__gun1">4</td>
-          </tr>
-          <tr>
-            <td>Gun_Damage_Mod:</td>
-            <td class="Gun_Damage_Mod__gun1 plus">1</td>
-          </tr>
-          <tr>
-            <td class="hits_count_gun1" data-min="2" data-value="1">Add 1 hit at:</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td class="hits_count_gun1" data-min="8" data-value="1">Add 1 hit at:</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td class="hits_count_gun1" data-min="16" data-value="1">Add 1 hit at:</td>
-            <td>16</td>
-          </tr>
-        </tbody>
-      </table>
-
     </div>
 
 
@@ -526,8 +435,8 @@
               {min_roll: 8, add: 1}
             ],
             stats: [
-              {stat: "Gun_Accuracy_Mod", value: 2},
-              {stat: "Gun_Crit_Damage_Mod", value: 2}
+              {name: "Accuracy", stat: "Gun_Accuracy_Mod", value: 2},
+              {name: "Crit Damage", stat: "Gun_Crit_Damage_Mod", value: 2}
             ],
             toggles: [
               {
@@ -551,7 +460,7 @@
               {min_roll: 16, add: 1}
             ],
             stats: [
-              {stat: "Gun_Damage_Mod", value: 1}
+              {name: "Damage", stat: "Gun_Damage_Mod", value: 1}
             ],
             toggles: []
           }
