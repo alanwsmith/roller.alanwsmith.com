@@ -67,7 +67,6 @@
     </div>
 
 
-
     <h2>Initiative<br>
       <div class="h2small">Natural: <span x-text="$store.d.rolls.initiative_natural">0</span> - Total: <span
           x-text="$store.d.rolls.initiative_total">0</span></div>
@@ -100,11 +99,96 @@
     </div>
 
 
+    <h2>Skill Checks<br>
+      <div class="h2small">Natural: <span x-text="$store.d.rolls.checks_natural">0</span>
+        - Total: <span x-text="$store.d.rolls.checks_total">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.insight())">Insight:</button></td>
+            <td x-text="$store.d.insight()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.interact())">Interact:</button></td>
+            <td x-text="$store.d.interact()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.search())">Search:</button></td>
+            <td x-text="$store.d.search()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.loot_search())">Loot Search:</button>
+            </td>
+            <td x-text="$store.d.loot_search()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.sneak())">Sneak:</button></td>
+            <td x-text="$store.d.sneak()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.guild_sneak())">Guild Sneak:</button>
+            </td>
+            <td x-text="$store.d.guild_sneak()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.talk())">Talk:</button></td>
+            <td x-text="$store.d.talk()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.traverse())">Traverse:</button></td>
+            <td x-text="$store.d.traverse()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
   </main>
 
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('d', {
+
+        // checks
+        insight() {
+          return this.mod_of('accuracy') + this.value_of('insight_mod')
+        },
+        interact() {
+          return this.mod_of('accuracy') + this.value_of('interact_mod')
+        },
+        search() {
+          return this.mod_of('mastery') + this.value_of('search_mod')
+        },
+        loot_search() {
+          return this.value_of('loot_search') + this.search()
+        },
+        sneak() {
+          return this.mod_of('mastery') + this.value_of('sneak_mod')
+        },
+        guild_sneak() {
+          return this.value_of('guild_sneak') + this.sneak()
+        },
+        talk() {
+          return this.mod_of('speed') + this.value_of('talk_mod')
+        },
+        traverse() {
+          return this.mod_of('speed') + this.value_of('traverse_mod')
+        },
 
         mod_of(id) {
           return Math.floor(this.value_of(id) / 2)
@@ -132,6 +216,11 @@
             this.value_of('initiative_mod')
         },
 
+        skill_check(mod) {
+          this.rolls.checks_natural = this.roll(20)
+          this.rolls.checks_total = this.rolls.checks_natural + mod
+        },
+
         value_of(id) {
           let holder = []
           for (let k of Object.keys(this.stats)) {
@@ -149,6 +238,8 @@
         name: "Rodger Hammerstien",
 
         rolls: {
+          checks_natural: "",
+          checks_total: "",
           initiative_natural: "",
           initiative_total: "",
         },
@@ -180,18 +271,19 @@
               {k: "speed", v: 0},
             ]
           },
+
           background: {
             name: "Background: Prize Shot",
             stats: [
               {k: "accuracy", v: 2},
-              {k: "insight", v: 2}
+              {k: "insight_mod", v: -2}
             ]
           },
           caliber1: {
             name: "Skill Tree: Caliber Level 1",
             stats: [
               {k: "damage_mod_favored_gun", v: 1},
-              {k: "search", v: 1},
+              {k: "search_mod", v: 1},
             ]
           },
           class: {
@@ -212,7 +304,7 @@
           looter: {
             name: "Looter Trait",
             stats: [
-              {k: "guild_sneak_search", v: 5},
+              {k: "guild_sneak", v: 5},
             ]
           },
           skill_points: {
