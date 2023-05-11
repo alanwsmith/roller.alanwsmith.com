@@ -102,65 +102,66 @@
       </table>
     </div>
 
-
     <h2>Skill Checks<br>
       <div class="h2small">Natural: <span x-text="$store.d.rolls.checks_natural">0</span>
         - Total: <span x-text="$store.d.rolls.checks_total">0</span>
       </div>
     </h2>
 
-    <!--
-
     <div class="cards1">
       <table>
         <tbody>
           <tr>
-            <td><button class="check_roller" data-type="Insight">Insight:</button></td>
-            <td id="Insight_Checks">1</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_insight())">Insight:</button></td>
+            <td x-text="$store.d.check_insight()"></td>
           </tr>
           <tr>
-            <td><button class="check_roller" data-type="Interact">Interact:</button></td>
-            <td id="Interact_Checks">3</td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td><button class="check_roller" data-type="Search">Search:</button></td>
-            <td id="Search_Checks">2</td>
-          </tr>
-          <tr>
-            <td><button class="check_roller" data-type="Loot_Search">Loot:</button></td>
-            <td id="Loot_Search_Checks">7</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_interact())">Interact:</button></td>
+            <td x-text="$store.d.check_interact()"></td>
           </tr>
         </tbody>
       </table>
       <table>
         <tbody>
           <tr>
-            <td><button class="check_roller" data-type="Sneak">Sneak:</button></td>
-            <td id="Sneak_Checks">1</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_search())">Search:</button></td>
+            <td x-text="$store.d.check_search()"></td>
           </tr>
           <tr>
-            <td><button class="check_roller" data-type="Guild_Sneak">Guild:</button></td>
-            <td id="Guild_Sneak_Checks">6</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_search_loot())">Loot Search:</button>
+            </td>
+            <td x-text="$store.d.check_search_loot()"></td>
           </tr>
         </tbody>
       </table>
       <table>
         <tbody>
           <tr>
-            <td><button class="check_roller" data-type="Talk">Talk:</button></td>
-            <td id="Talk_Checks">0</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_sneak())">Sneak:</button></td>
+            <td x-text="$store.d.check_sneak()"></td>
           </tr>
           <tr>
-            <td><button class="check_roller" data-type="Traverse">Traverse:</button></td>
-            <td id="Traverse_Checks">0</td>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_sneak_guild())">Guild Sneak:</button>
+            </td>
+            <td x-text="$store.d.check_sneak_guild()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_talk())">Talk:</button></td>
+            <td x-text="$store.d.check_talk()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.check_traverse())">Traverse:</button></td>
+            <td x-text="$store.d.check_traverse()"></td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!--
 
     <h2>General Rolls<br>
       <div class="h2small">
@@ -477,15 +478,6 @@
         movement: 3,
         name: "Rodger Hammerstein",
 
-        detail_checks: {
-          Guild_Sneak_Checks: {
-            looter_trait: 5
-          },
-          Loot_Search_Checks: {
-            insider_trait: 5
-          }
-        },
-
         health: {
           max: 14,
           current: 14,
@@ -507,26 +499,33 @@
           Damage_Mod_Favored_Gun: {
             caliber_level_1: 1
           },
-          Insight: {
+          Guild_Sneak_Mod: {
+            looter_trait: 5
+          },
+          Insight_Mod: {
             background: -2,
           },
+          Interact_Mod: {},
           Initiative_Mod: {},
+          Loot_Search_Mod: {
+            insider_trait: 5
+          },
           Mastery: {
             archetype: 2,
             class: 1,
             skill_points: 0,
           },
-          Search: {
+          Search_Mod: {
             caliber_level_1: 1
           },
-          Sneak: {},
+          Sneak_Mod: {},
           Speed: {
             archetype: 0,
             class: 0,
             skill_points: 0,
           },
-          Talk: {},
-          Traverse: {},
+          Talk_Mod: {},
+          Traverse_Mod: {},
         },
 
         rolls: {
@@ -551,11 +550,45 @@
         ],
         stat_names: ['Accuracy', 'Damage', 'Mastery', 'Speed'],
 
-
         traits: [
           {name: "Insider", desc: "+5 Loot Search Checks"},
           {name: "Looter", desc: "+5 Guild Sneak Checks"},
         ],
+
+
+
+        check_insight() {
+          return this.stat_mod("Accuracy") + this.stat_value("Insight_Mod")
+        },
+
+        check_interact() {
+          return this.stat_mod("Accuracy") + this.stat_value("Interact_Mod")
+        },
+
+        check_search() {
+          return this.stat_mod("Mastery") + this.stat_value("Search_Mod")
+        },
+
+        check_search_loot() {
+          return this.check_search() + this.stat_value("Loot_Search_Mod")
+        },
+
+        check_sneak() {
+          return this.stat_mod("Mastery") + this.stat_value("Sneak_Mod")
+        },
+
+        check_sneak_guild() {
+          return this.check_sneak() + this.stat_value("Guild_Sneak_Mod")
+        },
+
+        check_talk() {
+          return this.stat_mod("Speed") + this.stat_value("Talk_Mod")
+        },
+
+        check_traverse() {
+          return this.stat_mod("Speed") + this.stat_value("Traverse_Mod")
+        },
+
 
         roll(sides) {
           // Includes parseInt so you don't have to do it elsewhere
@@ -574,6 +607,11 @@
             this.stat_value('Initiative_Mod')
         },
 
+        skill_check(mod) {
+          this.rolls.checks_natural = this.roll(20)
+          this.rolls.checks_total = this.rolls.checks_natural + mod
+        },
+
         stat_value(name) {
           return Object.entries(this.stat_values[name]).map((k) => {
             return k[1]
@@ -582,7 +620,7 @@
 
         stat_mod(name) {
           return Math.floor(this.stat_value(name) / 2)
-        }
+        },
 
       })
     })
