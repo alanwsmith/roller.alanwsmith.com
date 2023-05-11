@@ -28,7 +28,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -41,7 +40,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -54,7 +52,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -67,7 +64,6 @@
           </tr>
         </tbody>
       </table>
-
     </div>
 
 
@@ -107,7 +103,6 @@
         - Total: <span x-text="$store.d.rolls.checks_total">0</span>
       </div>
     </h2>
-
     <div class="cards1">
       <table>
         <tbody>
@@ -168,9 +163,7 @@
         <span x-text="$store.d.rolls.basic"></span>
       </div>
     </h2>
-
     <div class="cards1">
-
       <table>
         <tbody>
           <tr>
@@ -178,7 +171,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -186,7 +178,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -194,7 +185,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -202,7 +192,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -210,7 +199,6 @@
           </tr>
         </tbody>
       </table>
-
       <table>
         <tbody>
           <tr>
@@ -218,9 +206,68 @@
           </tr>
         </tbody>
       </table>
-
     </div>
 
+    <h2>Range Attack<br>
+      <div class="h2small">
+        Damage:
+        <span x-text="$store.d.ranged_attack.total_damage"></span>
+      </div>
+    </h2>
+    <div class="cards2">
+      <table>
+        <tbody>
+          <tr>
+            <td>Accuracy (d20):</td>
+            <td x-text="$store.d.ranged_attack.accuracy_natural"></td>
+          </tr>
+          <tr>
+            <td>Modifier:</td>
+            <td x-text="$store.d.ranged_attack.accuracy_mod"></td>
+          </tr>
+          <tr>
+            <td>Calculated:</td>
+            <td x-text="$store.d.ranged_attack.accuracy_calculated"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Hits:</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Roll:</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Crits:</td>
+            <td< /td>
+          </tr>
+          <tr>
+            <td>Roll:</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>FavGun DMG:</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Bonuses:</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h2>Guns!</h2>
     <div class="cards3">
@@ -232,7 +279,7 @@
             </tr>
             <tr>
               <td x-html="`From ` + gun.guild"></td>
-              <td>Roll</td>
+              <td><button @click="$store.d.roll_ranged_attack(index)">Roll</button></td>
             </tr>
             <tr>
               <td>Type</td>
@@ -280,69 +327,7 @@
     </div>
 
 
-
     <!--
-    <h2>Range Attack<br>
-      <div class="h2small">
-        Damage:
-        <span id="Total_Damage">0</span>
-      </div>
-    </h2>
-
-    <div class="cards2">
-      <table>
-        <tbody>
-          <tr>
-            <td>Natural:</td>
-            <td id="Roll_Natural">0</td>
-          </tr>
-          <tr>
-            <td>Modifier:</td>
-            <td id="Accuracy_Adjustment" class="plus">0</td>
-          </tr>
-          <tr>
-            <td>Calculated:</td>
-            <td id="Roll_Total">0</td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td>Hits:</td>
-            <td id="Hits">0</td>
-          </tr>
-          <tr>
-            <td>Roll:</td>
-            <td><strong id="Natural_Hit_Rolls">0</strong></td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td>Crits:</td>
-            <td id="Crits">0</td>
-          </tr>
-          <tr>
-            <td>Roll:</td>
-            <td><strong id="Natural_Crit_Rolls">0</strong></td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <tbody>
-          <tr>
-            <td>FavGun DMG:</td>
-            <td><strong id="Favored_Gun_Damage_Mod" class="plus">0</strong></td>
-          </tr>
-          <tr>
-            <td>Bonuses:</td>
-            <td><strong id="Damage_Bonuses" class="plus">0</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
 
     <h2>Melee Attack
@@ -406,8 +391,8 @@
         </div>
       </div>
     </template>
-
   </main>
+
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('d', {
@@ -434,10 +419,10 @@
             hits: [
               {min_roll: 8, add: 1}
             ],
-            stats: [
-              {name: "Accuracy", stat: "Gun_Accuracy_Mod", value: 2},
-              {name: "Crit Damage", stat: "Gun_Crit_Damage_Mod", value: 2}
-            ],
+            stats: {
+              Accuracy: {name: "Accuracy", value: 2},
+              Crit_Damage: {name: "Crit Damage", value: 2}
+            },
             toggles: [
               {
                 name: "Range 3 = ACC +3",
@@ -459,9 +444,9 @@
               {min_roll: 8, add: 1},
               {min_roll: 16, add: 1}
             ],
-            stats: [
-              {name: "Damage", stat: "Gun_Damage_Mod", value: 1}
-            ],
+            stats: {
+              Damage: {name: "Gun_Damage_Mod", value: 1}
+            },
             toggles: []
           }
 
@@ -471,6 +456,21 @@
           max: 14,
           current: 14,
           regen: 0
+        },
+
+        ranged_attack: {
+          accuracy_natural: 0,
+          accuracy_mod: 0,
+          accuracy_calculated: 0,
+          total_damage: 0,
+        },
+
+        rolls: {
+          basic: 0,
+          checks_natural: 0,
+          checks_total: 0,
+          initiative_natural: 0,
+          initiative_total: 0,
         },
 
         stat_values: {
@@ -517,13 +517,6 @@
           Traverse_Mod: {},
         },
 
-        rolls: {
-          basic: 0,
-          checks_natural: 0,
-          checks_total: 0,
-          initiative_natural: 0,
-          initiative_total: 0,
-        },
 
         shields: {
           max: 20,
@@ -583,9 +576,9 @@
 
         is_favored_gun_type(index) {
           if (this.favored_guns.includes(this.guns[index].type)) {
-            return "yes"
+            return true
           } else {
-            return "no"
+            return false
           }
         },
 
@@ -595,6 +588,23 @@
           crypto.getRandomValues(roll_holder)
           const raw_roll = roll_holder[0] / (0xffffffff + 1)
           return Math.floor(raw_roll * parseInt(sides, 10)) + 1
+        },
+
+        roll_ranged_attack(index) {
+          const gun = this.guns[index]
+          this.ranged_attack.accuracy_natural = this.roll(20)
+          this.ranged_attack.accuracy_mod = 0
+          if (this.is_favored_gun_type(index)) {
+            this.ranged_attack.accuracy_mod += this.stat_mod('Accuracy')
+          }
+          if (gun.stats.Accuracy) {
+            this.ranged_attack.accuracy_mod += gun.stats.Accuracy.value
+          }
+
+
+
+
+          // this.ranged_attack.total_damage = 'x'
         },
 
         roll_initiative() {
