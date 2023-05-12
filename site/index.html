@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rodger Hammerstien Character Sheet</title>
+  <script defer src="alpine.js"></script>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+
+<body>
+  <main x-data>
+    <h1>
+      <span x-text="$store.d.name"></span>
+      <br />
+      <span class="h2small" x-html="'Bunkers and Badasses - Level ' + $store.d.value_of('level')"></span>
+    </h1>
+
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td>Health:</td>
+            <td x-html="$store.d.value_of('health')+ `/` + $store.d.value_of('max_health')"></td>
+          </tr>
+          <tr>
+            <td>Regen:</td>
+            <td x-text="$store.d.value_of('health_regen')"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Shields:</td>
+            <td x-html="$store.d.value_of('shields') + `/` + $store.d.value_of('max_shields')"></td>
+          </tr>
+          <tr>
+            <td>Regen:</td>
+            <td x-html="$store.d.value_of('shield_regen')"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Movement:</td>
+            <td x-text="$store.d.movement()"></td>
+          </tr>
+          <tr>
+            <td>Gold:</td>
+            <td x-text="$store.d.value_of('gold')"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>BA Rank:</td>
+            <td x-text="$store.d.value_of('ba_rank')"></td>
+          </tr>
+          <tr>
+            <td>BA Tokens:</td>
+            <td x-text="$store.d.value_of('ba_tokens')"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Initiative<br>
+      <div class="h2small">Natural: <span x-text="$store.d.rolls.initiative_natural">0</span> - Total: <span
+          x-text="$store.d.rolls.initiative_total">0</span></div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td>Speed Mod:</td>
+            <td x-html="`+` + $store.d.mod_of('speed')"></td>
+          </tr>
+          <tr>
+            <td>Misc Mod:</td>
+            <td x-html="`+` + $store.d.value_of('initiative_mod')"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>BA Rank:</td>
+            <td x-html="`+` + $store.d.value_of('ba_rank')"></td>
+          </tr>
+          <tr>
+            <td>1d20</td>
+            <td><button class="roller" @click="$store.d.roll_initiative()">Roll</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Skill Checks<br>
+      <div class="h2small">Natural: <span x-text="$store.d.rolls.checks_natural">0</span>
+        - Total: <span x-text="$store.d.rolls.checks_total">0</span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.insight())">Insight:</button></td>
+            <td x-text="$store.d.insight()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.interact())">Interact:</button></td>
+            <td x-text="$store.d.interact()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.search())">Search:</button></td>
+            <td x-text="$store.d.search()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.loot_search())">Loot Search:</button>
+            </td>
+            <td x-text="$store.d.loot_search()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.sneak())">Sneak:</button></td>
+            <td x-text="$store.d.sneak()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.guild_sneak())">Guild Sneak:</button>
+            </td>
+            <td x-text="$store.d.guild_sneak()"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.talk())">Talk:</button></td>
+            <td x-text="$store.d.talk()"></td>
+          </tr>
+          <tr>
+            <td><button class="roller" @click="$store.d.skill_check($store.d.traverse())">Traverse:</button></td>
+            <td x-text="$store.d.traverse()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Basic Rolls<br>
+      <div class="h2small">
+        Natural:
+        <span x-text="$store.d.rolls.basic"></span>
+      </div>
+    </h2>
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(4)">1d4</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(6)">1d6</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(8)">1d8</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(10)">1d10</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(12)">1d12</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td><button class="roller" @click="$store.d.basic_roll(20)">1d20</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Range Attack<br>
+      <div class="h2small">
+        Damage:
+        <span x-text="$store.d.ranged_attack.total_damage"></span>
+      </div>
+    </h2>
+    <div class="cards2">
+      <table>
+        <tbody>
+          <tr>
+            <td>Accuracy (d20):</td>
+            <td x-text="$store.d.ranged_attack.accuracy_natural"></td>
+          </tr>
+          <tr>
+            <td>Modifier:</td>
+            <td x-text="$store.d.ranged_attack.accuracy_mod"></td>
+          </tr>
+          <tr>
+            <td>Calculated:</td>
+            <td x-text="$store.d.ranged_attack.accuracy_calculated"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Hits:</td>
+            <td x-text="$store.d.ranged_attack.hits"></td>
+          </tr>
+          <tr>
+            <td>Roll:</td>
+            <td x-text="$store.d.ranged_attack.hits_roll"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Crits (d12):</td>
+            <td x-text="$store.d.ranged_attack.crits"></td>
+          </tr>
+          <tr>
+            <td>Roll:</td>
+            <td x-text="$store.d.ranged_attack.crits_roll"></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Base Damage:</td>
+            <td x-text="$store.d.ranged_attack.base_damage"></td>
+          </tr>
+          <tr>
+            <td>Modifier:</td>
+            <td x-text="$store.d.ranged_attack.damage_mod"></td>
+          </tr>
+          <tr>
+            <td>Total:</td>
+            <td x-text="$store.d.ranged_attack.total_damage"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Guns!</h2>
+    <div class="cards3">
+      <template x-for="(gun, gun_index) in $store.d.guns">
+        <table>
+          <tbody>
+            <tr>
+              <th colspan="2" x-text="gun.name"></th>
+            </tr>
+            <tr>
+              <td x-html="`From ` + gun.guild"></td>
+              <td><button class="roller" @click="$store.d.roll_ranged_attack(gun_index)">Roll</button></td>
+            </tr>
+            <tr>
+              <td>Type</td>
+              <td x-text="gun.type"></td>
+            </tr>
+            <tr>
+              <td>Favored</td>
+              <td x-text="$store.d.is_favored_gun_type(gun_index)"></td>
+            </tr>
+            <tr>
+              <td>Range</td>
+              <td x-text="gun.range"></td>
+            </tr>
+            <tr>
+              <td>Damage</td>
+              <td x-text="gun.damage.map((d) => { return ` d` + d })"></td>
+            </tr>
+            <template x-for="stat in gun.stats">
+              <tr>
+                <td x-text="$store.d.stat_name(stat.k)"></td>
+                <td x-html="`+` + stat.v"></td>
+              </tr>
+            </template>
+            <template x-for="toggle, toggle_index in gun.toggles">
+              <tr>
+                <td x-text="toggle.desc"></td>
+                <td><input x-on:change="$store.d.change_gun_toggle(gun_index, toggle_index)" type="checkbox" checked>
+                </td>
+              </tr>
+            </template>
+            <template x-for="hit in gun.hits">
+              <tr>
+                <td>Add 1 hit at:</td>
+                <td x-text="hit.min_roll"></td>
+              </tr>
+            </template>
+            <template x-for="crit in gun.crits">
+              <tr>
+                <td>Add 1 crit at:</td>
+                <td x-text="crit.min_roll"></td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </template>
+    </div>
+
+    <h2>Melee Attack
+      <div class="h2small">
+        Damage:
+        <span x-text="$store.d.melee_total_damage">0</span>
+      </div>
+    </h2>
+
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td>1d4</td>
+            <td><button class="roller" @click="$store.d.roll_melee()">Roll</button></td>
+          </tr>
+          <tr>
+            <td>Natural:</td>
+            <td x-text="$store.d.melee_natural_damage"></td>
+          </tr>
+          <tr>
+            <td>
+              Mod:</td>
+            <td class="plus" x-text="$store.d.mod_of('damage')"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Base Stats</h2>
+    <div class="cards1">
+
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.value_of('accuracy')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('accuracy')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.value_of('damage')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('damage')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Master</td>
+          <td x-text="$store.d.value_of('master')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('mastery')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.value_of('speed')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('speed')" class="plus"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Skill Points</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('skill_points', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.get_stat('skill_points', 'damage')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery</td>
+          <td x-text="$store.d.get_stat('skill_points', 'mastery')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.get_stat('skill_points', 'speed')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Archetype: Deadeye</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('archetype', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.get_stat('archetype', 'damage')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery</td>
+          <td x-text="$store.d.get_stat('archetype', 'mastery')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.get_stat('archetype', 'speed')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Class: Hunter </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('class', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.get_stat('class', 'damage')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery</td>
+          <td x-text="$store.d.get_stat('class', 'mastery')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.get_stat('class', 'speed')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Background: Prize Shot</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('background', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Insight Checks</td>
+          <td x-text="$store.d.get_stat('background', 'insight_mod')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Skills</h2>
+    <template x-for="skill in $store.d.skills()">
+      <div class="cards3">
+        <table>
+          <tbody>
+            <tr>
+              <td x-text="$store.d.stats[skill].name"></td>
+            </tr>
+            <tr>
+              <td>Level</td>
+              <td x-text="$store.d.stats[skill].level"></td>
+            </tr>
+            <template x-for="stat in $store.d.stats[skill].stats">
+              <tr>
+                <td x-text="$store.d.stat_name(stat.k)"></td>
+                <td x-text="stat.v"></td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </template>
+
+    <h2>Action Skill
+      <div class="h2small">Encounter uses: <input type="checkbox"> - Day uses: <input type="checkbox"> <input
+          type="checkbox"> <input type="checkbox"></div>
+    </h2>
+
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Wings Of Blood!</td>
+          </tr>
+          <tr>
+            <td>Does 2d8 to selected enemy</td>
+          </tr>
+          <tr>
+            <td>All adjacent enemies are taunted and attack me next</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Familiar: Roger The Flamingo</h2>
+
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Health:</td>
+            <td>15/15</td>
+          </tr>
+          <tr>
+            <td>Attack/Turn</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Movement</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>Damage:</td>
+            <td>1d4 + 1</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>ACC:</td>
+            <td class="plus">1</td>
+          </tr>
+          <tr>
+            <td>Roll 2-7:</td>
+            <td>-1 DMG</td>
+          </tr>
+          <tr>
+            <td>Roll 8-15:</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Roll 16+:</td>
+            <td>+1 DMG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Gernades</h2>
+
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Type:</td>
+            <td>tbd</td>
+          </tr>
+          <tr>
+            <td>Damage:</td>
+            <td>tbd</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Current Count:</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Max:</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Info:</td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Potions</h2>
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>1. </td>
+          </tr>
+
+          <tr>
+            <td>2. </td>
+          </tr>
+
+          <tr>
+            <td>3. </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Favored Guns</h2>
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Sniper</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Feats</h2>
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Social Distancing: </td>
+          </tr>
+          <tr>
+            <td>Gain extra movement the first time an enemy enters an adjacent square</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Traits</h2>
+    <!-- TODO: Make this dynamic -->
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="2">Insider</td>
+          </tr>
+          <tr>
+            <td>Guild Sneak Checks</td>
+            <td class="Guild_Sneak_Checks plus">5</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="2">Looter</td>
+          </tr>
+          <tr>
+            <td>Loot Search Checks</td>
+            <td class="Loot_Search_Checks plus">5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Shield</h2>
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Shield Type:</td>
+            <td>Basic</td>
+          </tr>
+          <tr>
+            <td>Shield Info:</td>
+            <td>Just a regular old shield that saves your ass</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <footer>
+    from<br /><a href="https://www.alanwsmith.com/">alan w. smith<br />
+      <a href="https://github.com/alanwsmith/roller.alanwsmith.com">about/source</a>
+  </footer>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('d', {
+
+        name: "Rodger Hammerstien",
+
+        // checks
+        insight() {
+          return this.mod_of('accuracy') + this.value_of('insight_mod')
+        },
+        interact() {
+          return this.mod_of('accuracy') + this.value_of('interact_mod')
+        },
+        search() {
+          return this.mod_of('mastery') + this.value_of('search_mod')
+        },
+        loot_search() {
+          return this.value_of('loot_search') + this.search()
+        },
+        sneak() {
+          return this.mod_of('mastery') + this.value_of('sneak_mod')
+        },
+        guild_sneak() {
+          return this.value_of('guild_sneak') + this.sneak()
+        },
+        talk() {
+          return this.mod_of('speed') + this.value_of('talk_mod')
+        },
+        traverse() {
+          return this.mod_of('speed') + this.value_of('traverse_mod')
+        },
+
+        // functions 
+        basic_roll(sides) {
+          this.rolls.basic = this.roll(sides)
+        },
+
+        change_gun_toggle(gun_index, toggle_index) {
+          this.guns[gun_index].toggles[toggle_index].status = !
+            this.guns[gun_index].toggles[toggle_index].status
+        },
+
+        get_stat(type, id) {
+          let v = 0
+          this.stats[type].stats.forEach((s) => {
+            if (s.k === id) {
+              v = s.v
+            }
+          })
+          return v
+        },
+
+        gun_toggle_of(gun_index, id) {
+          let holder = []
+          this.guns[gun_index].toggles.forEach((stat) => {
+            if (stat.k == id && stat.status === true) {
+              holder.push(stat.v)
+            }
+          })
+          return holder.reduce((a, c) => a + c, 0);
+        },
+
+        gun_value_of(gun_index, id) {
+          let holder = []
+          this.guns[gun_index].stats.forEach((stat) => {
+            if (stat.k == id) {
+              holder.push(stat.v)
+            }
+          })
+          return holder.reduce((a, c) => a + c, 0);
+        },
+
+        is_favored_gun_type(index) {
+          if (this.favored_guns.includes(this.guns[index].type)) {
+            return true
+          } else {
+            return false
+          }
+        },
+
+        mod_of(id) {
+          return Math.floor(this.value_of(id) / 2)
+        },
+
+        movement() {
+          return this.value_of("movement_base") +
+            this.mod_of("speed") +
+            this.mod_of("movement_mod")
+        },
+
+        roll(sides) {
+          const roll_holder = new Uint32Array(1)
+          crypto.getRandomValues(roll_holder)
+          const raw_roll = roll_holder[0] / (0xffffffff + 1)
+          return Math.floor(raw_roll * parseInt(sides, 10)) + 1
+        },
+
+        roll_initiative() {
+          this.rolls.initiative_natural = this.roll(20)
+          this.rolls.initiative_total =
+            this.rolls.initiative_natural +
+            this.value_of('ba_rank') +
+            this.mod_of('speed') +
+            this.value_of('initiative_mod')
+        },
+
+        roll_melee() {
+          this.melee_natural_damage = this.roll(this.value_of('melee_die'))
+          this.melee_total_damage = this.melee_natural_damage + this.mod_of('damage')
+        },
+
+        roll_ranged_attack(gun_index) {
+          const gun = this.guns[gun_index]
+          const ra = this.ranged_attack
+          ra.accuracy_mod = 0
+          ra.accuracy_calculated = 0
+          ra.base_damage = 0
+          ra.damage_mod = 0
+          ra.total_damage = 0
+          ra.hits = 0
+          ra.hits_roll = []
+          ra.crits = 0
+          ra.crits_roll = []
+          ra.accuracy_natural = this.roll(20)
+
+          if (ra.accuracy_natural > 1) {
+            if (this.is_favored_gun_type(gun_index)) {
+              ra.accuracy_mod += this.mod_of('accuracy')
+            }
+            ra.accuracy_mod += this.gun_value_of(gun_index, 'accuracy_mod')
+            ra.accuracy_mod += this.gun_toggle_of(gun_index, 'accuracy_mod')
+            ra.accuracy_calculated = ra.accuracy_natural + ra.accuracy_mod
+            ra.hits = 0
+            gun.hits.forEach((hit) => {
+              if (ra.accuracy_calculated >= hit.min_roll) {
+                ra.hits += 1
+              }
+            })
+
+            ra.crits = 0
+            gun.crits.forEach((crit) => {
+              if (ra.accuracy_calculated >= crit.min_roll) {
+                ra.crits += 1
+              }
+            })
+            if (ra.accuracy_natural === 20) {
+              ra.crits += 1
+            }
+            ra.hits_roll = []
+            for (let h = 0; h < ra.hits; h++) {
+              gun.damage.forEach((damage) => {
+                ra.hits_roll.push(this.roll(damage))
+              })
+            }
+
+            ra.crits_roll = []
+            for (let c = 0; c < ra.crits; c++) {
+              ra.crits_roll.push(this.roll(12))
+            }
+            ra.base_damage = ra.hits_roll.reduce((a, c) => a + c, 0);
+            ra.base_damage += ra.crits_roll.reduce((a, c) => a + c, 0);
+            if (this.is_favored_gun_type(gun_index)) {
+              ra.damage_mod += this.mod_of('damage')
+            }
+
+            ra.damage_mod += this.value_of('damage_mod_favored_gun')
+            if (ra.hits > 0) {
+              ra.damage_mod += this.gun_value_of(gun_index, 'damage_mod')
+            }
+            if (ra.crits > 0) {
+              ra.damage_mod += this.gun_value_of(gun_index, 'crit_damage_mod')
+            }
+            ra.total_damage = ra.base_damage + ra.damage_mod
+
+          }
+        },
+
+        skill_check(mod) {
+          this.rolls.checks_natural = this.roll(20)
+          this.rolls.checks_total = this.rolls.checks_natural + mod
+        },
+
+
+        skills() {
+          return Object.keys(this.stats).filter((stat) => {
+            return this.stats[stat].type === "Skill"
+          })
+        },
+
+
+        value_of(id) {
+          let holder = []
+          for (let k of Object.keys(this.stats)) {
+            this.stats[k].stats.forEach((s) => {
+              if (s.k === id) {
+                holder.push(s.v)
+              }
+            })
+          }
+          return holder.reduce((a, c) => a + c, 0);
+        },
+
+        favored_guns: ["Sniper"],
+
+        guns: [
+          {
+            damage: [10],
+            guild: "Black Powder",
+            name: "Crappy Sniper",
+            range: 8,
+            type: "Sniper",
+            crits: [
+              {min_roll: 16, add: 1}
+            ],
+            hits: [
+              {min_roll: 8, add: 1}
+            ],
+            stats: [
+              {k: "accuracy_mod", v: 2},
+              {k: "crit_damage_mod", v: 2}
+            ],
+            toggles: [
+              {k: "accuracy_mod", desc: "Range 3 = ACC +3", status: true, v: 3}
+            ]
+          },
+
+
+          {
+            damage: [4, 4],
+            guild: "Alas!",
+            name: "Synergy",
+            range: 5,
+            type: "Pistol",
+            crits: [],
+            hits: [
+              {min_roll: 2, add: 1},
+              {min_roll: 8, add: 1},
+              {min_roll: 16, add: 1}
+            ],
+            stats: [
+              {k: "damage_mod", v: 1},
+            ],
+            toggles: []
+          }
+
+        ],
+
+        ranged_attack: {
+          accuracy_natural: "",
+          accuracy_mod: "",
+          accuracy_calculated: "",
+          base_damage: "",
+          crits: [],
+          crits_roll: [],
+          hits: [],
+          hits_roll: [],
+          total_damage: "",
+        },
+
+        rolls: {
+          basic: "",
+          checks_natural: "",
+          checks_total: "",
+          initiative_natural: "",
+          initiative_total: "",
+        },
+
+        stats: {
+          character: {
+            name: "Character Details",
+            stats: [
+              {k: "ba_rank", v: 1},
+              {k: "ba_tokens", v: 0},
+              {k: "gold", v: 113},
+              {k: "health", v: 14},
+              {k: "health_regen", v: 0},
+              {k: "level", v: 1},
+              {k: "max_health", v: 14},
+              {k: "max_shields", v: 20},
+              {k: "melee_die", v: 4},
+              {k: "movement_base", v: 3},
+              {k: "shields", v: 20},
+              {k: "shield_regen", v: 5},
+            ]
+          },
+          archetype: {
+            name: "Archetype: Deadeye",
+            stats: [
+              {k: "accuracy", v: 4},
+              {k: "damage", v: 1},
+              {k: "mastery", v: 2},
+              {k: "speed", v: 0},
+            ]
+          },
+
+          background: {
+            name: "Background: Prize Shot",
+            stats: [
+              {k: "accuracy", v: 1},
+              {k: "insight_mod", v: -2}
+            ]
+          },
+          caliber1: {
+            name: "Caliber",
+            type: "Skill",
+            level: 1,
+            stats: [
+              {k: "damage_mod_favored_gun", v: 1},
+              {k: "search_mod", v: 1},
+            ]
+          },
+          class: {
+            name: "Class: Hunter",
+            stats: [
+              {k: "accuracy", v: 2},
+              {k: "damage", v: 1},
+              {k: "mastery", v: 1},
+              {k: "speed", v: 0},
+            ]
+          },
+          insider: {
+            name: "Insider",
+            type: "Trait",
+            stats: [
+              {k: "loot_search", v: 5},
+            ]
+          },
+          looter: {
+            name: "Looter",
+            type: "Trait",
+            stats: [
+              {k: "guild_sneak", v: 5},
+            ]
+          },
+          skill_points: {
+            name: "Skill Points",
+            stats: [
+              {k: "accuracy", v: 0},
+              {k: "damage", v: 0},
+              {k: "mastery", v: 0},
+              {k: "speed", v: 0},
+            ]
+          }
+        },
+
+        stat_names: {
+          accuracy_mod: "Accuracy Mod",
+          crit_damage_mod: "Crit Damage Mod",
+          damage_mod: "Damage Mod",
+          damage_mod_favored_gun: "Favored Gun DMG Mod",
+          guild_sneak: "Guild Sneak Mod",
+          loot_search: "Loot Search Mod",
+          search_mod: "Search Mod",
+        },
+
+        stat_name(key) {
+          if (this.stat_names[key]) {
+            return this.stat_names[key]
+          } else {
+            return key
+          }
+        },
+
+      })
+
+    })
+  </script>
+</body>
+
+</html>
