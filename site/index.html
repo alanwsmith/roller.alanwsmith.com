@@ -359,6 +359,125 @@
       </table>
     </div>
 
+
+    <h2>Base Stats</h2>
+    <div class="cards1">
+
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.value_of('accuracy')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('accuracy')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.value_of('damage')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('damage')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Master</td>
+          <td x-text="$store.d.value_of('master')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('mastery')" class="plus"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.value_of('speed')"></td>
+        </tr>
+        <tr>
+          <td>Mod</td>
+          <td x-text="$store.d.mod_of('speed')" class="plus"></td>
+        </tr>
+      </table>
+    </div>
+
+
+    <h2>Archetype: Deadeye</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('archetype', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.get_stat('archetype', 'damage')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery</td>
+          <td x-text="$store.d.get_stat('archetype', 'mastery')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.get_stat('archetype', 'speed')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Class: Hunter </h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('class', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Damage</td>
+          <td x-text="$store.d.get_stat('class', 'damage')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Mastery</td>
+          <td x-text="$store.d.get_stat('class', 'mastery')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Speed</td>
+          <td x-text="$store.d.get_stat('class', 'speed')"></td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Background: Prize Shot</h2>
+    <div class="cards1">
+      <table>
+        <tr>
+          <td>Accuracy</td>
+          <td x-text="$store.d.get_stat('background', 'accuracy')"></td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>Insight Checks</td>
+          <td x-text="$store.d.get_stat('background', 'insight_mod')"></td>
+        </tr>
+      </table>
+    </div>
+
   </main>
 
   <script>
@@ -399,6 +518,16 @@
         change_gun_toggle(gun_index, toggle_index) {
           this.guns[gun_index].toggles[toggle_index].status = !
             this.guns[gun_index].toggles[toggle_index].status
+        },
+
+        get_stat(type, id) {
+          let v = 0
+          this.stats[type].stats.forEach((s) => {
+            if (s.k === id) {
+              v = s.v
+            }
+          })
+          return v
         },
 
         gun_toggle_of(gun_index, id) {
