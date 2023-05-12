@@ -51,6 +51,11 @@ more complicated like the _Range Attack__ rolls.
 Those involved pulling various values and 
 conditions. 
 
+Click "Roll" on one of the guns and you can
+see the various outputs. Or, check 
+`roll_ranged_attack(gun_index)` in the source
+code to follow along that way. 
+
 -> h2
 
 The Math
