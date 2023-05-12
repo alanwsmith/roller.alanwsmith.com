@@ -332,6 +332,33 @@
       </template>
     </div>
 
+    <h2>Melee Attack
+      <div class="h2small">
+        Damage:
+        <span x-text="$store.d.melee_total_damage">0</span>
+      </div>
+    </h2>
+
+    <div class="cards1">
+      <table>
+        <tbody>
+          <tr>
+            <td>1d4</td>
+            <td><button class="roller" @click="$store.d.roll_melee()">Roll</button></td>
+          </tr>
+          <tr>
+            <td>Natural:</td>
+            <td x-text="$store.d.melee_natural_damage"></td>
+          </tr>
+          <tr>
+            <td>
+              Mod:</td>
+            <td class="plus" x-text="$store.d.mod_of('damage')"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </main>
 
   <script>
@@ -428,10 +455,14 @@
             this.value_of('initiative_mod')
         },
 
+        roll_melee() {
+          this.melee_natural_damage = this.roll(this.value_of('melee_die'))
+          this.melee_total_damage = this.melee_natural_damage + this.mod_of('damage')
+        },
+
         roll_ranged_attack(gun_index) {
           const gun = this.guns[gun_index]
           const ra = this.ranged_attack
-
           ra.accuracy_mod = 0
           ra.accuracy_calculated = 0
           ra.base_damage = 0
@@ -441,19 +472,15 @@
           ra.hits_roll = []
           ra.crits = 0
           ra.crits_roll = []
-
           ra.accuracy_natural = this.roll(20)
 
           if (ra.accuracy_natural > 1) {
-
             if (this.is_favored_gun_type(gun_index)) {
               ra.accuracy_mod += this.mod_of('accuracy')
             }
-
             ra.accuracy_mod += this.gun_value_of(gun_index, 'accuracy_mod')
             ra.accuracy_mod += this.gun_toggle_of(gun_index, 'accuracy_mod')
             ra.accuracy_calculated = ra.accuracy_natural + ra.accuracy_mod
-
             ra.hits = 0
             gun.hits.forEach((hit) => {
               if (ra.accuracy_calculated >= hit.min_roll) {
@@ -467,11 +494,9 @@
                 ra.crits += 1
               }
             })
-
             if (ra.accuracy_natural === 20) {
               ra.crits += 1
             }
-
             ra.hits_roll = []
             for (let h = 0; h < ra.hits; h++) {
               gun.damage.forEach((damage) => {
@@ -483,28 +508,22 @@
             for (let c = 0; c < ra.crits; c++) {
               ra.crits_roll.push(this.roll(12))
             }
-
             ra.base_damage = ra.hits_roll.reduce((a, c) => a + c, 0);
             ra.base_damage += ra.crits_roll.reduce((a, c) => a + c, 0);
-
             if (this.is_favored_gun_type(gun_index)) {
               ra.damage_mod += this.mod_of('damage')
             }
 
             ra.damage_mod += this.value_of('damage_mod_favored_gun')
-
             if (ra.hits > 0) {
               ra.damage_mod += this.gun_value_of(gun_index, 'damage_mod')
             }
-
             if (ra.crits > 0) {
               ra.damage_mod += this.gun_value_of(gun_index, 'crit_damage_mod')
             }
-
             ra.total_damage = ra.base_damage + ra.damage_mod
 
           }
-
         },
 
         skill_check(mod) {
