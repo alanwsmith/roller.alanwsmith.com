@@ -304,7 +304,7 @@
             </tr>
             <template x-for="stat in gun.stats">
               <tr>
-                <td x-text="stat.k"></td>
+                <td x-text="$store.d.stat_name(stat.k)"></td>
                 <td x-html="`+` + stat.v"></td>
               </tr>
             </template>
@@ -478,11 +478,38 @@
       </table>
     </div>
 
+    <h2>Skills</h2>
+    <template x-for="skill in $store.d.skills()">
+      <div class="cards3">
+        <table>
+          <tbody>
+            <tr>
+              <td x-text="$store.d.stats[skill].name"></td>
+            </tr>
+            <tr>
+              <td>Level</td>
+              <td x-text="$store.d.stats[skill].level"></td>
+            </tr>
+            <template x-for="stat in $store.d.stats[skill].stats">
+              <tr>
+                <td x-text="$store.d.stat_name(stat.k)"></td>
+                <td x-text="stat.v"></td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+
+      </div>
+
+    </template>
+
   </main>
 
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('d', {
+
+        name: "Rodger Hammerstien",
 
         // checks
         insight() {
@@ -660,6 +687,14 @@
           this.rolls.checks_total = this.rolls.checks_natural + mod
         },
 
+
+        skills() {
+          return Object.keys(this.stats).filter((stat) => {
+            return this.stats[stat].type === "Skill"
+          })
+        },
+
+
         value_of(id) {
           let holder = []
           for (let k of Object.keys(this.stats)) {
@@ -715,10 +750,8 @@
             toggles: []
           }
 
-
         ],
 
-        name: "Rodger Hammerstien",
 
         ranged_attack: {
           accuracy_natural: "",
@@ -776,7 +809,9 @@
             ]
           },
           caliber1: {
-            name: "Skill Tree: Caliber Level 1",
+            name: "Caliber",
+            type: "Skill",
+            level: 1,
             stats: [
               {k: "damage_mod_favored_gun", v: 1},
               {k: "search_mod", v: 1},
@@ -792,13 +827,15 @@
             ]
           },
           insider: {
-            name: "Insider Trait",
+            name: "Insider",
+            type: "Trait",
             stats: [
               {k: "loot_search", v: 5},
             ]
           },
           looter: {
-            name: "Looter Trait",
+            name: "Looter",
+            type: "Trait",
             stats: [
               {k: "guild_sneak", v: 5},
             ]
@@ -811,6 +848,24 @@
               {k: "mastery", v: 0},
               {k: "speed", v: 0},
             ]
+          }
+        },
+
+        stat_names: {
+          accuracy_mod: "Accuracy Mod",
+          crit_damage_mod: "Crit Damage Mod",
+          damage_mod: "Damage Mod",
+          damage_mod_favored_gun: "Favored Gun DMG Mod",
+          guild_sneak: "Guild Sneak Mod",
+          loot_search: "Loot Search Mod",
+          search_mod: "Search Mod",
+        },
+
+        stat_name(key) {
+          if (this.stat_names[key]) {
+            return this.stat_names[key]
+          } else {
+            return key
           }
         },
 
