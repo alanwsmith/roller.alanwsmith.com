@@ -12,7 +12,7 @@
     <h1>
       <span x-text="$store.d.name"></span>
       <br />
-      <span class="h2small" x-html="'Level ' + $store.d.value_of('level')"></span>
+      <span class="h2small" x-html="'Bunkers and Badasses - Level ' + $store.d.value_of('level')"></span>
     </h1>
 
     <div class="cards1">
@@ -284,7 +284,7 @@
             </tr>
             <tr>
               <td x-html="`From ` + gun.guild"></td>
-              <td><button @click="$store.d.roll_ranged_attack(gun_index)">Roll</button></td>
+              <td><button class="roller" @click="$store.d.roll_ranged_attack(gun_index)">Roll</button></td>
             </tr>
             <tr>
               <td>Type</td>
@@ -525,12 +525,207 @@
             </template>
           </tbody>
         </table>
-
       </div>
-
     </template>
 
+    <h2>Action Skill
+      <div class="h2small">Encounter uses: <input type="checkbox"> - Day uses: <input type="checkbox"> <input
+          type="checkbox"> <input type="checkbox"></div>
+    </h2>
+
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Wings Of Blood!</td>
+          </tr>
+          <tr>
+            <td>Does 2d8 to selected enemy</td>
+          </tr>
+          <tr>
+            <td>All adjacent enemies are taunted and attack me next</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Familiar: Roger The Flamingo</h2>
+
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Health:</td>
+            <td>15/15</td>
+          </tr>
+          <tr>
+            <td>Attack/Turn</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>Movement</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>Damage:</td>
+            <td>1d4 + 1</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>ACC:</td>
+            <td class="plus">1</td>
+          </tr>
+          <tr>
+            <td>Roll 2-7:</td>
+            <td>-1 DMG</td>
+          </tr>
+          <tr>
+            <td>Roll 8-15:</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Roll 16+:</td>
+            <td>+1 DMG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Gernades</h2>
+
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Type:</td>
+            <td>tbd</td>
+          </tr>
+          <tr>
+            <td>Damage:</td>
+            <td>tbd</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Current Count:</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Max:</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Info:</td>
+          </tr>
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Potions</h2>
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>1. </td>
+          </tr>
+
+          <tr>
+            <td>2. </td>
+          </tr>
+
+          <tr>
+            <td>3. </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Favored Guns</h2>
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td>Sniper</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Feats</h2>
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Social Distancing: </td>
+          </tr>
+          <tr>
+            <td>Gain extra movement the first time an enemy enters an adjacent square</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <h2>Traits</h2>
+    <!-- TODO: Make this dynamic -->
+    <div class="cards3">
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="2">Insider</td>
+          </tr>
+          <tr>
+            <td>Guild Sneak Checks</td>
+            <td class="Guild_Sneak_Checks plus">5</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="2">Looter</td>
+          </tr>
+          <tr>
+            <td>Loot Search Checks</td>
+            <td class="Loot_Search_Checks plus">5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Shield</h2>
+    <div class="cards4">
+      <table>
+        <tbody>
+          <tr>
+            <td>Shield Type:</td>
+            <td>Basic</td>
+          </tr>
+          <tr>
+            <td>Shield Info:</td>
+            <td>Just a regular old shield that saves your ass</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
+  <footer>
+    from<br /><a href="https://www.alanwsmith.com/">alan w. smith<br />
+      <a href="https://github.com/alanwsmith/roller.alanwsmith.com">about/source</a>
+  </footer>
 
   <script>
     document.addEventListener('alpine:init', () => {
@@ -778,7 +973,6 @@
           }
 
         ],
-
 
         ranged_attack: {
           accuracy_natural: "",
